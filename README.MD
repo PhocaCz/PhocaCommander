@@ -1,0 +1,1 @@
+Phoca Commander is Joomla! CMS extension. Compoent - dual pane file manager for managing files in Joomla! CMS.
