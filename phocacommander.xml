@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension method="upgrade" type="component" version="3">
+	<name>com_phocacommander</name>
+	<author>Jan Pavelka (www.phoca.cz)</author>
+	<creationDate>24/01/2014</creationDate>
+	<authorEmail></authorEmail>
+	<authorUrl>www.phoca.cz</authorUrl>
+	<copyright>Jan Pavelka</copyright>
+	<license>GNU/GPL</license>
+	<version>3.0.0</version>
+	<description>Phoca Commander</description>
+	<scriptfile>install/script.php</scriptfile>
+
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">install/sql/mysql/install.utf8.sql</file>
+		</sql>
+	</install>
+
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">install/sql/mysql/uninstall.utf8.sql</file>
+		</sql>
+	</uninstall>
+
+	<update>
+		<schemas/>
+	</update>
+
+	<files folder="site">
+		<filename>index.html</filename>
+	</files>
+
+	<media destination="com_phocacommander" folder="media">
+		<filename>index.html</filename>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+	</media>
+
+	<languages>
+		<language tag="en-GB" client="site">language/en-GB/en-GB.com_phocacommander.ini</language>
+		<language tag="en-GB" client="site">language/en-GB/en-GB.com_phocacommander.sys.ini</language>
+	</languages>
+
+	<administration>
+		<menu img="" link="option=com_phocacommander">COM_PHOCACOMMANDER</menu>
+		<submenu>
+			<menu img="" alt="COM_PHOCACOMMANDER" view="phocacommandercp" link="option=com_phocacommander">COM_PHOCACOMMANDER</menu>
+			<menu img="" alt="COM_PHOCACOMMANDER_INFO" view="phocacommanderinfo" link="option=com_phocacommander&amp;view=phocacommanderinfo">COM_PHOCACOMMANDER_INFO</menu>
+		</submenu>
+
+		<files folder="admin">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<filename>phocacommander.php</filename>
+			<filename>phocacommander.xml</filename>
+			<folder>controllers</folder>
+			<folder>help</folder>
+			<folder>helpers</folder>
+			<folder>install</folder>
+			<folder>models</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+		</files>
+
+		<languages>
+			<language tag="en-GB">language/en-GB/en-GB.com_phocacommander.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_phocacommander.sys.ini</language>
+		</languages>
+
+	</administration>
+</extension>

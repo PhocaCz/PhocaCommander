@@ -1,0 +1,216 @@
+table.ph-table {
+	width: 100%;
+
+}
+table.ph-table tr td,
+table.ph-table tr th {
+}
+
+/* Checkbox */
+#phPromptValueMove,
+#phPromptValueUnpack,
+#phPromptValueUnpackOther,
+#phPromptValueCopy {
+	margin-bottom:5px;
+}
+
+#selectAllA,
+#selectAllB {
+
+	margin-left: 2px;
+	margin-bottom: 3px;
+}
+
+.ph-box-s {
+	border-bottom: 1px solid #c5c5c5;
+}
+.ph-box-b {
+	border-top: 1px solid #c5c5c5;
+}
+
+.ph-box-o table,
+.ph-box-o table.ph-table tr,
+.ph-box-o table.ph-table tr, td {
+	margin:0;
+	padding:0px;
+	border-collapse: collapse;
+}
+.ph-box-o table.ph-table tr td{
+	border: 1px solid #fcfcfc;
+}
+
+table.ph-table tr th {
+	text-align: center;
+}
+.ph-box-s {
+	margin: 0;
+	padding: 0;
+	padding-right: 17px;
+}
+
+.ph-status {
+	height:4px;
+	margin-right:-17px;
+	background: #f0f0f0;
+}
+.ph-box-o {
+	overflow: auto;
+	margin: 0;
+	padding: 0;
+}
+
+th.ph-check { width: 1%; padding-left: 2px;white-space: nowrap}
+th.ph-name { width: 44%;}
+td.ph-name { width: 45%;}
+td.ph-size, th.ph-size { width: 15%; text-align: right;padding-right: 5px !important;}
+td.ph-date, th.ph-date { width: 20%; text-align: center;}
+td.ph-attributes, th.ph-attributes { width: 10%; text-align: center;}
+td.ph-owner, th.ph-owner {width: 10%; text-align: center;}
+
+.ph-a,
+.ph-b {
+	border: 1px solid #d0d0d0;
+}
+
+label.ph-checkbox {
+    display: block;
+	margin: 0; padding: 0;
+}
+label.ph-checkbox input {
+    
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -2px;
+    *overflow: hidden;
+}
+
+.ph-path {
+	background: #f0f0f0;
+	padding-left: 5px;
+	font-size: small;
+}
+
+#ph-ajaxtop {
+	display: none;
+}
+.ph-commander-box {
+	
+	margin-left: 15px;
+}
+.ph-commander-box-in {
+	margin: 0 auto !important;
+}
+.ph-arrow {
+	font-size: 15px;
+	font-weight: 900;
+}
+/*
+label.ph-checkbox:hover {
+	background: #f0f0f0
+}*/
+
+label.ph-checkbox {
+	padding:2px;
+	border: 1px solid transparent;
+}
+label.ph-checkbox:hover {
+	border: 1px solid #CCE6FF;
+}
+.ph-active {
+	background: #CCE6FF;
+}
+
+.ph-status-active {
+	background: #0059b2;
+}
+
+/* Bootstrap conflict */
+.ui-icon-closethick {
+	margin-top: -2px;
+	margin-left: 0px;
+}
+
+
+#ph-ajaxtop-message {
+	position:fixed;
+	top:0px;
+	left:0;
+	right:0;
+	width:50%;
+	background:#ffe500;
+	border:5px solid #bfb130;
+	border-top: 0px;
+	-webkit-border-radius: 0px 0px 3px 3px;
+	border-radius: 0px 0px 3px 3px;
+	padding:10px;
+	margin: 0 auto;
+	text-align:center;
+	z-index: 9999;
+	color: #a69500;
+}
+
+#ph-ajaxtop {
+	display: none;
+}
+
+.ph-success-txt {
+	color: #468847;
+	font-weight: bold;
+}
+.ph-error-txt {
+	color: #B94A48;
+	font-weight: bold;
+}
+
+.ph-file-folder {
+	font-weight: bold;
+	background: #CCE6FF;
+	padding: 0px 10px;
+}
+
+.ph-dialog {
+	line-height: 1.7;
+	text-align: center !important;
+	display:none;
+}
+.ph-prepend-text {
+	
+}
+
+.ph-table-attribs tr td,
+.ph-table-attribs tr th{
+	padding: 5px;
+	
+	
+}
+
+.ph-table-attribs tr td .ph-input-attribs {
+	margin-top: 5px;
+}
+
+
+.ph-input-box-prompt {
+	margin-top:10px;
+}
+label.ph-input-prompt span{
+}
+label.ph-input-prompt input.ph-input-checkbox-prompt {
+}
+
+.ph-warning-text {
+	color: #FF3D3D;
+}
+.ph-main-warning {
+
+}
+.ph-main-warning ul li {
+	text-align: left;
+}
+.ph-main-warning a {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+
