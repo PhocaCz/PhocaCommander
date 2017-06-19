@@ -46,7 +46,7 @@ class PhocaCommanderHelper
 			}
 		}
 
-		$xml_items = '';
+		$xml_items = array();
 		if (count($xmlFilesInDir))
 		{
 			foreach ($xmlFilesInDir as $xmlfile)
