@@ -1,0 +1,36 @@
+{
+	"author": "Jan Pavelka (www.phoca.cz)",
+	"authorUrl": "https://www.phoca.cz",
+	"copyright": "Jan Pavelka",
+	"license": "GNU/GPL",
+	"projectName": "PhocaCommander",
+	"extensionName": "Phoca Commander",
+	"projectInitials" : "CM",
+	"description": "Phoca Commander is Joomla! CMS component - it is dual panel file manager (like Total Commander, Midnight Commander, Krusader, ...) working in Joomla! administration.",
+	"projectUrl": "https://www.phoca.cz/phocacommander",
+	"projectDocumentationUrl": "http://www.phoca.cz/project/phocacommander-joomla-file-manager",
+	"projectMainComponent": "Phoca Commander",
+	"projectMainComponentInfoUrl": "https://www.phoca.cz/project/phocacommander-joomla-file-manager",
+	"projectDemo" : {
+		"Joomla! 3 Demo": "https://youtu.be/0iB1gOaz0og"
+	},
+	"projectColor": "#23008C",
+	"menu": {
+		"main":{
+			"0" : {
+				"image": "",
+				"view": "",
+				"link": "option=com_phocacommander",
+				"title": "COM_PHOCACOMMANDER"
+			}
+		},
+		"submenu": {
+			"0" : {
+				"image": "",
+				"view": "phocacommanderinfo",
+				"link": "option=com_phocacommander&amp;view=phocacommanderinfo",
+				"title": "COM_PHOCACOMMANDER_INFO"
+			}
+		}
+	}
+}

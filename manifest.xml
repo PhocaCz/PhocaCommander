@@ -1,23 +1,21 @@
 <updates>
 	<update>
 		<name><![CDATA[ Phoca Commander ]]></name>
-		<description><![CDATA[ Phoca Commander is Joomla! CMS component - it is dual panel file manager working in Joomla! administration. ]]></description>
+		<description><![CDATA[ Phoca Commander is Joomla! CMS component - it is dual panel file manager (like Total Commander, Midnight Commander, Krusader, ...) working in Joomla! administration. ]]></description>
 		<element>com_phocacommander</element>
 		<type>component</type>
-		<version>3.0.3</version>
-		<infourl title="Phoca Commander 3.0.3">http://www.phoca.cz/version/index.php?phocacommander=3.0.3</infourl>
+		<version>3.0.4</version>
+		<infourl title="Phoca Commander 3.0.4">http://www.phoca.cz/version/index.php?phocacommander=3.0.4</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/3.0.3/com_phocacommander_v3.0.3.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/3.0.4/com_phocacommander_v3.0.4.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>stable</tag>
 		</tags>
-		<maintainer>
-		<![CDATA[ Phoca.cz ]]>
-		</maintainer>
-		<maintainerurl>http://www.phoca.cz/</maintainerurl>
+		<maintainer><![CDATA[ Phoca.cz ]]></maintainer>
+		<maintainerurl>https://www.phoca.cz/</maintainerurl>
 		<section>Updates</section>
-		<targetplatform name="joomla" version="3.7"/>
+		<targetplatform name="joomla" version="3.9"/>
 		<client>1</client>
 	</update>
 </updates>

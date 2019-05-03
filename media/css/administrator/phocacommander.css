@@ -213,4 +213,12 @@ label.ph-input-prompt input.ph-input-checkbox-prompt {
 	font-weight: bold;
 }
 
+#adminForm {
+	margin: 0 0 0 0 !important; 
+}
+
+.ph-cpanel-logo img {
+	transform: scale(0.6);
+	transform-origin: 0 50%;
+}
 
