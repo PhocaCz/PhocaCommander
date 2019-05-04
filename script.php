@@ -23,13 +23,13 @@ class com_phocacommanderInstallerScript
 
     function createFolders() {
 
-        return;
+        return true;
     }
 
     function install($parent) {
         $this->loadLanguage($parent);
-        $msg = $this->createFolders();
-        JFactory::getApplication()->enqueueMessage($msg, 'message');
+       // $msg = $this->createFolders();
+      //  JFactory::getApplication()->enqueueMessage($msg, 'message');
         return true;
     }
     function uninstall($parent) {

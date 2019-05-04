@@ -2,7 +2,7 @@
 <extension type="component" method="upgrade" version="3">
 	<name>com_phocacommander</name>
 	<author>Jan Pavelka (www.phoca.cz)</author>
-	<creationDate>03/05/2019</creationDate>
+	<creationDate>04/05/2019</creationDate>
 	<authorEmail></authorEmail>
 	<authorUrl>https://www.phoca.cz</authorUrl>
 	<copyright>Jan Pavelka</copyright>
@@ -61,6 +61,7 @@
 			<folder>install</folder>
 			<folder>models</folder>
 			<folder>tables</folder>
+			<folder>update</folder>
 			<folder>views</folder>
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
