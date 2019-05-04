@@ -39,8 +39,8 @@ class com_phocacommanderInstallerScript
 
     function update($parent) {
         //$this->loadLanguage($parent);
-        $msg = $this->createFolders();
-        JFactory::getApplication()->enqueueMessage($msg, 'message');
+        //$msg = $this->createFolders();
+        //JFactory::getApplication()->enqueueMessage($msg, 'message');
         return true;
     }
 
