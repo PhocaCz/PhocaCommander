@@ -117,10 +117,11 @@ class PhocaCommanderHelper
 
 	public static function renderAjaxTopHtml($text) {
 		$o = '<div id="ph-ajaxtop">'
-		.'<div id="ph-ajaxtop-message">'. JHtml::_( 'image', 'media/com_phocacommander/images/administrator/icon-loading5.gif', '')
+		.'<div id="ph-ajaxtop-message"><div class="ph-loader-top"></div>'
 		.'&nbsp; '. htmlspecialchars($text) . '</div>'
 		.'</div>';
 		return $o;
+
 	}
 
 	public static function getMimeTypeIcon($filename, $size = 16, $outcome = 0) {
@@ -1149,6 +1150,8 @@ class PhocaCommanderHelper
         }
 
     }
+	
+	
 
 	public static function getInfo() {
 
@@ -1158,6 +1161,21 @@ class PhocaCommanderHelper
 			return '';
 		}
 		return 'Powered by <a href="https://www.phoca.cz/phocacommander" target="_blank">Phoca Commander</a> | ';
+	}
+	
+	public static function setVars( $task = '') {
+
+		$a			= array();
+		$app		= JFactory::getApplication();
+		$a['o'] 	= htmlspecialchars(strip_tags($app->input->get('option')));
+		$a['c'] 	= str_replace('com_', '', $a['o']);
+		$a['n'] 	= 'Phoca' . ucfirst(str_replace('com_phoca', '', $a['o']));
+		$a['l'] 	= strtoupper($a['o']);
+		$a['i']		= 'media/'.$a['o'].'/images/administrator/';
+		$a['s']		= 'media/'.$a['o'].'/css/administrator/'.$a['c'].'.css';
+		$a['task']	= $a['c'] . htmlspecialchars(strip_tags($task));
+		$a['tasks'] = $a['task']. 's';
+		return $a;
 	}
 }
 ?>

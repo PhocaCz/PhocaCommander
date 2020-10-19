@@ -190,6 +190,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 		$model = $this->getModel();
 
 		$data  = $this->input->post->get('jform', array(), 'array');
+
 		$context = "$this->option.edit.$this->context";
 		$task = $this->getTask();
 

@@ -2,6 +2,11 @@
 <config>
 <fields addfieldpath="/administrator/components/com_phocacommander/models/fields">
 <fieldset name="general" description="" label="COM_PHOCACOMMANDER_GENERAL_OPTIONS_LABEL">
+
+<field name="theme" default="0" type="list" class="btn-group" label="COM_PHOCACOMMANDER_THEME_LABEL" description="COM_PHOCACOMMANDER_THEME_DESC" >
+	<option value="0">COM_PHOCACOMMANDER_DEFAULT</option>
+	<option value="phoca-dark">COM_PHOCACOMMANDER_PHOCA_DARK</option>
+</field>
 <field 	name="f_keys" 
 				type="radio" 
 				class="btn-group"
@@ -14,7 +19,7 @@
 
 <field 	name="box_height" 
 				type="text" 
-				default="350" 
+				default="60vh" 
 				size="3"
 				label="COM_PHOCACOMMANDER_FIELD_BOX_HEIGHT_LABEL"
 				description="COM_PHOCACOMMANDER_FIELD_BOX_HEIGHT_DESC" />

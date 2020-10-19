@@ -10,7 +10,7 @@
  */
 defined('_JEXEC') or die;
 jimport('joomla.application.component.view');
-
+use Joomla\CMS\HTML\HTMLHelper;
 
 class PhocaCommanderCpViewPhocaCommanderEdit extends JViewLegacy
 {
@@ -18,11 +18,27 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends JViewLegacy
 	protected $form;
 	protected $state;
 	protected $t;
+	protected $r;
 	protected $source;
 
 	public function display($tpl = null)
 	{
-		JHTML::stylesheet('media/com_phocacommander/css/administrator/phocacommander.css' );
+		$document 			= JFactory::getDocument();
+		$paramsC 			= JComponentHelper::getParams('com_phocacommander');
+
+		$this->r = new PhocaCommanderRenderAdminView();
+
+
+		$oVars   = array();
+        $oLang   = array();
+        $oParams = array();
+        $oLang   = array('COM_PHOCACOMMANDER_ERROR_SAVING_FILE' => JText::_('COM_PHOCACOMMANDER_ERROR_SAVING_FILE'));
+
+
+        //$oVars['token']         = JSession::getFormToken();
+        $oVars['urleditsave'] = JURI::base(true) . '/index.php?option=com_phocacommander&task=phocacommanderedit.save&format=json&' . JSession::getFormToken() . '=1';
+		$document->addScriptOptions('phLangCM', $oLang);
+		$document->addScriptOptions('phVarsCM', $oVars);
 
 		$app   					= JFactory::getApplication();
 		$this->t['fullfile']	= $app->input->get( 'file', '', 'string'  );

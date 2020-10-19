@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" method="upgrade" version="3">
+<extension type="component" method="upgrade" version="3.9">
 	<name>com_phocacommander</name>
 	<author>Jan Pavelka (www.phoca.cz)</author>
-	<creationDate>04/05/2019</creationDate>
+	<creationDate>19/10/2020</creationDate>
 	<authorEmail></authorEmail>
 	<authorUrl>https://www.phoca.cz</authorUrl>
 	<copyright>Jan Pavelka</copyright>
 	<license>GNU/GPL</license>
-	<version>3.0.4</version>
+	<version>3.0.5</version>
 	<description>COM_PHOCACOMMANDER_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<projectName>PhocaCommander</projectName>
@@ -36,6 +36,7 @@
 
 	<media destination="com_phocacommander" folder="media">
 		<folder>css</folder>
+		<folder>duotone</folder>
 		<folder>images</folder>
 		<folder>js</folder>
 		<filename>index.html</filename>

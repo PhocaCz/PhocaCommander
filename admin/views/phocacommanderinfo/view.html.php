@@ -12,10 +12,14 @@ jimport( 'joomla.application.component.view' );
 class PhocaCommanderCpViewPhocaCommanderInfo extends JViewLegacy
 {
 	protected $t;
+	protected $r;
 
 	function display($tpl = null) {
 
-		JHTML::stylesheet( 'media/com_phocacommander/css/administrator/phocacommander.css' );
+		$this->t	= PhocaCommanderHelper::setVars('info');
+		$this->r = new PhocaCommanderRenderAdminView();
+		$this->t['component_head'] 	= 'COM_PHOCACOMMANDER_PHOCA_COMMANDER';
+		$this->t['component_links']	= $this->r->getLinks(1);
 
 		$this->t['version'] = PhocaCommanderHelper::getExtensionVersion();
 		$this->addToolbar();
@@ -39,7 +43,7 @@ class PhocaCommanderCpViewPhocaCommanderInfo extends JViewLegacy
 		}
 		JToolbarHelper::divider();
 		JToolbarHelper::help( 'screen.phocacommander', true );
-		JToolbarHelper::cancel('phocacommanderinfo.cancel', 'JTOOLBAR_CLOSE');
+		//JToolbarHelper::cancel('phocacommanderinfo.cancel', 'JTOOLBAR_CLOSE');
 	}
 }
 ?>

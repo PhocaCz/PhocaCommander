@@ -9,10 +9,12 @@
 defined('_JEXEC') or die();
 jimport( 'joomla.application.component.view' );
 jimport( 'joomla.html.pane' );
+use Joomla\CMS\HTML\HTMLHelper;
 
 class PhocaCommanderCpViewPhocaCommanderCp extends JViewLegacy
 {
 	protected $t;
+	protected $r;
 	protected $views;
 
 	function display($tpl = null) {
@@ -24,19 +26,18 @@ class PhocaCommanderCpViewPhocaCommanderCp extends JViewLegacy
 		$this->t['experimental_zip']		= $paramsC->get( 'experimental_zip', 0 );
 		$this->t['display_upload_button']	= $paramsC->get( 'display_upload_button', 1 );
 		$this->t['display_download_button']	= $paramsC->get( 'display_download_button', 0 );
-		//JHtml::_('bootstrap.loadCss');
-		JHtml::_('jquery.framework', false);
+
+
 
 		$this->t['version'] = PhocaCommanderHelper::getExtensionVersion();
 
-		JHTML::stylesheet( 'media/com_phocacommander/css/administrator/phocacommander.css' );
-		JHTML::stylesheet( 'media/com_phocacommander/css/administrator/jquery-ui.css' );
-		JHTML::stylesheet( 'media/com_phocacommander/css/administrator/phoca-ui.css' );
-		JHTML::stylesheet( 'media/com_phocacommander/js/administrator/prettyphoto/css/prettyPhoto.css' );
+		$this->r = new PhocaCommanderRenderAdminView();
 
-		$document->addScript(JURI::root(true).'/media/com_phocacommander/js/administrator/jquery.base64.js');
-		$document->addScript(JURI::root(true).'/media/com_phocacommander/js/administrator/jquery-ui.min.js');
-		$document->addScript(JURI::root(true).'/media/com_phocacommander/js/administrator/prettyphoto/js/jquery.prettyPhoto.js');
+
+
+
+
+
 
 		$model = $this->getModel();
 		$model->checkState();
@@ -115,6 +116,83 @@ class PhocaCommanderCpViewPhocaCommanderCp extends JViewLegacy
 
 		$this->t['ftp'] 			= !JClientHelper::hasCredentials('ftp');
 		$this->t['path']			= JPATH_ROOT;
+
+
+
+
+		/* JS */
+		$this->t['url'] = 'index.php?option=com_phocacommander&view=phocacommanderfilesa&format=json&tmpl=component&'. JSession::getFormToken().'=1';
+		$this->t['urlaction'] = 'index.php?option=com_phocacommander&view=phocacommanderactiona&format=json&tmpl=component&'. JSession::getFormToken().'=1';
+		$this->t['urledit'] = 'index.php?option=com_phocacommander&task=phocacommanderedit.edit&'. JSession::getFormToken().'=1';
+		$this->t['urladmin'] = 'index.php';
+
+
+
+		$oVars   = array();
+        $oLang   = array();
+        $oParams = array();
+        $oLang   = array(
+        	'COM_PHOCACOMMANDER_ERROR_SAVING_FILE' => JText::_('COM_PHOCACOMMANDER_ERROR_SAVING_FILE'),
+			'COM_PHOCACOMMANDER_UPDATING' => JText::_('COM_PHOCACOMMANDER_UPDATING'),
+			'COM_PHOCACOMMANDER_SERVER_ERROR' => JText::_('COM_PHOCACOMMANDER_SERVER_ERROR'),
+			'COM_PHOCACOMMANDER_CREATE' => JText::_('COM_PHOCACOMMANDER_CREATE'),
+			'COM_PHOCACOMMANDER_JOOMLA_ROOT_FOLDER' => JText::_('COM_PHOCACOMMANDER_JOOMLA_ROOT_FOLDER'),
+			'COM_PHOCACOMMANDER_FOLDER' => JText::_('COM_PHOCACOMMANDER_FOLDER'),
+			'COM_PHOCACOMMANDER_NO_FILE_NO_FOLDER_SELECTED' => JText::_('COM_PHOCACOMMANDER_NO_FILE_NO_FOLDER_SELECTED'),
+			'COM_PHOCACOMMANDER_FOLDER_CANNOT_BE_PREVIEWED_OR_EDITED' => JText::_('COM_PHOCACOMMANDER_FOLDER_CANNOT_BE_PREVIEWED_OR_EDITED'),
+			'COM_PHOCACOMMANDER_FOLDER_CANNOT_BE_DOWNLOADED' => JText::_('COM_PHOCACOMMANDER_FOLDER_CANNOT_BE_DOWNLOADED'),
+			'COM_PHOCACOMMANDER_ONLY_ONE_FILE_OR_FOLDER_NEEDS_TO_BE_SELECTED' => JText::_('COM_PHOCACOMMANDER_ONLY_ONE_FILE_OR_FOLDER_NEEDS_TO_BE_SELECTED'),
+			'COM_PHOCACOMMANDER_ONLY_ONE_FILE_NEEDS_TO_BE_SELECTED' => JText::_('COM_PHOCACOMMANDER_ONLY_ONE_FILE_NEEDS_TO_BE_SELECTED'),
+			'COM_PHOCACOMMANDER_FILES_FOLDERS_SM' => JText::_('COM_PHOCACOMMANDER_FILES_FOLDERS_SM'),
+			'COM_PHOCACOMMANDER_FOLDER_SM' => JText::_('COM_PHOCACOMMANDER_FOLDER_SM'),
+			'COM_PHOCACOMMANDER_TO' => JText::_('COM_PHOCACOMMANDER_TO'),
+			'COM_PHOCACOMMANDER_OK' => JText::_('COM_PHOCACOMMANDER_OK'),
+			'COM_PHOCACOMMANDER_ARE_YOU_SURE_COPY' => JText::_('COM_PHOCACOMMANDER_ARE_YOU_SURE_COPY'),
+			'COM_PHOCACOMMANDER_ARE_YOU_SURE_MOVE' => JText::_('COM_PHOCACOMMANDER_ARE_YOU_SURE_MOVE'),
+			'COM_PHOCACOMMANDER_ARE_YOU_SURE_DELETE' => JText::_('COM_PHOCACOMMANDER_ARE_YOU_SURE_DELETE'),
+			'COM_PHOCACOMMANDER_PERMANENTLY_REMOVE_WARNING' => JText::_('COM_PHOCACOMMANDER_PERMANENTLY_REMOVE_WARNING'),
+			'COM_PHOCACOMMANDER_RENAME' => JText::_('COM_PHOCACOMMANDER_RENAME'),
+			'COM_PHOCACOMMANDER_NEW_ATTRIBUTE' => JText::_('COM_PHOCACOMMANDER_NEW_ATTRIBUTE'),
+			'COM_PHOCACOMMANDER_SET_NEW_ATTRIBUTE_FOR' => JText::_('COM_PHOCACOMMANDER_SET_NEW_ATTRIBUTE_FOR'),
+			'COM_PHOCACOMMANDER_ARE_YOU_SURE_UNPACK' => JText::_('COM_PHOCACOMMANDER_ARE_YOU_SURE_UNPACK'),
+			'COM_PHOCACOMMANDER_EXTRACTED_FILES_OVERWRITE_EXISTING_FILES_WARNING' => JText::_('COM_PHOCACOMMANDER_EXTRACTED_FILES_OVERWRITE_EXISTING_FILES_WARNING'),
+			'COM_PHOCACOMMANDER_ONLY_ARCHIVE_FILE_CAN_BE_UNPACKED' => JText::_('COM_PHOCACOMMANDER_ONLY_ARCHIVE_FILE_CAN_BE_UNPACKED'),
+			'COM_PHOCACOMMANDER_PACK' => JText::_('COM_PHOCACOMMANDER_PACK'),
+			'COM_PHOCACOMMANDER_ONLY_IMAGES_CAN_BE_PREVIEWED' => JText::_('COM_PHOCACOMMANDER_ONLY_IMAGES_CAN_BE_PREVIEWED'),
+			'COM_PHOCACOMMANDER_CANCEL' => JText::_('COM_PHOCACOMMANDER_CANCEL')
+		);
+
+		$session = JFactory::getSession();
+		$w = $session->get('ww', false, 'com_phocacommander.phocacommander');
+		if(!$w){
+			$oVars['welcomewarning'] = 0;
+			$session->set('ww', true, 'com_phocacommander.phocacommander');
+		} else {
+			$oVars['welcomewarning'] = 1;
+		}
+
+		$oVars['activepanel']		= $this->t['activepanel'];
+		$oVars['panel']				= $this->t['panel'];
+		$oVars['foldera']			= $this->t['foldera'];
+		$oVars['folderb']			= $this->t['folderb'];
+		$oVars['orderinga']			= $this->t['orderinga'];
+		$oVars['orderingb']			= $this->t['orderingb'];
+		$oVars['directiona']		= $this->t['directiona'];
+		$oVars['directiona']		= $this->t['directiona'];
+
+		$oVars['url']			= $this->t['url'];
+		$oVars['urlaction']		= $this->t['urlaction'];
+		$oVars['urledit']		= $this->t['urledit'];
+		$oVars['urladmin']		= $this->t['urladmin'];
+		$oVars['urlroot']		= JURI::root();
+
+
+
+
+        //$oVars['token']         = JSession::getFormToken();
+        $oVars['urleditsave'] = JURI::base(true) . '/index.php?option=com_phocacommander&task=phocacommanderedit.save&format=json&' . JSession::getFormToken() . '=1';
+		$document->addScriptOptions('phLangCM', $oLang);
+		$document->addScriptOptions('phVarsCM', $oVars);
 
 
 		$this->addToolbar();

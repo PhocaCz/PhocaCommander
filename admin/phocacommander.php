@@ -16,6 +16,7 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_phocacommander')) {
 require_once( JPATH_COMPONENT.'/controller.php' );
 jimport( 'joomla.filesystem.folder' );
 jimport( 'joomla.filesystem.file' );
+require_once( JPATH_COMPONENT.'/helpers/renderadminview.php' );
 require_once( JPATH_COMPONENT.'/helpers/phocacommander.php' );
 require_once( JPATH_COMPONENT.'/helpers/phocacommanderresponse.php' );
 require_once( JPATH_COMPONENT.'/helpers/fileupload.php' );

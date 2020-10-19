@@ -584,7 +584,7 @@ class PhocaCommanderFileUpload
 		$illegal_mime = explode(',', $paramsL['upload_mime_illegal']);
 		if(function_exists('finfo_open')) {// We have fileinfo
 			$finfo	= finfo_open(FILEINFO_MIME);
-			$type	= finfo_file($finfo, $file['tmp_name']);
+			$type	= finfo_file($finfo, $file['tmp_name'], FILEINFO_MIME_TYPE);
 			if(strlen($type) && !in_array($type, $allowed_mime) && in_array($type, $illegal_mime)) {
 				$err = 'COM_PHOCACOMMANDER_WARNINVALIDMIME';
 				return false;

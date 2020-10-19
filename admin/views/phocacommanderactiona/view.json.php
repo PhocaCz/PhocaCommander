@@ -469,7 +469,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends JViewLegacy
 							}
 							catch (Exception $e)
 							{
-								echo $r->_('0', JText::_('COM_PHOCACOMMANDER_FILE_NOT_UNPACKED'));return;
+								echo $r->_('0', JText::_('COM_PHOCACOMMANDER_FILE_NOT_UNPACKED') . "\n" . $e->getMessage());return;
 							}
 
 

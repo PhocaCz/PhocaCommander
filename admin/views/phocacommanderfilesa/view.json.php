@@ -98,7 +98,7 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends JViewLegacy
 		$this->p['display_inline_edit'] 		= $paramsC->get( 'display_inline_edit', 0);
 		$this->p['display_inline_download'] 	= $paramsC->get( 'display_inline_download', 0);
 
-		$this->p['box_height'] 		= $paramsC->get( 'box_height', '350');
+		$this->p['box_height'] 		= $paramsC->get( 'box_height', '60vh');
 		$this->t['urlimage'] 		= JURI::root().'media/com_phocacommander/images/administrator/';
 		$this->t['urlimagemime'] 	= JURI::root().'media/com_phocacommander/images/administrator/mime/16';
 		$this->t['url'] 			= 'index.php?option=com_phocacommander&view=phocacommanderfilesa&format=json&tmpl=component&'. JSession::getFormToken().'=1';
@@ -244,7 +244,7 @@ $o .= '<th class="ph-size">'.$size.'</th>';
 $o .= '<th class="ph-date">'.$date.'</th>';
 $o .= '<th class="ph-attributes">'.JText::_('COM_PHOCACOMMANDER_ATTR').'</th>';
 $o .= '<th class="ph-owner">'.JText::_('COM_PHOCACOMMANDER_OWNER').'</th></tr></table></div>';
-$o .= '<div class="ph-box-o" style="height:'.$this->p['box_height'].'px;"><table class="ph-table" id="ph-table-'.$this->t['panel'].'">';
+$o .= '<div class="ph-box-o" style="height:'.htmlspecialchars(strip_tags($this->p['box_height'])).';"><table class="ph-table" id="ph-table-'.$this->t['panel'].'">';
 
 // UP
 if ($parent == '' && $path == $searchPath) {
