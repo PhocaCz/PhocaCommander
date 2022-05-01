@@ -7,6 +7,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die();
+use Joomla\CMS\Factory;
 
 class PhocaCommanderCpControllerPhocaCommanderinfo extends PhocaCommanderCpController
 {
@@ -16,7 +17,7 @@ class PhocaCommanderCpControllerPhocaCommanderinfo extends PhocaCommanderCpContr
 	}
 	
 	function cancel($key = NULL) {
-		$app = JFactory::getApplication('administrator'); 
+		$app = Factory::getApplication('administrator'); 
 $context = 'com_phocacommander.write.';
 $abc = 'TOURDS';
 			$a = $app->getUserStateFromRequest( $context.'from', 'from', $abc, 'string' );

@@ -9,20 +9,24 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
-
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Version;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+
 
 class PhocaCommanderRenderAdminView
 {
 	protected $t;
 	public function __construct(){
 
-		$paramsC 		= JComponentHelper::getParams('com_phocacommander');
+		$paramsC 		= ComponentHelper::getParams('com_phocacommander');
 		$this->t['theme']					= $paramsC->get( 'theme', 0 );
 
-		$app				= JFactory::getApplication();
-		$version 			= new \Joomla\CMS\Version();
+		$app				= Factory::getApplication();
+		$version 			= new Version();
 		$this->compatible 	= $version->isCompatible('4.0.0-alpha');
 		$this->view			= $app->input->get('view');
 		$this->option		= $app->input->get('option');
@@ -31,12 +35,12 @@ class PhocaCommanderRenderAdminView
 		switch($this->view) {
 
             default:
-				Joomla\CMS\HTML\HTMLHelper::_('behavior.formvalidator');
-				Joomla\CMS\HTML\HTMLHelper::_('behavior.keepalive');
+				HTMLHelper::_('behavior.formvalidator');
+				HTMLHelper::_('behavior.keepalive');
 
 				if (!$this->compatible) {
-					Joomla\CMS\HTML\HTMLHelper::_('behavior.tooltip');
-					Joomla\CMS\HTML\HTMLHelper::_('formbehavior.chosen', 'select');
+					HTMLHelper::_('behavior.tooltip');
+					HTMLHelper::_('formbehavior.chosen', 'select');
 
 				}
 
@@ -62,7 +66,7 @@ class PhocaCommanderRenderAdminView
 
 		HTMLHelper::_('jquery.framework', false);
 		//HTMLHelper::_('script', 'system/core.js', false, true);
-		JHtml::_('behavior.core');
+		HTMLHelper::_('behavior.core');
 		HTMLHelper::_('script', 'media/com_phocacommander/js/administrator/jquery.base64.js', array('version' => 'auto'));
 		HTMLHelper::_('script', 'media/com_phocacommander/js/administrator/jquery-ui.min.js', array('version' => 'auto'));
 		HTMLHelper::_('script', 'media/com_phocacommander/js/administrator/prettyphoto/js/jquery.prettyPhoto.js', array('version' => 'auto'));
@@ -136,7 +140,7 @@ class PhocaCommanderRenderAdminView
 			$tmpl = '&tmpl='.$tmpl;
 		}
 
-		return '<div id="'.$view.'"><form action="'.JRoute::_('index.php?option='.$option . $viewP . $layout . '&id='.(int) $itemId . $tmpl).'" method="post" name="'.$name.'" id="'.$id.'" class="form-validate '.$class.'" role="form">'."\n"
+		return '<div id="'.$view.'"><form action="'.Route::_('index.php?option='.$option . $viewP . $layout . '&id='.(int) $itemId . $tmpl).'" method="post" name="'.$name.'" id="'.$id.'" class="form-validate '.$class.'" role="form">'."\n"
 		.'<div id="phAdminEdit" class="row-fluid">'."\n";
 
 	}
@@ -152,7 +156,7 @@ class PhocaCommanderRenderAdminView
 	public function formInputs() {
 
 		$o = '<input type="hidden" name="task" value="" />'. "\n";
-		$o .= Joomla\CMS\HTML\HTMLHelper::_('form.token'). "\n";
+		$o .= HTMLHelper::_('form.token'). "\n";
 
 		return $o;
 	}
@@ -211,7 +215,7 @@ class PhocaCommanderRenderAdminView
 
 
 	public function getLinks($internalLinksOnly = 0) {
-		$app	= JFactory::getApplication();
+		$app	= Factory::getApplication();
 		$option = $app->input->get('option');
 		$oT		= strtoupper($option);
 
@@ -276,7 +280,7 @@ class PhocaCommanderRenderAdminView
 
 		$o = '';
 		$o .= '<p>&nbsp;</p>';
-		$o .= '<h4 style="margin-bottom:5px;">'.JText::_($oT.'_USEFUL_LINKS'). '</h4>';
+		$o .= '<h4 style="margin-bottom:5px;">'.Text::_($oT.'_USEFUL_LINKS'). '</h4>';
 		$o .= '<ul>';
 		foreach ($links as $k => $v) {
 			$o .= '<li><a style="text-decoration:underline" href="'.$v[1].'" target="_blank">'.$v[0].'</a></li>';
@@ -285,7 +289,7 @@ class PhocaCommanderRenderAdminView
 
 		$o .= '<div>';
 		$o .= '<p>&nbsp;</p>';
-		$o .= '<h4 style="margin-bottom:5px;">'.JText::_($oT.'_USEFUL_TIPS'). '</h4>';
+		$o .= '<h4 style="margin-bottom:5px;">'.Text::_($oT.'_USEFUL_TIPS'). '</h4>';
 
 		$m = mt_rand(0, 10);
 		if ((int)$m > 0) {
@@ -295,7 +299,7 @@ class PhocaCommanderRenderAdminView
 			for ($i = 0; $i<3; $i++) {
 				$numO = $num[$i];
 				$o .= '<div style="float:left;width:33%;margin:0 auto;">';
-				$o .= '<div><a style="text-decoration:underline;" href="https://www.phoca.cz/'.$components[$numO][1].'" target="_blank">'.Joomla\CMS\HTML\HTMLHelper::_('image',  'media/'.$option.'/images/administrator/icon-box-'.$components[$numO][2].'.png', ''). '</a></div>';
+				$o .= '<div><a style="text-decoration:underline;" href="https://www.phoca.cz/'.$components[$numO][1].'" target="_blank">'.JHtml::_('image',  'media/'.$option.'/images/administrator/icon-box-'.$components[$numO][2].'.png', ''). '</a></div>';
 				$o .= '<div style="margin-top:-10px;"><small><a style="text-decoration:underline;" href="https://www.phoca.cz/'.$components[$numO][1].'" target="_blank">'.$components[$numO][0].'</a></small></div>';
 				$o .= '</div>';
 			}
@@ -305,12 +309,12 @@ class PhocaCommanderRenderAdminView
 			$num = range(0,(count($banners) - 1 ));
 			shuffle($num);
 			$numO = $num[0];
-			$o .= '<div><a href="https://www.phoca.cz/'.$banners[$numO][1].'" target="_blank">'.Joomla\CMS\HTML\HTMLHelper::_('image',  'media/'.$option.'/images/administrator/b-'.$banners[$numO][2].'.png', ''). '</a></div>';
+			$o .= '<div><a href="https://www.phoca.cz/'.$banners[$numO][1].'" target="_blank">'.JHtml::_('image',  'media/'.$option.'/images/administrator/b-'.$banners[$numO][2].'.png', ''). '</a></div>';
 
 		}
 
 		$o .= '<p>&nbsp;</p>';
-		$o .= '<h4 style="margin-bottom:5px;">'.JText::_($oT.'_PLEASE_READ'). '</h4>';
+		$o .= '<h4 style="margin-bottom:5px;">'.Text::_($oT.'_PLEASE_READ'). '</h4>';
 		$o .= '<div><a style="text-decoration:underline" href="https://www.phoca.cz/phoca-needs-your-help/" target="_blank">'.JText::_($oT.'_PHOCA_NEEDS_YOUR_HELP'). '</a></div>';
 
 		$o .= '</div>';

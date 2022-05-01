@@ -8,9 +8,14 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined('_JEXEC') or die();
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 jimport('joomla.application.component.controllerform');
 
-class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
+class PhocaCommanderCpControllerPhocaCommanderEdit extends FormController
 {
 	protected	$option 		= 'com_phocacommander';
 
@@ -18,17 +23,17 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 	public function save($key = null, $urlVar = null)
 	{
 
-		if (!JSession::checkToken('request')) {
+		if (!Session::checkToken('request')) {
 			$response = array(
 				'status' => '0',
-				'error' => '<span class="ph-result-txt ph-error-txt">' . JText::_('JINVALID_TOKEN') . '</span>');
+				'error' => '<span class="ph-result-txt ph-error-txt">' . Text::_('JINVALID_TOKEN') . '</span>');
 			echo json_encode($response);
 			return;
 		}
 
 
-		$app   = JFactory::getApplication();
-		$lang  = JFactory::getLanguage();
+		$app   = Factory::getApplication();
+		$lang  = Factory::getLanguage();
 		$model = $this->getModel();
 		$data  = $this->input->post->get('jform', array(), 'array');
 
@@ -42,7 +47,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 		if (!$this->allowSave($data, $key)) {
 			$response = array(
 				'status' => '0',
-				'error' => '<span class="ph-result-txt ph-error-txt">' . JText::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED') . '</span>');
+				'error' => '<span class="ph-result-txt ph-error-txt">' . Text::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED') . '</span>');
 			echo json_encode($response);
 			return;
 		}
@@ -91,7 +96,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 			// Redirect back to the edit screen.
 			$this->setRedirect(
-				JRoute::_(
+				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
 					. $this->getRedirectToItemAppend($recordId, $urlVar). '&file='.$data['filename'], false
 				)
@@ -99,7 +104,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 			$response = array(
 				'status' => '0',
-				'error' => '<span class="ph-result-txt ph-error-txt">' . JText::_('COM_PHOCACOMMANDER_ERROR') . ': ' . $errorMsg. '</span>');
+				'error' => '<span class="ph-result-txt ph-error-txt">' . Text::_('COM_PHOCACOMMANDER_ERROR') . ': ' . $errorMsg. '</span>');
 			echo json_encode($response);
 			return;
 		}
@@ -124,7 +129,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 			$this->setMessage($this->getError(), 'error');
 
 			$this->setRedirect(
-				JRoute::_(
+				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
 					. $this->getRedirectToItemAppend($recordId, $urlVar). '&file='.$data['filename'], false
 				)
@@ -133,7 +138,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 			$response = array(
 				'status' => '0',
-				'error' => '<span class="ph-result-txt ph-error-txt">' . JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()). '</span>');
+				'error' => '<span class="ph-result-txt ph-error-txt">' . Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()). '</span>');
 			echo json_encode($response);
 			return;
 
@@ -141,7 +146,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 		}
 
 		/*$this->setMessage(
-			JText::_(
+			Text::_(
 				($lang->hasKey($this->text_prefix . ($recordId == 0 && $app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS')
 					? $this->text_prefix
 					: 'JLIB_APPLICATION') . ($recordId == 0 && $app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS'
@@ -168,7 +173,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 				// Redirect back to the edit screen.
 				$this->setRedirect(
-					JRoute::_(
+					Route::_(
 						'index.php?option=' . $this->option . '&view=' . $this->view_item
 						. $this->getRedirectToItemAppend($recordId, $urlVar). '&file='.$data['filename'], false
 					)
@@ -184,7 +189,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 				// Redirect to the list screen.
 				$this->setRedirect(
-					JRoute::_(
+					Route::_(
 						'index.php?option=' . $this->option , false
 					)
 				);
@@ -193,7 +198,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 		$response = array(
 				'status' => '1',
-				'message' => '<span class="ph-result-txt ph-success-txt">' .JText::_('COM_PHOCACOMMANDER_SUCCESS_SAVING_FILE'). '</span>');
+				'message' => '<span class="ph-result-txt ph-success-txt">' .Text::_('COM_PHOCACOMMANDER_SUCCESS_SAVING_FILE'). '</span>');
 			echo json_encode($response);
 			return;
 

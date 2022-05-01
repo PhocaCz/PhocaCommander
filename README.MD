@@ -2,7 +2,7 @@
 
 
 
-![Phoca Commander](https://github.com/PhocaCz/PhocaCommander/blob/master/phocacommander.png)
+![Phoca Commander](https://github.com/PhocaCz/PhocaCommander/blob/master/phocacommander.png?raw=true)
 
 # Phoca Commander
 
@@ -52,9 +52,13 @@ Phoca Commander is Joomla! CMS component - it is dual panel file manager (like T
 
 
 
-## Version
+## Version (Joomla! 3.x)
 
 3.0.5
+
+## Version (Joomla! 4.x)
+
+4.0.0
 
 
 

@@ -8,6 +8,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\HTML\HTMLHelper;
 
 JFactory::getDocument()->addScriptDeclaration(
 
@@ -18,7 +22,7 @@ JFactory::getDocument()->addScriptDeclaration(
 	} else if (task == "phocacommanderedit.cancel" || document.formvalidator.isValid(document.getElementById("adminForm"))) {
 		Joomla.submitform(task, document.getElementById("adminForm"));
 	} else {
-        Joomla.renderMessages({"error": ["'. JText::_('JGLOBAL_VALIDATION_FORM_FAILED', true).'"]});
+        Joomla.renderMessages({"error": ["'. Text::_('JGLOBAL_VALIDATION_FORM_FAILED', true).'"]});
 	}
 }
 
@@ -35,7 +39,7 @@ jQuery(document).ready(function() {
 '
 
 );
-$action = JRoute::_('index.php?option=com_phocacommander&layout=edit&id=1&file='.$this->t['fullfile']);
+$action = Route::_('index.php?option=com_phocacommander&layout=edit&id=1&file='.$this->t['fullfile']);
 
 echo '<div id="phocacommanderedit"><form action="'.$action.'" method="post" name="adminForm" id="adminForm" class="form-validate">';
 //."\n"
@@ -45,7 +49,7 @@ echo '<div id="phocacommanderedit"><form action="'.$action.'" method="post" name
 /*
 echo '<div class="span10 form-horizontal">';
 $tabs = array (
-'general' 		=> JText::_('COM_PHOCACOMMANDER_EDIT_OPTIONS'));
+'general' 		=> Text::_('COM_PHOCACOMMANDER_EDIT_OPTIONS'));
 $o = '<ul class="nav nav-tabs">';
 $i = 0;
 foreach($tabs as $k => $v) {
@@ -66,7 +70,7 @@ echo '<div class="tab-pane active" id="general">'."\n";
 if ($this->ftp) { echo $this->loadTemplate('ftp');}
 
 /*echo '<p class="well well-small lead" style="line-height:1;">'.JText::_('COM_PHOCACOMMANDER_EDITING_FILE').' "'.$this->t['file'].'"<br /><span style="font-size:small">('.base64_decode($this->t['fullfile']).')</span></p>';
-echo '<p class="label">'.JText::_('COM_PHOCACOMMANDER_TOGGLE_FULL_SCREEN').'</p>';
+echo '<p class="label">'.Text::_('COM_PHOCACOMMANDER_TOGGLE_FULL_SCREEN').'</p>';
 echo '<div class="clr"></div>';
 */
 
@@ -82,7 +86,7 @@ echo '</div>';
 
 // Second Column
 //echo '<div class="span2"></div>';//end span2
-echo '<div class="ph-line-info">'.JText::_('COM_PHOCACOMMANDER_EDITING_FILE').' "'.$this->t['file'].'" <span style="font-size:small">('.base64_decode($this->t['fullfile']).')</span></div>';
+echo '<div class="ph-line-info">'.Text::_('COM_PHOCACOMMANDER_EDITING_FILE').' "'.$this->t['file'].'" <span style="font-size:small">('.base64_decode($this->t['fullfile']).')</span></div>';
 echo '<input name="task" type="hidden" value="" />'. "\n";
 echo '<input name="orderinga" type="hidden" value="'.$this->t['orderinga'].'" />'. "\n";
 echo '<input name="orderingb" type="hidden" value="'.$this->t['orderingb'].'" />'. "\n";
@@ -92,7 +96,7 @@ echo '<input name="foldera" type="hidden" value="'.$this->t['foldera'].'" />'. "
 echo '<input name="folderb" type="hidden" value="'.$this->t['folderb'].'" />'. "\n";
 echo '<input name="panel" type="hidden" value="'.$this->t['panel'].'" />'. "\n";
 echo '<input name="activepanel" type="hidden" value="'.$this->t['activepanel'].'" />'. "\n";
-echo JHtml::_('form.token'). "\n";
+echo HTMLHelper::_('form.token'). "\n";
 echo  $this->form->getInput('filename');
 echo $this->form->getInput('id');
 echo '</form></div>';

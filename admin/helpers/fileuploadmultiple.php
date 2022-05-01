@@ -9,10 +9,15 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 class PhocaCommanderFileUploadMultiple
 {
-	public $method 		= 1;
+	public $method 		= 4;
 	public $url			= '';
 	public $reload		= '';
 	public $maxFileSize	= '';
@@ -27,24 +32,26 @@ class PhocaCommanderFileUploadMultiple
 	public static function renderMultipleUploadLibraries() {
 
 
-		$paramsC 		= JComponentHelper::getParams('com_phocacommander');
+		$paramsC 		= ComponentHelper::getParams('com_phocacommander');
 		$chunkMethod 	= $paramsC->get( 'multiple_upload_chunk', 0 );
-		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 1 );
+		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 4 );
 
-		JHtml::_('behavior.framework', true);// Load it here to be sure, it is loaded before jquery
+		//JHtml::_('behavior.framework', true);// Load it here to be sure, it is loaded before jquery
 		JHtml::_('jquery.framework', false);// Load it here because of own nonConflict method (nonconflict is set below)
-		$document			= JFactory::getDocument();
+		$document			= Factory::getDocument();
 		// No more used  - - - - -
-		//$document->addScript(JURI::root(true).'/components/com_phocadownload/assets/jquery/jquery-1.6.4.min.js');//USE SYSTEM
+		//$document->addScript(JUri::root(true).'/components/com_phocadownload/assets/jquery/jquery-1.6.4.min.js');//USE SYSTEM
 		//$nC = 'var pgJQ =  jQuery.noConflict();';//SET BELOW
 		//$document->addScriptDeclaration($nC);//SET BELOW
 		// - - - - - - - - - - - -
 
-		$document->addScript(JURI::root(true).'/media/com_phocacommander/js/administrator/plupload/plupload.full.min.js');
-		$document->addScript(JURI::root(true).'/media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/jquery.plupload.queue.js');
-		//$document->addScript(JURI::root(true).'/media/com_phocacommander/js/administrator/plupload/moxie.js');
-		//$document->addScript(JURI::root(true).'/media/com_phocacommander/js/administrator/plupload/jquery.ui.plupload/jquery.ui.plupload.js');
-		JHTML::stylesheet( 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css' );
+		$document->addScript(Uri::root(true).'/media/com_phocacommander/js/administrator/plupload/plupload.js');
+		$document->addScript(Uri::root(true).'/media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/jquery.plupload.queue.js');
+
+		$document->addScript(Uri::root(true).'/media/com_phocacommander/js/administrator/plupload/plupload.html5.js');
+		//$document->addScript(JUri::root(true).'/media/com_phocacommander/js/administrator/plupload/moxie.js');
+		//$document->addScript(JUri::root(true).'/media/com_phocacommander/js/administrator/plupload/jquery.ui.plupload/jquery.ui.plupload.js');
+		HTMLHelper::stylesheet( 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css' );
 	}
 
 	public static function getMultipleUploadSizeFormat($size) {
@@ -56,22 +63,23 @@ class PhocaCommanderFileUploadMultiple
 
 	public function renderMultipleUploadJS($frontEnd = 0, $chunkMethod = 0) {
 
-		$document	= JFactory::getDocument();
+		$document	= Factory::getDocument();
 		switch ($this->method) {
-			case 2:
+			/*case 2:
 				$name		= 'gears_uploader';
 				$runtime	= 'gears';
 			break;
 			case 3:
 				$name		= 'silverlight_uploader';
 				$runtime	= 'silverlight';
-			break;
+			break;*/
+			default:
 			case 4:
 				$name		= 'html5_uploader';
 				$runtime	= 'html5';
 			break;
 
-			case 5:
+			/*case 5:
 				$name		= 'browserplus_uploader';
 				$runtime	= 'browserplus';
 			break;
@@ -85,7 +93,7 @@ class PhocaCommanderFileUploadMultiple
 			default:
 				$name		= 'flash_uploader';
 				$runtime	= 'flash';
-			break;
+			break;*/
 		}
 
 		$chunkEnabled = 0;
@@ -117,16 +125,18 @@ class PhocaCommanderFileUploadMultiple
 		$js.= '  phSetFolderUpload(phFolderUpload)'. "\n";
 
 		$js.='   plupload.addI18n({'."\n";
-		$js.='	   \'Select files\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_SELECT_FILES')).'\','."\n";
-		$js.='	   \'Add files to the upload queue and click the start button.\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_ADD_FILES_TO_UPLOAD_QUEUE_AND_CLICK_START_BUTTON')).'\','."\n";
-		$js.='	   \'Filename\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_FILENAME')).'\','."\n";
-		$js.='	   \'Status\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_STATUS')).'\','."\n";
-		$js.='	   \'Size\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_SIZE')).'\','."\n";
-		$js.='	   \'Add files\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_ADD_FILES')).'\','."\n";
-		$js.='	   \'Start upload\':\''.addslashes(JText::_('COM_PHOCACOMMANDER_START_UPLOAD')).'\','."\n";
-		$js.='	   \'Stop current upload\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_STOP_CURRENT_UPLOAD')).'\','."\n";
-		$js.='	   \'Start uploading queue\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_START_UPLOADING_QUEUE')).'\','."\n";
-		$js.='	   \'Drag files here.\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_DRAG_FILES_HERE')).'\''."\n";
+		$js.='	   \'Select files\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_SELECT_FILES')).'\','."\n";
+		$js.='	   \'Add files to the upload queue and click the start button.\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_ADD_FILES_TO_UPLOAD_QUEUE_AND_CLICK_START_BUTTON')).'\','."\n";
+		$js.='	   \'Filename\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_FILENAME')).'\','."\n";
+		$js.='	   \'Status\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_STATUS')).'\','."\n";
+		$js.='	   \'Size\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_SIZE')).'\','."\n";
+		$js.='	   \'Add files\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_ADD_FILES')).'\','."\n";
+		$js.='	   \'Start upload\':\''.addslashes(Text::_('COM_PHOCACOMMANDER_START_UPLOAD')).'\','."\n";
+		$js.='	   \'Start Upload\':\''.addslashes(JText::_('COM_PHOCACOMMANDER_START_UPLOAD')).'\','."\n";
+		$js.='	   \'Stop Upload\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_STOP_CURRENT_UPLOAD')).'\','."\n";
+		$js.='	   \'Stop current upload\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_STOP_CURRENT_UPLOAD')).'\','."\n";
+		$js.='	   \'Start uploading queue\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_START_UPLOADING_QUEUE')).'\','."\n";
+		$js.='	   \'Drag files here.\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_DRAG_FILES_HERE')).'\''."\n";
 		$js.='   });';
 
 		$js.=' '."\n";
@@ -161,9 +171,9 @@ class PhocaCommanderFileUploadMultiple
 			}
 		}*/
 		if ($this->method == 1) {
-			$js.='		flash_swf_url : \''.JURI::root(false).'media/com_phocacommander/js/administrator/plupload/moxie.js\''."\n";
+			//$js.='		flash_swf_url : \''.Uri::root(false).'media/com_phocacommander/js/administrator/plupload/moxie.js\''."\n";
 		} else if ($this->method == 3) {
-			$js.='		silverlight_xap_url : \''.JURI::root(true).'/media/com_phocacommander/js/administrator/plupload/Moxie.xap\''."\n";
+			//$js.='		silverlight_xap_url : \''.Uri::root(true).'/media/com_phocacommander/js/administrator/plupload/Moxie.xap\''."\n";
 		}
 		$js.='	});'."\n";
 
@@ -201,13 +211,13 @@ function phAttachErrors(uploader) {
 			
 			file.status = plupload.FAILED;
 			if (phAllFiles == uploader.files.length ) { 
-				alert(\''.JText::_('COM_PHOCACOMMANDER_LIST_OF_UPLOAD_ERRORS').': \' + "\n" + phAllErrorMessages);
+				alert(\''.Text::_('COM_PHOCACOMMANDER_LIST_OF_UPLOAD_ERRORS').': \' + "\n" + phAllErrorMessages);
 			} else { return false;}
 		}
 		
 		if (phAllFiles == uploader.files.length ) {
 			
-			jQuery(\'.plupload_filelist_footer\').append(\'<span class="ph-upload-finished alert alert-success">'.JText::_('COM_PHOCACOMMANDER_UPLOADING_FINISHED').'</span>\'); 
+			jQuery(\'.plupload_filelist_footer\').append(\'<span class="ph-upload-finished alert alert-success">'.Text::_('COM_PHOCACOMMANDER_UPLOADING_FINISHED').'</span>\'); 
 			setTimeout(function(){
 				phAllFiles = 0;
 				phUploadedFiles = 0;
@@ -298,34 +308,34 @@ function phAttachCallbacks(uploader) {
 
 
 		switch ($this->method) {
-			case 2:
+			/*case 2:
 				$name		= 'gears_uploader';
-				$msg		= JText::_('COM_PHOCACOMMANDER_NOT_INSTALLED_GEARS');
+				$msg		= Text::_('COM_PHOCACOMMANDER_NOT_INSTALLED_GEARS');
 			break;
 			case 3:
 				$name		= 'silverlight_uploader';
-				$msg		= JText::_('COM_PHOCACOMMANDER_NOT_INSTALLED_SILVERLIGHT');
-			break;
+				$msg		= Text::_('COM_PHOCACOMMANDER_NOT_INSTALLED_SILVERLIGHT');
+			break;*/
 			case 4:
 				$name		= 'html5_uploader';
-				$msg		= JText::_('COM_PHOCACOMMANDER_NOT_SUPPORTED_HTML5');
+				$msg		= Text::_('COM_PHOCACOMMANDER_NOT_SUPPORTED_HTML5');
 			break;
-
+/*
 			case 5:
 				$name		= 'browserplus_uploader';
-				$msg		= JText::_('COM_PHOCACOMMANDER_NOT_INSTALLED_BROWSERPLUS');
+				$msg		= Text::_('COM_PHOCACOMMANDER_NOT_INSTALLED_BROWSERPLUS');
 			break;
 
 			case 6:
 				$name		= 'html4_uploader';
-				$msg		= JText::_('COM_PHOCACOMMANDER_NOT_SUPPORTED_HTML4');
+				$msg		= Text::_('COM_PHOCACOMMANDER_NOT_SUPPORTED_HTML4');
 			break;
 
 			case 1:
 			default:
 				$name		= 'flash_uploader';
-				$msg		= JText::_('COM_PHOCACOMMANDER_NOT_INSTALLED_FLASH');
-			break;
+				$msg		= Text::_('COM_PHOCACOMMANDER_NOT_INSTALLED_FLASH');
+			break;*/
 		}
 
 		$style				= '';

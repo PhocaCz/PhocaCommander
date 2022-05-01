@@ -7,9 +7,18 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die();
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Filesystem\File;
 jimport( 'joomla.application.component.view');
 
-class PhocaCommanderCpViewPhocaCommanderFilesA extends JViewLegacy
+class PhocaCommanderCpViewPhocaCommanderFilesA extends HtmlView
 {
 	protected $t;
 	protected $p;
@@ -17,15 +26,15 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends JViewLegacy
 
 	function display($tpl = null){
 
-		if (!JSession::checkToken('request')) {
+		if (!Session::checkToken('request')) {
 			$response = array(
 				'status' => '0',
-				'error' => '<button type="button" class="close" data-dismiss="alert">×</button><div class="alert alert-danger">' . JText::_('JINVALID_TOKEN') . '</div>');
+				'error' => '<button type="button" class="close" data-dismiss="alert">×</button><div class="alert alert-danger">' . Text::_('JINVALID_TOKEN') . '</div>');
 			echo json_encode($response);
 			return;
 		}
 
-		$app					= JFactory::getApplication();
+		$app					= Factory::getApplication();
 		$this->t['panel']		= $app->input->get( 'panel', '', 'string'  );
 		$this->t['activepanel']	= $app->input->get( 'activepanel', '', 'string'  );
 		$this->t['orderinga']	= $app->input->get( 'orderinga', '', 'string'  );
@@ -35,7 +44,7 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends JViewLegacy
 		$this->t['directionb'] 	= $app->input->get( 'directionb', '', 'string'  );
 		$this->t['folderb']		= $app->input->get( 'folderb', '', 'string'  );
 
-		$app   			= JFactory::getApplication();
+		$app   			= Factory::getApplication();
 		$context 		= 'com_phocacommander.phocacommander.';
 		$app->getUserStateFromRequest($context .'orderinga', 'orderinga', $this->t['orderinga'], 'string');
 		$app->getUserStateFromRequest($context .'orderingb', 'orderingb', $this->t['orderingb'], 'string');
@@ -60,13 +69,13 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends JViewLegacy
 		$model 						= $this->getModel();
 		$path 						= JPATH_ROOT;
 		$searchPath					= JPATH_ROOT;
-		$searchPathRel				= JURI::root();
+		$searchPathRel				= Uri::root();
 		$parent						= '';
 		$this->t['folderdecoded'] 	= '';
 		if ($this->t['folder'] != '') {
 			$this->t['folderdecoded'] 	= base64_decode($this->t['folder']);
 
-			if (JFolder::exists(JPath::clean($path . '/' .$this->t['folderdecoded']))) {
+			if (Folder::exists(Path::clean($path . '/' .$this->t['folderdecoded']))) {
 				$searchPath					= $path . '/' . $this->t['folderdecoded'];
 				$searchPathRel				= $searchPathRel . '/' . $this->t['folderdecoded'];
 				$parent 					= str_replace("\\", "/", dirname($this->t['folderdecoded']));
@@ -91,7 +100,7 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends JViewLegacy
 
 		}
 
-		$paramsC 					= JComponentHelper::getParams('com_phocacommander');
+		$paramsC 					= ComponentHelper::getParams('com_phocacommander');
 
 
 		$this->p['display_inline_view'] 		= $paramsC->get( 'display_inline_view', 0);
@@ -99,9 +108,9 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends JViewLegacy
 		$this->p['display_inline_download'] 	= $paramsC->get( 'display_inline_download', 0);
 
 		$this->p['box_height'] 		= $paramsC->get( 'box_height', '60vh');
-		$this->t['urlimage'] 		= JURI::root().'media/com_phocacommander/images/administrator/';
-		$this->t['urlimagemime'] 	= JURI::root().'media/com_phocacommander/images/administrator/mime/16';
-		$this->t['url'] 			= 'index.php?option=com_phocacommander&view=phocacommanderfilesa&format=json&tmpl=component&'. JSession::getFormToken().'=1';
+		$this->t['urlimage'] 		= Uri::root().'media/com_phocacommander/images/administrator/';
+		$this->t['urlimagemime'] 	= Uri::root().'media/com_phocacommander/images/administrator/mime/16';
+		$this->t['url'] 			= 'index.php?option=com_phocacommander&view=phocacommanderfilesa&format=json&tmpl=component&'. Session::getFormToken().'=1';
 
 		// Active panel
 		$activePanelClass = '';
@@ -142,11 +151,11 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends JViewLegacy
 
 
 		$lFF = PhocaCommanderHelper::createLoadFilesFunction($this->t, $this->t['folder'], 'name', $reverse);
-		$name = '<a href="javascript: void(0)" onclick="'.$lFF.'">'.JText::_('COM_PHOCACOMMANDER_NAME').'</a> '.$arrowName;
+		$name = '<a href="javascript: void(0)" onclick="'.$lFF.'">'.Text::_('COM_PHOCACOMMANDER_NAME').'</a> '.$arrowName;
 		$lFF = PhocaCommanderHelper::createLoadFilesFunction($this->t, $this->t['folder'],  'size', $reverse);
-		$size = '<a href="javascript: void(0)" onclick="'.$lFF.'">'.JText::_('COM_PHOCACOMMANDER_SIZE').'</a> '.$arrowSize;
+		$size = '<a href="javascript: void(0)" onclick="'.$lFF.'">'.Text::_('COM_PHOCACOMMANDER_SIZE').'</a> '.$arrowSize;
 		$lFF = PhocaCommanderHelper::createLoadFilesFunction($this->t, $this->t['folder'], 'date', $reverse);
-		$date = '<a href="javascript: void(0)" onclick="'.$lFF.'">'.JText::_('COM_PHOCACOMMANDER_DATE').'</a> '.$arrowDate;
+		$date = '<a href="javascript: void(0)" onclick="'.$lFF.'">'.Text::_('COM_PHOCACOMMANDER_DATE').'</a> '.$arrowDate;
 
 
 // Files Folders
@@ -194,7 +203,7 @@ foreach ($items as $k => $v) {
 		//$files[$i]['chmod'] = fileperms($searchPath . '/' . $v);
 		$files[$i]['chmod'] = substr(sprintf('%o', fileperms($searchPath . '/' . $v)), -4);
 
-		$ext 		= JFile::getExt($v);
+		$ext 		= File::getExt($v);
 		$attribImg	= '';
 		if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' | $ext == 'gif') {
 			$attribImg = ' class="phLightBox" data-src="'.$searchPathRel.''.utf8_encode($v).'" ';
@@ -209,18 +218,18 @@ foreach ($items as $k => $v) {
 		// View
 		if ($this->p['display_inline_view'] == 1) {
 			if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' | $ext == 'gif') {
-				$iA .= ' <a href="javascript: void(0)" onclick="phDoActionInline(\'view\', \''.$files[$i]['name'].'\', \''.$this->t['folder'].'\');return false;"><i class="glyphicon glyphicon-search icon-search" title="'.JText::_('COM_PHOCACOMMANDER_VIEW').'"></i></a>';
+				$iA .= ' <a href="javascript: void(0)" onclick="phDoActionInline(\'view\', \''.$files[$i]['name'].'\', \''.$this->t['folder'].'\');return false;"><i class="glyphicon glyphicon-search icon-search" title="'.Text::_('COM_PHOCACOMMANDER_VIEW').'"></i></a>';
 			}
 		}
 
 		// Edit
 		if ($this->p['display_inline_edit'] == 1) {
-			$iA .= ' <a href="javascript: void(0)" onclick="phDoActionInline(\'edit\', \''.$files[$i]['name'].'\', \''.$this->t['folder'].'\');return false;"><i class="glyphicon glyphicon-edit icon-edit" title="'.JText::_('COM_PHOCACOMMANDER_EDIT').'"></i></a>';
+			$iA .= ' <a href="javascript: void(0)" onclick="phDoActionInline(\'edit\', \''.$files[$i]['name'].'\', \''.$this->t['folder'].'\');return false;"><i class="glyphicon glyphicon-edit icon-edit" title="'.Text::_('COM_PHOCACOMMANDER_EDIT').'"></i></a>';
 		}
 
 		// Download
 		if ($this->p['display_inline_download'] == 1) {
-			$iA .= ' <a href="javascript: void(0)" onclick="phDoActionInline(\'download\', \''.$files[$i]['name'].'\', \''.$this->t['folder'].'\');return false;"><i class="glyphicon glyphicon-download icon-download" title="'.JText::_('COM_PHOCACOMMANDER_DOWNLOAD').'"></i></a>';
+			$iA .= ' <a href="javascript: void(0)" onclick="phDoActionInline(\'download\', \''.$files[$i]['name'].'\', \''.$this->t['folder'].'\');return false;"><i class="glyphicon glyphicon-download icon-download" title="'.Text::_('COM_PHOCACOMMANDER_DOWNLOAD').'"></i></a>';
 		}
 
 
@@ -242,8 +251,8 @@ $o .= '<tr><th class="ph-check"><input type="checkbox" name="selectAll" id="sele
 $o .= '<th class="ph-name">'.$name.'</th>';
 $o .= '<th class="ph-size">'.$size.'</th>';
 $o .= '<th class="ph-date">'.$date.'</th>';
-$o .= '<th class="ph-attributes">'.JText::_('COM_PHOCACOMMANDER_ATTR').'</th>';
-$o .= '<th class="ph-owner">'.JText::_('COM_PHOCACOMMANDER_OWNER').'</th></tr></table></div>';
+$o .= '<th class="ph-attributes">'.Text::_('COM_PHOCACOMMANDER_ATTR').'</th>';
+$o .= '<th class="ph-owner">'.Text::_('COM_PHOCACOMMANDER_OWNER').'</th></tr></table></div>';
 $o .= '<div class="ph-box-o" style="height:'.htmlspecialchars(strip_tags($this->p['box_height'])).';"><table class="ph-table" id="ph-table-'.$this->t['panel'].'">';
 
 // UP
@@ -293,7 +302,7 @@ foreach ($files as $k => $v) {
 $o .='</table></div>';
 
 $o .= '<div class="ph-box-b"><table class="ph-table">';
-$o .= '<tr><td class="ph-path" colspan="5">'.JPath::clean($searchPath).'</td></table></div>';
+$o .= '<tr><td class="ph-path" colspan="5">'.Path::clean($searchPath).'</td></table></div>';
 
 $o .= '<form style="display:none;">';
 $o .= '<input type="hidden" value="'.$this->t['folder'].'" name="ph-panel'.$this->t['panel'].'" id="phPanel'.$this->t['panel'].'" />';

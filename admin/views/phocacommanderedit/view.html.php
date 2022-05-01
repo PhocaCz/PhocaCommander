@@ -9,10 +9,19 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Client\ClientHelper;
+use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 jimport('joomla.application.component.view');
 use Joomla\CMS\HTML\HTMLHelper;
 
-class PhocaCommanderCpViewPhocaCommanderEdit extends JViewLegacy
+class PhocaCommanderCpViewPhocaCommanderEdit extends HtmlView
 {
 	protected $item;
 	protected $form;
@@ -23,8 +32,8 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends JViewLegacy
 
 	public function display($tpl = null)
 	{
-		$document 			= JFactory::getDocument();
-		$paramsC 			= JComponentHelper::getParams('com_phocacommander');
+		$document 			= Factory::getDocument();
+		$paramsC 			= ComponentHelper::getParams('com_phocacommander');
 
 		$this->r = new PhocaCommanderRenderAdminView();
 
@@ -32,15 +41,15 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends JViewLegacy
 		$oVars   = array();
         $oLang   = array();
         $oParams = array();
-        $oLang   = array('COM_PHOCACOMMANDER_ERROR_SAVING_FILE' => JText::_('COM_PHOCACOMMANDER_ERROR_SAVING_FILE'));
+        $oLang   = array('COM_PHOCACOMMANDER_ERROR_SAVING_FILE' => Text::_('COM_PHOCACOMMANDER_ERROR_SAVING_FILE'));
 
 
         //$oVars['token']         = JSession::getFormToken();
-        $oVars['urleditsave'] = JURI::base(true) . '/index.php?option=com_phocacommander&task=phocacommanderedit.save&format=json&' . JSession::getFormToken() . '=1';
+        $oVars['urleditsave'] = Uri::base(true) . '/index.php?option=com_phocacommander&task=phocacommanderedit.save&format=json&' . Session::getFormToken() . '=1';
 		$document->addScriptOptions('phLangCM', $oLang);
 		$document->addScriptOptions('phVarsCM', $oVars);
 
-		$app   					= JFactory::getApplication();
+		$app   					= Factory::getApplication();
 		$this->t['fullfile']	= $app->input->get( 'file', '', 'string'  );
 
 		$context 				= 'com_phocacommander.phocacommander.';
@@ -54,7 +63,7 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends JViewLegacy
 		$this->t['activepanel'] = $app->getUserStateFromRequest($context .'activepanel', 'activepanel', '', 'string');
 
 		$this->form		= $this->get('Form');
-		$this->ftp		= JClientHelper::setCredentialsFromRequest('ftp');
+		$this->ftp		= ClientHelper::setCredentialsFromRequest('ftp');
 		$model 			= $this->getModel();
 
 		$fileWithPath	= base64_decode($this->t['fullfile']);
@@ -76,7 +85,7 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends JViewLegacy
 		$this->source	= $model->getSource($this->form->getValue('filename'));
 
 		if (!isset($this->source->source)) {
-			throw new Exception(JText::_('COM_PHOCACOMMANDER_FILE_DOES_NOT_EXIST'), 500);
+			throw new Exception(Text::_('COM_PHOCACOMMANDER_FILE_DOES_NOT_EXIST'), 500);
 			return false;
 		}
 
@@ -94,23 +103,23 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends JViewLegacy
 	protected function addToolbar() {
 
 		require_once JPATH_COMPONENT.'/helpers/phocacommanderedit.php';
-		JFactory::getApplication()->input->set('hidemainmenu', true);
-		$bar 		= JToolbar::getInstance('toolbar');
-		$user		= JFactory::getUser();
+		Factory::getApplication()->input->set('hidemainmenu', true);
+		$bar 		= Toolbar::getInstance('toolbar');
+		$user		= Factory::getUser();
 		$canDo		= PhocaCommanderEditHelper::getActions();
 
-		$text = JText::_('COM_PHOCACOMMANDER_EDIT');
-		JToolbarHelper::title(   JText::_( 'COM_PHOCACOMMANDER_FILE' ).': <small><small>[ ' . $text.' ]</small></small>' , 'file');
+		$text = Text::_('COM_PHOCACOMMANDER_EDIT');
+		ToolbarHelper::title(   Text::_( 'COM_PHOCACOMMANDER_FILE' ).': <small><small>[ ' . $text.' ]</small></small>' , 'file');
 
 		// If not checked out, can save the item.
 		if ($canDo->get('core.edit')){
-			JToolbarHelper::apply('phocacommanderedit.apply', 'JTOOLBAR_APPLY');
-			JToolbarHelper::save('phocacommanderedit.save', 'JTOOLBAR_SAVE');
+			ToolbarHelper::apply('phocacommanderedit.apply', 'JTOOLBAR_APPLY');
+			ToolbarHelper::save('phocacommanderedit.save', 'JTOOLBAR_SAVE');
 		}
 
-		JToolbarHelper::cancel('phocacommanderedit.cancel', 'JTOOLBAR_CLOSE');
-		JToolbarHelper::divider();
-		JToolbarHelper::help( 'screen.phocacommander', true );
+		ToolbarHelper::cancel('phocacommanderedit.cancel', 'JTOOLBAR_CLOSE');
+		ToolbarHelper::divider();
+		ToolbarHelper::help( 'screen.phocacommander', true );
 	}
 
 }

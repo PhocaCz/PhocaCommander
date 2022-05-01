@@ -7,6 +7,15 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Client\ClientHelper;
+use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Client\FtpClient;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Factory;
 class PhocaCommanderHelper
 {
 	/*
@@ -35,12 +44,12 @@ class PhocaCommanderHelper
 
 	public static function getExtensionVersion($c = 'phocacommander') {
 		$folder = JPATH_ADMINISTRATOR . '/components/com_'.$c;
-		if (JFolder::exists($folder)) {
-			$xmlFilesInDir = JFolder::files($folder, '.xml$');
+		if (Folder::exists($folder)) {
+			$xmlFilesInDir = Folder::files($folder, '.xml$');
 		} else {
 			$folder = JPATH_SITE . '/components/com_'.$c;
-			if (JFolder::exists($folder)) {
-				$xmlFilesInDir = JFolder::files($folder, '.xml$');
+			if (Folder::exists($folder)) {
+				$xmlFilesInDir = Folder::files($folder, '.xml$');
 			} else {
 				$xmlFilesInDir = null;
 			}
@@ -51,7 +60,7 @@ class PhocaCommanderHelper
 		{
 			foreach ($xmlFilesInDir as $xmlfile)
 			{
-				if ($data = \JInstaller::parseXMLInstallFile($folder.'/'.$xmlfile)) {
+				if ($data = Installer::parseXMLInstallFile($folder.'/'.$xmlfile)) {
 					foreach($data as $key => $value) {
 						$xml_items[$key] = $value;
 					}
@@ -79,17 +88,17 @@ class PhocaCommanderHelper
 			}
 		}
 
-		$ftpOptions = JClientHelper::getCredentials('ftp');
+		$ftpOptions = ClientHelper::getCredentials('ftp');
 
 		// Check to make sure the path valid and clean
-		$path = JPath::clean($path);
+		$path = Path::clean($path);
 
 		if ($ftpOptions['enabled'] == 1)
 		{
 			// Connect the FTP client
 			//jimport('joomla.client.ftp');
 			//jimport('joomla.client.helper');
-			$ftp = JClientFtp::getInstance(
+			$ftp = FtpClient::getInstance(
 				$ftpOptions['host'], $ftpOptions['port'], array(),
 				$ftpOptions['user'], $ftpOptions['pass']
 			);
@@ -100,7 +109,7 @@ class PhocaCommanderHelper
 		if ($ftpOptions['enabled'] == 1)
 		{
 			// Translate path and delete
-			$path = JPath::clean(str_replace(JPATH_ROOT, $ftpOptions['root'], $path), '/');
+			$path = Path::clean(str_replace(JPATH_ROOT, $ftpOptions['root'], $path), '/');
 
 			// FTP connector throws an error
 			$ret = $ftp->chmod($path, $mode);
@@ -125,7 +134,7 @@ class PhocaCommanderHelper
 	}
 
 	public static function getMimeTypeIcon($filename, $size = 16, $outcome = 0) {
-		$ext = JFile::getExt($filename);
+		$ext = File::getExt($filename);
 		switch(strtolower($ext)) {
 
 
@@ -241,9 +250,9 @@ class PhocaCommanderHelper
 		}
 
 		if ($outcome == 1) {
-			return 'style="background: url(\''.JURI::root(). 'media/com_phocacommander/images/administrator/mime/'.(int)$size.'/icon-'. htmlspecialchars($icon).'.png\') 0 center no-repeat;"';
+			return 'style="background: url(\''.Uri::root(). 'media/com_phocacommander/images/administrator/mime/'.(int)$size.'/icon-'. htmlspecialchars($icon).'.png\') 0 center no-repeat;"';
 		} else {
-			return '<img src="'.JURI::root(). 'media/com_phocacommander/images/administrator/mime/'.(int)$size.'/icon-'. htmlspecialchars($icon). '.png'.'" alt="" />';
+			return '<img src="'.Uri::root(). 'media/com_phocacommander/images/administrator/mime/'.(int)$size.'/icon-'. htmlspecialchars($icon). '.png'.'" alt="" />';
 		}
 
 		return $mime;
@@ -1155,8 +1164,8 @@ class PhocaCommanderHelper
 
 	public static function getInfo() {
 
-		JPluginHelper::importPlugin('phocatools');
-		$results = \JFactory::getApplication()->triggerEvent('PhocatoolsOnDisplayInfo', array('NjI5NTcyMjc3Mjc='));
+		PluginHelper::importPlugin('phocatools');
+		$results = Factory::getApplication()->triggerEvent('PhocatoolsOnDisplayInfo', array('NjI5NTcyMjc3Mjc='));
 		if (isset($results[0]) && $results[0] === true) {
 			return '';
 		}
@@ -1166,7 +1175,7 @@ class PhocaCommanderHelper
 	public static function setVars( $task = '') {
 
 		$a			= array();
-		$app		= JFactory::getApplication();
+		$app		= Factory::getApplication();
 		$a['o'] 	= htmlspecialchars(strip_tags($app->input->get('option')));
 		$a['c'] 	= str_replace('com_', '', $a['o']);
 		$a['n'] 	= 'Phoca' . ucfirst(str_replace('com_phoca', '', $a['o']));

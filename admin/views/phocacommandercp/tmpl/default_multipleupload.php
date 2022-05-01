@@ -7,11 +7,13 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die();
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Language\Text;
 echo '<div id="com_phocacommander-multipleupload" class="ph-in">';
 echo $this->t['mu_response_msg'] ;
-echo '<form action="'. JURI::base().'index.php?option=com_phocacommander" >';
+echo '<form action="'. Uri::base().'index.php?option=com_phocacommander" >';
 if ($this->t['ftp']) {echo PhocaDownloadFileUpload::renderFTPaccess();}
-echo '<small>'.JText::_('COM_PHOCACOMMANDER_SELECT_FILES').'. '.JText::_('COM_PHOCACOMMANDER_ADD_FILES_TO_UPLOAD_QUEUE_AND_CLICK_START_BUTTON').'</small>';
+echo '<small>'.Text::_('COM_PHOCACOMMANDER_SELECT_FILES').'. '.Text::_('COM_PHOCACOMMANDER_ADD_FILES_TO_UPLOAD_QUEUE_AND_CLICK_START_BUTTON').'</small>';
 echo $this->t['mu_output'];
 echo '</form>';
 echo '</div>';

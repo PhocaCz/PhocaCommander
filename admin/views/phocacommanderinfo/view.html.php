@@ -7,9 +7,13 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die();
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\Toolbar;
 jimport( 'joomla.application.component.view' );
 
-class PhocaCommanderCpViewPhocaCommanderInfo extends JViewLegacy
+class PhocaCommanderCpViewPhocaCommanderInfo extends HtmlView
 {
 	protected $t;
 	protected $r;
@@ -31,18 +35,18 @@ class PhocaCommanderCpViewPhocaCommanderInfo extends JViewLegacy
 		$class	= 'PhocaCommanderCpHelper';
 		$canDo	= $class::getActions('com_phocacommander');
 
-		JToolbarHelper::title( JText::_('COM_PHOCACOMMANDER_CM_INFO' ), 'info.png' );
+		ToolbarHelper::title( Text::_('COM_PHOCACOMMANDER_CM_INFO' ), 'info.png' );
 
 		// This button is unnecessary but it is displayed because Joomla! design bug
-		$bar = JToolbar::getInstance( 'toolbar' );
-		$dhtml = '<a href="index.php?option=com_phocacommander" class="btn btn-small"><i class="icon-home-2" title="'.JText::_('COM_PHOCACOMMANDER').'"></i> '.JText::_('COM_PHOCACOMMANDER').'</a>';
+		$bar = Toolbar::getInstance( 'toolbar' );
+		$dhtml = '<a href="index.php?option=com_phocacommander" class="btn btn-small"><i class="icon-home-2" title="'.Text::_('COM_PHOCACOMMANDER').'"></i> '.Text::_('COM_PHOCACOMMANDER').'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
 		if ($canDo->get('core.admin')) {
-			JToolbarHelper::preferences('com_phocacommander');
+			ToolbarHelper::preferences('com_phocacommander');
 		}
-		JToolbarHelper::divider();
-		JToolbarHelper::help( 'screen.phocacommander', true );
+		ToolbarHelper::divider();
+		ToolbarHelper::help( 'screen.phocacommander', true );
 		//JToolbarHelper::cancel('phocacommanderinfo.cancel', 'JTOOLBAR_CLOSE');
 	}
 }

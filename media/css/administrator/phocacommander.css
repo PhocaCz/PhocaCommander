@@ -70,6 +70,9 @@ td.ph-owner, th.ph-owner {width: 10%; text-align: center;}
 .ph-a,
 .ph-b {
 	border: 1px solid #d0d0d0;
+	padding-left: 0;
+	padding-right: 0;
+	background: #f9f9f9;
 }
 
 label.ph-checkbox {
@@ -235,7 +238,7 @@ label.ph-input-prompt input.ph-input-checkbox-prompt {
 	margin-bottom: 0;
 }
 #phocacommanderedit .CodeMirror {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 260px);
     min-height: 400px;
     max-height: 800px;
 }
@@ -320,7 +323,7 @@ label.ph-input-prompt input.ph-input-checkbox-prompt {
 	position:absolute;
 	font-size: 2em;
 	left: 0.4em;
-	/*margin-top: -0.3em;*/
+	margin-top: -0.4em;
 
 }
 
@@ -336,7 +339,7 @@ label.ph-input-prompt input.ph-input-checkbox-prompt {
 	position:absolute;
 	font-size: 2em;
 	left: 0.4em;
-	/*margin-top: -0.3em;*/
+	margin-top: -0.4em;
 }
 #ph-ajaxtop-message .ph-error-txt {
 }
@@ -351,4 +354,27 @@ label.ph-input-prompt input.ph-input-checkbox-prompt {
 	font-size: 2em;
 	left: 0.4em;
 	/*margin-top: -0.3em;*/
+}
+
+
+
+.ph-commander-box-in {
+	font-size: 0.85em;
+}
+.ph-commander-box-in label {
+	font-size: 0.95em;
+}
+
+
+#toolbar .btn {
+	font-size: 0.85em;
+	padding: 0.6em 0.4em;
+	line-height: 1;
+	margin: 0.2em 0.2em;
+}
+
+#toolbar a.btn.btn-small i,
+.subhead joomla-toolbar-button .btn > span,
+#toolbar .btn i {
+	margin-inline-end: 0;
 }

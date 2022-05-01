@@ -7,9 +7,12 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
 
-if (!JFactory::getUser()->authorise('core.manage', 'com_phocacommander')) {
-	throw new Exception(JText::_('COM_PHOCACOMMANDER_ERROR_ALERTNOAUTHOR'), 404);
+if (!Factory::getUser()->authorise('core.manage', 'com_phocacommander')) {
+	throw new Exception(Text::_('COM_PHOCACOMMANDER_ERROR_ALERTNOAUTHOR'), 404);
 	return false;
 }
 
@@ -25,7 +28,7 @@ require_once( JPATH_COMPONENT.'/helpers/renderadmin.php' );
 
 
 jimport('joomla.application.component.controller');
-$controller	= JControllerLegacy::getInstance('PhocaCommanderCp');
-$controller->execute(JFactory::getApplication()->input->get('task'));
+$controller	= BaseController::getInstance('PhocaCommanderCp');
+$controller->execute(Factory::getApplication()->input->get('task'));
 $controller->redirect();
 ?>

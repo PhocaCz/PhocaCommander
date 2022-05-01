@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" method="upgrade" version="3.9">
+<extension type="component" method="upgrade" version="4.0">
 	<name>com_phocacommander</name>
 	<author>Jan Pavelka (www.phoca.cz)</author>
-	<creationDate>19/10/2020</creationDate>
+	<creationDate>01/05/2022</creationDate>
 	<authorEmail></authorEmail>
 	<authorUrl>https://www.phoca.cz</authorUrl>
 	<copyright>Jan Pavelka</copyright>
 	<license>GNU/GPL</license>
-	<version>3.0.5</version>
+	<version>4.0.0</version>
 	<description>COM_PHOCACOMMANDER_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<projectName>PhocaCommander</projectName>
@@ -35,10 +35,10 @@
 	</files>
 
 	<media destination="com_phocacommander" folder="media">
-		<folder>css</folder>
 		<folder>duotone</folder>
-		<folder>images</folder>
+		<folder>css</folder>
 		<folder>js</folder>
+		<folder>images</folder>
 		<filename>index.html</filename>
 	</media>
 
@@ -52,23 +52,24 @@
 		<menu img="media/com_phocacommander/images/administrator/" alt="COM_PHOCACOMMANDER" link="option=com_phocacommander">COM_PHOCACOMMANDER</menu>
 
 			<submenu>
+				<menu img="media/com_phocacommander/images/administrator/" alt="COM_PHOCACOMMANDER_CONTROLPANEL" view="" link="option=com_phocacommander">COM_PHOCACOMMANDER_CONTROLPANEL</menu>
 				<menu img="media/com_phocacommander/images/administrator/" alt="COM_PHOCACOMMANDER_INFO" view="phocacommanderinfo" link="option=com_phocacommander&amp;view=phocacommanderinfo">COM_PHOCACOMMANDER_INFO</menu>
 			</submenu>
 
 		<files folder="admin">
 			<folder>controllers</folder>
-			<folder>help</folder>
-			<folder>helpers</folder>
 			<folder>install</folder>
-			<folder>models</folder>
-			<folder>tables</folder>
 			<folder>update</folder>
+			<folder>tables</folder>
+			<folder>helpers</folder>
 			<folder>views</folder>
-			<filename>access.xml</filename>
-			<filename>config.xml</filename>
-			<filename>controller.php</filename>
+			<folder>help</folder>
+			<folder>models</folder>
 			<filename>index.html</filename>
+			<filename>config.xml</filename>
 			<filename>phocacommander.php</filename>
+			<filename>access.xml</filename>
+			<filename>controller.php</filename>
 		</files>
 
 		<languages folder="admin/language">

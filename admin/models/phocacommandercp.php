@@ -7,35 +7,37 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die();
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
 jimport( 'joomla.application.component.modellist' );
 jimport( 'joomla.filesystem.folder' );
 jimport( 'joomla.filesystem.file' );
 
-class PhocaCommanderCpModelPhocaCommanderCp extends JModelList
+class PhocaCommanderCpModelPhocaCommanderCp extends ListModel
 {
 	protected	$option 		= 'com_phocacommander';
-	
+
 	public function checkState() {
-		$app = JFactory::getApplication('administrator');
-		
+		$app = Factory::getApplication('administrator');
+
 	/*	$ab = $app->getUserState('cv');
 		$panelA = $this->state->get('cv');
 
 		if ($panelA == '') {
 			$panelA = $app->getUserStateFromRequest('cv', 'panelg','acd', 'string');
 		}
-		
-	
+
+
 $this->setState('cv', $panelA);
 //$panelc = $app->getUserStateFromRequest('cv', 'panelg');
 
-		print_r($this->state);*/
+		*/
 		$app->getUserStateFromRequest( 'com_phocacommander.cv', 'panelg', 'baf', 'string' );
-		
-	}
-	
 
-	
-	
+	}
+
+
+
+
 }
 ?>

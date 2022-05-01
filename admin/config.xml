@@ -7,25 +7,25 @@
 	<option value="0">COM_PHOCACOMMANDER_DEFAULT</option>
 	<option value="phoca-dark">COM_PHOCACOMMANDER_PHOCA_DARK</option>
 </field>
-<field 	name="f_keys" 
-				type="radio" 
+<field 	name="f_keys"
+				type="radio"
 				class="btn-group"
-				default="1" 
+				default="1"
 				label="COM_PHOCACOMMANDER_FIELD_F_KEYS_LABEL"
 				description="COM_PHOCACOMMANDER_FIELD_F_KEYS_DESC">
 			<option value="1">COM_PHOCACOMMANDER_WITH_TITLES</option>
 			<option value="0">COM_PHOCACOMMANDER_WITHOUT_TITLES</option>
 		</field>
 
-<field 	name="box_height" 
-				type="text" 
-				default="60vh" 
+<field 	name="box_height"
+				type="text"
+				default="60vh"
 				size="3"
 				label="COM_PHOCACOMMANDER_FIELD_BOX_HEIGHT_LABEL"
 				description="COM_PHOCACOMMANDER_FIELD_BOX_HEIGHT_DESC" />
-				
-<field name="upload_maxsize" type="phocatext" size="20" default="3145728" label="COM_PHOCACOMMANDER_FIELD_UPLOAD_MAX_SIZE_ADMIN_LABEL" description="COM_PHOCACOMMANDER_FIELD_UPLOAD_MAX_SIZE_ADMIN_DESC" />				
-				
+
+<field name="upload_maxsize" type="phocatext" size="20" default="3145728" label="COM_PHOCACOMMANDER_FIELD_UPLOAD_MAX_SIZE_ADMIN_LABEL" description="COM_PHOCACOMMANDER_FIELD_UPLOAD_MAX_SIZE_ADMIN_DESC" />
+
 <field name="overwrite_existing_files" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_FIELD_OVERWRITE_EXISTING_FILES_LABEL" description="COM_PHOCACOMMANDER_FIELD_OVERWRITE_EXISTING_FILES_DESC" >
 	<option value="1">COM_PHOCACOMMANDER_YES</option>
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
@@ -118,7 +118,7 @@
 {sxm=application/vnd.sun.xml.math}
 {sxw=application/vnd.sun.xml.writer}
 {ogv=video/ogg}
-{ogg=audio/ogg}" rows="8" cols="35" type="textarea" label="COM_PHOCACOMMANDER_FIELD_ALLOWED_FILE_TYPES_UPLOAD_LABEL" description="COM_PHOCACOMMANDER_FIELD_ALLOWED_FILE_TYPES_UPLOAD_DESC" />				
+{ogg=audio/ogg}" rows="8" cols="35" type="textarea" label="COM_PHOCACOMMANDER_FIELD_ALLOWED_FILE_TYPES_UPLOAD_LABEL" description="COM_PHOCACOMMANDER_FIELD_ALLOWED_FILE_TYPES_UPLOAD_DESC" />
 
 
 <field name="disallowed_file_types_upload" default="" rows="2" cols="35" type="phocatextarea" label="COM_PHOCACOMMANDER_FIELD_DISALLOWED_FILE_TYPES_UPLOAD_LABEL" description="COM_PHOCACOMMANDER_FIELD_DISALLOWED_FILE_TYPES_UPLOAD_DESC" />
@@ -128,27 +128,27 @@
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
 </field>
 
-<field 	name="edit_not_writable" 
-				type="radio" 
+<field 	name="edit_not_writable"
+				type="radio"
 				class="btn-group"
-				default="0" 
+				default="0"
 				label="COM_PHOCACOMMANDER_FIELD_EDIT_NOT_WRITABLE_FILES_LABEL"
 				description="COM_PHOCACOMMANDER_FIELD_EDIT_NOT_WRITABLE_FILES_DESC">
 			<option value="1">COM_PHOCACOMMANDER_YES</option>
 			<option value="0">COM_PHOCACOMMANDER_NO</option>
 		</field>
 
-<field 	name="create_index" 
-				type="radio" 
+<field 	name="create_index"
+				type="radio"
 				class="btn-group"
-				default="1" 
+				default="1"
 				label="COM_PHOCACOMMANDER_FIELD_CREATE_INDEX_FILE_LABEL"
 				description="COM_PHOCACOMMANDER_FIELD_CREATE_INDEX_FILE_DESC">
 			<option value="1">COM_PHOCACOMMANDER_YES</option>
 			<option value="0">COM_PHOCACOMMANDER_NO</option>
 		</field>
 
-		
+
 <field name="display_upload_button" default="1" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_DISPLAY_UPLOAD_BUTTON_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_UPLOAD_BUTTON_DESC" >
 	<option value="1">COM_PHOCACOMMANDER_YES</option>
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
@@ -157,8 +157,8 @@
 <field name="display_download_button" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_DISPLAY_DOWNLOAD_BUTTON_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_DOWNLOAD_BUTTON_DESC" >
 	<option value="1">COM_PHOCACOMMANDER_YES</option>
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
-</field>		
-		
+</field>
+
 <field name="phocahead1" type="phocahead"  default="COM_PHOCACOMMANDER_CONFIG_INLINE_ACTIONS_LABEL" label="" description=""/>
 
 
@@ -177,8 +177,8 @@
 	<option value="1">COM_PHOCACOMMANDER_YES</option>
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
 </field>
-		
-		
+
+
 </fieldset>
 
 
@@ -191,7 +191,7 @@
 	<option value="1">COM_PHOCACOMMANDER_YES</option>
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
 </field>
-	
+
 </fieldset>
 
 <fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">

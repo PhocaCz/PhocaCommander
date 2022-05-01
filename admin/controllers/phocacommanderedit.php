@@ -8,9 +8,17 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined('_JEXEC') or die();
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Uri\Uri;
 jimport('joomla.application.component.controllerform');
 
-class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
+class PhocaCommanderCpControllerPhocaCommanderEdit extends FormController
 {
 	protected	$option 		= 'com_phocacommander';
 
@@ -18,7 +26,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 	function __construct($config=array()) {
 		parent::__construct($config);
 
-		$app   			= JFactory::getApplication();
+		$app   			= Factory::getApplication();
 		$context 		= 'com_phocacommander.phocacommander.';
 		$orderinga 		= $app->input->get('orderinga', '', 'string');
 		$orderingb 		= $app->input->get('orderingb', '', 'string');
@@ -29,7 +37,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 		$foldera 		= $app->input->get('foldera', '', 'string');
 		$folderb 		= $app->input->get('folderb', '', 'string');
 
-		if(JSession::checkToken('request')) {
+		if(Session::checkToken('request')) {
 			$app->input->post->set('orderinga', $orderinga);
 			$app->input->post->set('orderingb', $orderingb);
 			$app->input->post->set('directiona', $directiona);
@@ -53,7 +61,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 	}
 
 	protected function allowEdit($data = array(), $key = 'id') {
-		$user		= JFactory::getUser();
+		$user		= Factory::getUser();
 		$allow		= null;
 		$allow		= $user->authorise('core.edit', 'com_phocacommander');
 
@@ -66,15 +74,15 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 	public function cancel($key = null)
 	{
-		JSession::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
-		$this->setRedirect(JRoute::_('index.php?option=com_phocacommander'.$this->getRedirectToListAppend(), false));
+		Session::checkToken('request') or jexit(Text::_('JINVALID_TOKEN'));
+		$this->setRedirect(Route::_('index.php?option=com_phocacommander'.$this->getRedirectToListAppend(), false));
 
 		return true;
 	}
 
 	public function edit($key = null, $urlVar = null) {
 
-		$app   		= JFactory::getApplication();
+		$app   		= Factory::getApplication();
 		$context 	= "$this->option.edit.$this->context";
 		$file		= $app->input->get( 'filename', '', 'string'  );
 		$recordId 	= 1;
@@ -82,11 +90,11 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 		if (!$this->allowEdit(array($key => $recordId), $key))
 		{
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+			$this->setError(Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 			$this->setMessage($this->getError(), 'error');
 
 			$this->setRedirect(
-				JRoute::_(
+				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_list
 					. $this->getRedirectToListAppend() . '&file='.$file, false
 				)
@@ -99,7 +107,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 		$app->setUserState($context . '.data', null);
 
 		$this->setRedirect(
-			JRoute::_(
+			Route::_(
 				'index.php?option=' . $this->option . '&view=' . $this->view_item
 				. $this->getRedirectToItemAppend($recordId, $urlVar) . '&file='.$file, false
 			)
@@ -110,7 +118,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 	public function download() {
 
-		$app   		= JFactory::getApplication();
+		$app   		= Factory::getApplication();
 		$context 	= "$this->option.edit.$this->context";
 		$file		= $app->input->get( 'filename', '', 'string'  );
 
@@ -119,10 +127,10 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 		$path		= JPATH_ROOT;
 
-		$pathFolder	= JPath::clean($path . '/' .$file);
+		$pathFolder	= Path::clean($path . '/' .$file);
 
 		$mimeType = '';
-		if (JFile::exists($pathFolder)) {
+		if (File::exists($pathFolder)) {
 
 			if (function_exists('mime_content_type')) {
 				$mimeType 	= mime_content_type($pathFolder);
@@ -136,7 +144,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 			}
 
 			if ($mimeType == '') {
-				$ext 		= JFile::getExt($file);
+				$ext 		= File::getExt($file);
 				$mimeType = PhocaCommanderHelper::getMimeType($ext);
 			}
 
@@ -145,7 +153,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 			// test for protocol and set the appropriate headers
 			jimport( 'joomla.environment.uri' );
-			$_tmp_uri 		= JURI::getInstance( JURI::current() );
+			$_tmp_uri 		= Uri::getInstance( Uri::current() );
 			$_tmp_protocol 	= $_tmp_uri->getScheme();
 			if ($_tmp_protocol == "https") {
 				// SSL Support
@@ -172,7 +180,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 			$recordId 	= 1;
 			$key = $urlVar 	= 'id';
 			$this->setRedirect(
-				JRoute::_(
+				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
 					. $this->getRedirectToItemAppend($recordId, $urlVar) . '&file='.$file, false
 				)
@@ -183,10 +191,10 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 	public function save($key = null, $urlVar = null)
 	{
-		JSession::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken('request') or jexit(Text::_('JINVALID_TOKEN'));
 
-		$app   = JFactory::getApplication();
-		$lang  = JFactory::getLanguage();
+		$app   = Factory::getApplication();
+		$lang  = Factory::getLanguage();
 		$model = $this->getModel();
 
 		$data  = $this->input->post->get('jform', array(), 'array');
@@ -203,11 +211,11 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 		// Access check.
 		if (!$this->allowSave($data, $key))
 		{
-			$this->setError(JText::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
+			$this->setError(Text::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
 			$this->setMessage($this->getError(), 'error');
 
 			$this->setRedirect(
-				JRoute::_(
+				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_list
 					. $this->getRedirectToListAppend(). '&file='.$data['filename'] , false
 				)
@@ -254,7 +262,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 			// Redirect back to the edit screen.
 			$this->setRedirect(
-				JRoute::_(
+				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
 					. $this->getRedirectToItemAppend($recordId, $urlVar). '&file='.$data['filename'], false
 				)
@@ -277,11 +285,11 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 			$app->setUserState($context . '.data', $validData);
 
 			// Redirect back to the edit screen.
-			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()));
+			$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()));
 			$this->setMessage($this->getError(), 'error');
 
 			$this->setRedirect(
-				JRoute::_(
+				Route::_(
 					'index.php?option=' . $this->option . '&view=' . $this->view_item
 					. $this->getRedirectToItemAppend($recordId, $urlVar). '&file='.$data['filename'], false
 				)
@@ -291,7 +299,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 		}
 
 		$this->setMessage(
-			JText::_(
+			Text::_(
 				($lang->hasKey($this->text_prefix . ($recordId == 0 && $app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS')
 					? $this->text_prefix
 					: 'JLIB_APPLICATION') . ($recordId == 0 && $app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS'
@@ -312,7 +320,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 				// Redirect back to the edit screen.
 				$this->setRedirect(
-					JRoute::_(
+					Route::_(
 						'index.php?option=' . $this->option . '&view=' . $this->view_item
 						. $this->getRedirectToItemAppend($recordId, $urlVar). '&file='.$data['filename'], false
 					)
@@ -328,7 +336,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends JControllerForm
 
 				// Redirect to the list screen.
 				$this->setRedirect(
-					JRoute::_(
+					Route::_(
 						'index.php?option=' . $this->option , false
 					)
 				);

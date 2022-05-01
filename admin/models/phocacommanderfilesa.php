@@ -7,50 +7,52 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined( '_JEXEC' ) or die();
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
 jimport( 'joomla.application.component.modellist' );
 jimport( 'joomla.filesystem.folder' );
 jimport( 'joomla.filesystem.file' );
 
-class PhocaCommanderCpModelPhocaCommanderFilesA extends JModelList
+class PhocaCommanderCpModelPhocaCommanderFilesA extends ListModel
 {
 	protected	$option 		= 'com_phocacommander';
 	/*
 	public function checkState($panel, $ordering, $direction, $panelA, $panelB) {
-		$app = JFactory::getApplication('administrator');
-	//print_r($this->context.$panel);
+		$app = Factory::getApplication('administrator');
+
 		if ($direction == '') {
 			$direction = $app->getUserStateFromRequest( $this->context.$panel.'direction', 'direction' );
 		} else {
 			$direction = $app->getUserStateFromRequest( $this->context.$panel.'direction', 'direction', $direction, 'string' );
 		}
-		
+
 		$this->setState('direction', $direction);
-		
+
 		if ($ordering == '') {
 			$ordering = $app->getUserStateFromRequest($this->context.$panel.'.ordering', 'ordering');
 		} else {
 			$ordering = $app->getUserStateFromRequest($this->context.$panel.'.ordering', 'ordering', $ordering, 'string');
 		}
-		
+
 		$this->setState('ordering', $ordering);
-		
+
 		if ($panelA == '') {
 			$panelA = $app->getUserStateFromRequest($this->context.$panel.'.panela', 'panela');
 		} else {
 			$panelA = $app->getUserStateFromRequest($this->context.$panel.'.panela', 'panela', $panelA, 'string');
 		}
-		
+
 		$this->setState('panela', $panelA);
-		
+
 		if ($panelB == '') {
 			$panelB = $app->getUserStateFromRequest($this->context.$panel.'.panelb', 'panelb');
 		} else {
 			$panelB = $app->getUserStateFromRequest($this->context.$panel.'.panelb', 'panelb', $panelB, 'string');
 		}
-		
+
 		$this->setState('panelb', $panelB);
 	}*/
-	
+
 	public function sortItems (&$array, $key, $dir = 'ASC') {
 		$sorter=array();
 		$ret=array();
@@ -63,13 +65,13 @@ class PhocaCommanderCpModelPhocaCommanderFilesA extends JModelList
 		} else {
 			arsort($sorter);
 		}
-		
+
 		foreach ($sorter as $ii => $va) {
 			$ret[$ii]=$array[$ii];
 		}
 		$array=$ret;
 	}
-	
-	
+
+
 }
 ?>

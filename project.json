@@ -27,6 +27,12 @@
 		"submenu": {
 			"0" : {
 				"image": "",
+				"view": "",
+				"link": "option=com_phocacommander",
+				"title": "COM_PHOCACOMMANDER_CONTROLPANEL"
+			},
+			"1" : {
+				"image": "",
 				"view": "phocacommanderinfo",
 				"link": "option=com_phocacommander&amp;view=phocacommanderinfo",
 				"title": "COM_PHOCACOMMANDER_INFO"

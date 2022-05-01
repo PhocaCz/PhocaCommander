@@ -73,6 +73,10 @@
   border: 2px solid #A9B7C6;
 }
 
+.admin.com_phocacommander .subhead .btn > span {
+  color: #A9B7C6;
+}
+
 .admin.com_phocacommander #toolbar [class^="icon-"], 
 .admin.com_phocacommander #toolbar [class*=" icon-"] {
   background: #3c3f40;
@@ -100,6 +104,7 @@
 .ph-b {
 
   border-color: #A9B7C6;
+  background: #494D4E;
 }
 
 .ph-status {
@@ -184,4 +189,8 @@ input[type=checkbox] {
 .ph-cpanel-logo img {
   background: #fff;
   padding:1em;
+}
+
+.ph-commander-box-in label {
+	color: #A9B7C6;
 }

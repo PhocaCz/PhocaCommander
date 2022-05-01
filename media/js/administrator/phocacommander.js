@@ -40,7 +40,7 @@ function phCloseMsgBoxSuccess(button) {
         animateId.finish();
         animateId.remove();
         jQuery("#ph-ajaxtop").hide();
-        jQuery(".ph-result-txt").remove(); 
+        jQuery(".ph-result-txt").remove();
         if (button != '') {jQuery(button).attr('disabled', false);}
     })
     jQuery("#ph-ajaxtop-message").on("mouseenter", function(e){
@@ -55,7 +55,7 @@ function phCloseMsgBoxError(button) {
 
     if (typeof button === 'undefined') {button = '';}
     if (button != '') {jQuery(button).attr('disabled', true);}
-   
+
 	var animateId =  jQuery(".ph-progressbar-bottom").animate({
 		width: "0%"
     }, 3500, function() {
@@ -64,12 +64,12 @@ function phCloseMsgBoxError(button) {
         if (button != '') {jQuery(button).attr('disabled', false);}
       }
     );
-    
+
     jQuery("#ph-ajaxtop-message").on("click", function(e){
         animateId.finish();
         animateId.remove();
         jQuery("#ph-ajaxtop").hide();
-        jQuery(".ph-result-txt").remove();   
+        jQuery(".ph-result-txt").remove();
         if (button != '') {jQuery(button).attr('disabled', false);}
     })
     jQuery("#ph-ajaxtop-message").on("mouseenter", function(e){
@@ -90,10 +90,10 @@ function phSaveEdit(button) {
 
 
     var source = Joomla.editors.instances['jform_source'].getValue();
-    jQuery('#adminForm input[name ="task"]').val('phocacommanderedit.save');  
-    jQuery('#adminForm #jform_source').val(source);    
+    jQuery('#adminForm input[name ="task"]').val('phocacommanderedit.save');
+    jQuery('#adminForm #jform_source').val(source);
     var formdata = jQuery("#adminForm").serialize();
-    
+
 
     jQuery.ajax({
         type: "POST",
@@ -107,7 +107,7 @@ function phSaveEdit(button) {
                 jQuery("#ph-ajaxtop").show();
                 jQuery("#ph-ajaxtop-message").html(phGetMsg(data.message, 0));
                 phCloseMsgBoxSuccess(button);
-            } else { 
+            } else {
                 jQuery("#ph-ajaxtop").show();
                 jQuery("#ph-ajaxtop-message").html(phGetMsg(data.error, 0));
                 phCloseMsgBoxError(button);
@@ -119,10 +119,10 @@ function phSaveEdit(button) {
             phCloseMsgBoxError(button);
         }
     })
-}  
+}
 
 
-/* 
+/*
  * Main
  */
 var phVars 	= Joomla.getOptions('phVarsCM');
@@ -237,7 +237,7 @@ function getPanelID(panel) {
 
 
 function phRequest(dataPost) {
-	
+
     var phVars 	= Joomla.getOptions('phVarsCM');
     var phLang  = Joomla.getOptions('phLangCM');
     var phUrl = phVars['urlaction'];
@@ -270,7 +270,7 @@ function phRequest(dataPost) {
 
 			} else {
 
-               
+
 				jQuery("#ph-ajaxtop-message").html(phGetMsg(data.error, 0));
 				phRequestActive = null;
 				phCloseMsgBoxError();
@@ -316,7 +316,9 @@ function phRequest(dataPost) {
 function phDoAction(task) {
 
     var phVars 	= Joomla.getOptions('phVarsCM');
-    var phLang  = Joomla.getOptions('phLangCM');
+	var phLang  = Joomla.getOptions('phLangCM');
+
+	var phUrlRoot = phVars['urlroot'];
 
 	var dataPost 			= {};
 	var txtFileFolder 		= '';
@@ -473,7 +475,7 @@ function phDoAction(task) {
 			var phExt = phExt.toLowerCase();
 			if (phExt == 'jpg' || phExt == 'jpeg' || phExt == 'png' || phExt == 'gif') {
 				jQuery().prettyPhoto({social_tools: false, horizontal_padding: 17, theme: 'pp_default'});
-				var ppImage	= '<?php echo JURI::root();?>' + jQuery.base64.atob(pathFrom, true) + '/' + jQuery.base64.atob(searchIDsNoPrefix, true);
+				var ppImage	= phUrlRoot + jQuery.base64.atob(pathFrom, true) + '/' + jQuery.base64.atob(searchIDsNoPrefix, true);
 				var ppTitle	= jQuery.base64.atob(searchIDsNoPrefix, true);
 				var ppDesc	= ' ';
 				jQuery.prettyPhoto.open(ppImage,ppTitle,ppDesc);
@@ -488,7 +490,7 @@ function phDoAction(task) {
 			var phExt = phExt.toLowerCase();
 			if (phExt == 'zip' || phExt == 'tar' || phExt == 'gz' || phExt == 'gzip' || phExt == 'bz2' || phExt == 'bzip2' ) {
 				if (phExt == 'zip') {
-                    
+
 					phPrompt(dataPost, 'Unpack', phLang['COM_PHOCACOMMANDER_OK'], phLang['COM_PHOCACOMMANDER_ARE_YOU_SURE_UNPACK'] + "<br>" + txtFileFolder + "<br>" + txtTo + "<br>" + txtPathWhere, "#phPromptValueUnpack", 1 );
 				} else {
 					var warnUnpack = '<span class="ph-warning-text">' + phLang['COM_PHOCACOMMANDER_EXTRACTED_FILES_OVERWRITE_EXISTING_FILES_WARNING'] + '</span>';
@@ -597,7 +599,7 @@ function phConfirm(dataPost, txt) {
     var phLangCancel = phLang['COM_PHOCACOMMANDER_CANCEL'];
 
 	jQuery("#phDialogConfirm" ).html( txt );
-    
+
     var phButtons = {};
 	phButtons[phLangOk] = function() {
         jQuery(this).dialog("close");
@@ -608,7 +610,7 @@ function phConfirm(dataPost, txt) {
         jQuery(this).dialog("close");
 		return false;
     };
-    
+
     jQuery("#phDialogConfirm").dialog({
         autoOpen: false,
 		modal: true,
@@ -625,7 +627,7 @@ function phPrompt(dataPost, type, txtButton, txt, promptValue, checkBox) {
     var phLang  = Joomla.getOptions('phLangCM');
     var phLangOk = phLang['COM_PHOCACOMMANDER_OK'];
     var phLangCancel = phLang['COM_PHOCACOMMANDER_CANCEL'];
-    
+
 	var phButtons = {};
 	phButtons[txtButton] = function() {
 		if(checkBox) {
@@ -756,7 +758,7 @@ jQuery(document).ready(function() {
     var phLang  = Joomla.getOptions('phLangCM');
     var phVars  = Joomla.getOptions('phVarsCM');
 
-	jQuery('#selectAllA').live( "click", function() {
+	jQuery('#selectAllA').on( "click", function() {
 		phActivePanel = 'B';
 		var checkedStatusA = this.checked;
 		jQuery('#ph-table-A tr').find('td:first :checkbox').each(function () {
@@ -766,7 +768,7 @@ jQuery(document).ready(function() {
 		 });
 	});
 
-	jQuery('#selectAllB').live( "click", function() {
+	jQuery('#selectAllB').on( "click", function() {
 		phActivePanel = 'B';
 		var checkedStatusB = this.checked;
 		jQuery('#ph-table-B tr').find('td:first :checkbox').each(function () {
@@ -786,7 +788,7 @@ jQuery(document).ready(function() {
 
 
 	/* Make selected file or folder active - color */
-	jQuery('td input:checkbox').live("change", function(){
+	jQuery('td input:checkbox').on("change", function(){
 		jQuery(this).parent().toggleClass('ph-active', this.checked);
 	});
 
@@ -794,14 +796,14 @@ jQuery(document).ready(function() {
 	/* Start or change the form*/
 
 	/* Change */
-	jQuery('#ph-a').live( "click", function() {
+	jQuery('#ph-a').on( "click", function() {
 		phActivePanel = 'A';
 	});
-	jQuery('#ph-b').live( "click", function() {
+	jQuery('#ph-b').on( "click", function() {
 		phActivePanel = 'B';
 	});
 
-	jQuery('#phCommanderBox').live("click", function(){
+	jQuery('#phCommanderBox').on("click", function(){
 		if (phActivePanel == 'A') {
 			jQuery('#phStatusA').addClass('ph-status-active');
 			jQuery('#phStatusB').removeClass('ph-status-active');
@@ -814,7 +816,7 @@ jQuery(document).ready(function() {
 
 
 	/* Keys */
-	jQuery( document ).live( "keydown", function( e ) {
+	jQuery( document ).on( "keydown", function( e ) {
 		//alert(e.which);
 
 		if (e.keyCode == 90 && e.ctrlKey) {
@@ -875,7 +877,7 @@ $(document).keydown(function(e) {
     if (e.keyCode in map) {
         map[e.keyCode] = true;
         if (map[17] && map[120]) {
-            alert("ano");
+
         }
     }
 }).keyup(function(e) {
@@ -885,15 +887,15 @@ $(document).keydown(function(e) {
 }); */
 
 	/* Attributes */
-	jQuery('#ro').live("change", function(){ if(this.checked) { phO = phO + 4;} else {phO = phO - 4;} setAttribVal(phO, phG, phT);});
-	jQuery('#wo').live("change", function(){ if(this.checked) { phO = phO + 2;} else {phO = phO - 2;} setAttribVal(phO, phG, phT);});
-	jQuery('#eo').live("change", function(){ if(this.checked) { phO = phO + 1;} else {phO = phO - 1;} setAttribVal(phO, phG, phT);});
+	jQuery('#ro').on("change", function(){ if(this.checked) { phO = phO + 4;} else {phO = phO - 4;} setAttribVal(phO, phG, phT);});
+	jQuery('#wo').on("change", function(){ if(this.checked) { phO = phO + 2;} else {phO = phO - 2;} setAttribVal(phO, phG, phT);});
+	jQuery('#eo').on("change", function(){ if(this.checked) { phO = phO + 1;} else {phO = phO - 1;} setAttribVal(phO, phG, phT);});
 
-	jQuery('#rg').live("change", function(){ if(this.checked) { phG = phG + 4;} else {phG = phG - 4;} setAttribVal(phO, phG, phT);});
-	jQuery('#wg').live("change", function(){ if(this.checked) { phG = phG + 2;} else {phG = phG - 2;} setAttribVal(phO, phG, phT);});
-	jQuery('#eg').live("change", function(){ if(this.checked) { phG = phG + 1;} else {phG = phG - 1;} setAttribVal(phO, phG, phT);});
+	jQuery('#rg').on("change", function(){ if(this.checked) { phG = phG + 4;} else {phG = phG - 4;} setAttribVal(phO, phG, phT);});
+	jQuery('#wg').on("change", function(){ if(this.checked) { phG = phG + 2;} else {phG = phG - 2;} setAttribVal(phO, phG, phT);});
+	jQuery('#eg').on("change", function(){ if(this.checked) { phG = phG + 1;} else {phG = phG - 1;} setAttribVal(phO, phG, phT);});
 
-	jQuery('#rt').live("change", function(){ if(this.checked) { phT = phT + 4;} else {phT = phT - 4;} setAttribVal(phO, phG, phT);});
-	jQuery('#wt').live("change", function(){ if(this.checked) { phT = phT + 2;} else {phT = phT - 2;} setAttribVal(phO, phG, phT);});
-	jQuery('#et').live("change", function(){ if(this.checked) { phT = phT + 1;} else {phT = phT - 1;} setAttribVal(phO, phG, phT);});
+	jQuery('#rt').on("change", function(){ if(this.checked) { phT = phT + 4;} else {phT = phT - 4;} setAttribVal(phO, phG, phT);});
+	jQuery('#wt').on("change", function(){ if(this.checked) { phT = phT + 2;} else {phT = phT - 2;} setAttribVal(phO, phG, phT);});
+	jQuery('#et').on("change", function(){ if(this.checked) { phT = phT + 1;} else {phT = phT - 1;} setAttribVal(phO, phG, phT);});
 })
