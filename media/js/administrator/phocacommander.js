@@ -588,7 +588,7 @@ function phAlert(txt) {
 	jQuery( "#phDialogWarning" ).dialog( "open" );
 	/* Correct class */
 	phSetCloseButton();
-	jQuery('button').addClass('btn btn-default');
+	jQuery('#phDialogWarning button').addClass('btn btn-default');
 
 }
 
@@ -619,7 +619,7 @@ function phConfirm(dataPost, txt) {
 	jQuery( "#phDialogConfirm" ).dialog( "open" );
 	/* Correct class */
 	phSetCloseButton();
-	jQuery('button').addClass('btn btn-default');
+	jQuery('#phDialogConfirm button').addClass('btn btn-default');
 }
 
 function phPrompt(dataPost, type, txtButton, txt, promptValue, checkBox) {
@@ -662,7 +662,7 @@ function phPrompt(dataPost, type, txtButton, txt, promptValue, checkBox) {
 	jQuery("#phDialogPrompt" + type + ' .ph-prepend-text').html( txt );
 	/* Correct class */
 	phSetCloseButton();
-	jQuery('button').addClass('btn btn-default');
+	jQuery("#phDialogPrompt" + type + ' button').addClass('btn btn-default');
 }
 
 function phPromtWarning(type, txtButton, returnValue, w, h) {
@@ -700,7 +700,7 @@ function phPromtWarning(type, txtButton, returnValue, w, h) {
 	jQuery("#phDialogPrompt" + type).dialog( "open" );
 	/* Correct class */
 	phSetCloseButton();
-	jQuery('button').addClass('btn btn-default');
+	jQuery("#phDialogPrompt" + type + ' button').addClass('btn btn-default');
 }
 
 function phFrame(dataPost, type, txt) {
@@ -726,7 +726,7 @@ function phFrame(dataPost, type, txt) {
 	jQuery("#phDialogPrompt" + type + ' .ph-prepend-text').html( txt );
 	/* Correct class */
 	phSetCloseButton();
-	jQuery('button').addClass('btn btn-default');
+	jQuery("#phDialogPrompt" + type + ' button').addClass('btn btn-default');
 }
 
 

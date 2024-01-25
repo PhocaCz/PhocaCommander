@@ -35,9 +35,11 @@ class PhocaCommanderFileUploadMultiple
 		$paramsC 		= ComponentHelper::getParams('com_phocacommander');
 		$chunkMethod 	= $paramsC->get( 'multiple_upload_chunk', 0 );
 		$uploadMethod 	= $paramsC->get( 'multiple_upload_method', 4 );
+		$app				= Factory::getApplication();
+		$wa 				= $app->getDocument()->getWebAssetManager();
 
 		//JHtml::_('behavior.framework', true);// Load it here to be sure, it is loaded before jquery
-		JHtml::_('jquery.framework', false);// Load it here because of own nonConflict method (nonconflict is set below)
+		HtmlHelper::_('jquery.framework', false);// Load it here because of own nonConflict method (nonconflict is set below)
 		$document			= Factory::getDocument();
 		// No more used  - - - - -
 		//$document->addScript(JUri::root(true).'/components/com_phocadownload/assets/jquery/jquery-1.6.4.min.js');//USE SYSTEM
@@ -51,7 +53,8 @@ class PhocaCommanderFileUploadMultiple
 		$document->addScript(Uri::root(true).'/media/com_phocacommander/js/administrator/plupload/plupload.html5.js');
 		//$document->addScript(JUri::root(true).'/media/com_phocacommander/js/administrator/plupload/moxie.js');
 		//$document->addScript(JUri::root(true).'/media/com_phocacommander/js/administrator/plupload/jquery.ui.plupload/jquery.ui.plupload.js');
-		HTMLHelper::stylesheet( 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css' );
+		//HTMLHelper::stylesheet( 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css' );
+		$wa->registerAndUseStyle('com_phocacommander.plupload', 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css', array('version' => 'auto'));
 	}
 
 	public static function getMultipleUploadSizeFormat($size) {
@@ -132,8 +135,8 @@ class PhocaCommanderFileUploadMultiple
 		$js.='	   \'Size\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_SIZE')).'\','."\n";
 		$js.='	   \'Add files\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_ADD_FILES')).'\','."\n";
 		$js.='	   \'Start upload\':\''.addslashes(Text::_('COM_PHOCACOMMANDER_START_UPLOAD')).'\','."\n";
-		$js.='	   \'Start Upload\':\''.addslashes(JText::_('COM_PHOCACOMMANDER_START_UPLOAD')).'\','."\n";
-		$js.='	   \'Stop Upload\' : \''.addslashes(JText::_('COM_PHOCACOMMANDER_STOP_CURRENT_UPLOAD')).'\','."\n";
+		$js.='	   \'Start Upload\':\''.addslashes(Text::_('COM_PHOCACOMMANDER_START_UPLOAD')).'\','."\n";
+		$js.='	   \'Stop Upload\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_STOP_CURRENT_UPLOAD')).'\','."\n";
 		$js.='	   \'Stop current upload\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_STOP_CURRENT_UPLOAD')).'\','."\n";
 		$js.='	   \'Start uploading queue\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_START_UPLOADING_QUEUE')).'\','."\n";
 		$js.='	   \'Drag files here.\' : \''.addslashes(Text::_('COM_PHOCACOMMANDER_DRAG_FILES_HERE')).'\''."\n";

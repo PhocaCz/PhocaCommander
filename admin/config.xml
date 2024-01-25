@@ -6,6 +6,7 @@
 <field name="theme" default="0" type="list" class="btn-group" label="COM_PHOCACOMMANDER_THEME_LABEL" description="COM_PHOCACOMMANDER_THEME_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_DEFAULT</option>
 	<option value="phoca-dark">COM_PHOCACOMMANDER_PHOCA_DARK</option>
+	<option value="phoca-light">COM_PHOCACOMMANDER_PHOCA_LIGHT</option>
 </field>
 <field 	name="f_keys"
 				type="radio"

@@ -248,48 +248,48 @@ class PhocaCommanderCpViewPhocaCommanderCp extends HtmlView
 
 		// This button is unnecessary but it is displayed because Joomla! design bug
 		$bar = Toolbar::getInstance( 'toolbar' );
-		$dhtml = '<a href="index.php?option=com_phocacommander" class="btn btn-small"><i class="icon-home-2" title="'.Text::_('COM_PHOCACOMMANDER').'"></i> '. ' '.'</a>';
+		$dhtml = '<a href="index.php?option=com_phocacommander" class="btn btn-primary btn-small"><i class="icon-home-2" title="'.Text::_('COM_PHOCACOMMANDER').'"></i> '. ' '.'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
 		ToolbarHelper::divider();
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'attributes\')" class="btn btn-small"><i class="icon-list" title="'.Text::_('COM_PHOCACOMMANDER_F1_ATTRIBUTES').'"></i> '.Text::_($f[1]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'attributes\')" class="btn btn-primary btn-small"><i class="icon-list" title="'.Text::_('COM_PHOCACOMMANDER_F1_ATTRIBUTES').'"></i> '.Text::_($f[1]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'rename\')" class="btn btn-small"><i class="icon-pencil-2" title="'.Text::_('COM_PHOCACOMMANDER_F2_RENAME').'"></i> '.Text::_($f[2]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'rename\')" class="btn btn-primary btn-small"><i class="icon-pencil-2" title="'.Text::_('COM_PHOCACOMMANDER_F2_RENAME').'"></i> '.Text::_($f[2]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'view\')" class="btn btn-small"><i class="icon-search" title="'.Text::_('COM_PHOCACOMMANDER_F3_VIEW').'"></i> '.Text::_($f[3]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'view\')" class="btn btn-primary btn-small"><i class="icon-search" title="'.Text::_('COM_PHOCACOMMANDER_F3_VIEW').'"></i> '.Text::_($f[3]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'edit\')" class="btn btn-small"><i class="icon-edit" title="'.Text::_('COM_PHOCACOMMANDER_F4_EDIT').'"></i> '.Text::_($f[4]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'edit\')" class="btn btn-primary btn-small"><i class="icon-edit" title="'.Text::_('COM_PHOCACOMMANDER_F4_EDIT').'"></i> '.Text::_($f[4]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'copy\')" class="btn btn-small" id="btn-copy"><i class="icon-copy" title="'.Text::_('COM_PHOCACOMMANDER_F5_COPY').'"></i> '.Text::_($f[5]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'copy\')" class="btn btn-primary btn-small" id="btn-copy"><i class="icon-copy" title="'.Text::_('COM_PHOCACOMMANDER_F5_COPY').'"></i> '.Text::_($f[5]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'move\')" class="btn btn-small" id="btn-move"><i class="icon-move" title="'.Text::_('COM_PHOCACOMMANDER_F6_MOVE').'"></i> '.Text::_($f[6]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'move\')" class="btn btn-primary btn-small" id="btn-move"><i class="icon-move" title="'.Text::_('COM_PHOCACOMMANDER_F6_MOVE').'"></i> '.Text::_($f[6]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'new\')" class="btn btn-small" id="btn-new"><i class="icon-folder-close" title="'.Text::_('COM_PHOCACOMMANDER_F7_NEW_FOLDER').'"></i> '.Text::_($f[7]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'new\')" class="btn btn-primary btn-small" id="btn-new"><i class="icon-folder-close" title="'.Text::_('COM_PHOCACOMMANDER_F7_NEW_FOLDER').'"></i> '.Text::_($f[7]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'delete\')" class="btn btn-small" id="btn-delete"><i class="icon-delete" title="'.Text::_('COM_PHOCACOMMANDER_F8_DELETE').'"></i> '.Text::_($f[8]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'delete\')" class="btn btn-primary btn-small" id="btn-delete"><i class="icon-delete" title="'.Text::_('COM_PHOCACOMMANDER_F8_DELETE').'"></i> '.Text::_($f[8]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'unpack\')" class="btn btn-small btn-default"><i class="icon-box-remove" title="'.Text::_('COM_PHOCACOMMANDER_F9_UNPACK').'"></i> '.Text::_($f[9]).'</a>';
+		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'unpack\')" class="btn btn-small btn-primary"><i class="icon-box-remove" title="'.Text::_('COM_PHOCACOMMANDER_F9_UNPACK').'"></i> '.Text::_($f[9]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
 		if ($this->t['display_upload_button'] == 1) {
-			$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'upload\')" class="btn btn-small btn-default"><i class="icon-upload" title="'.Text::_('COM_PHOCACOMMANDER_F10_UPLOAD').'"></i> '.Text::_($f[10]).'</a>';
+			$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'upload\')" class="btn btn-small btn-primary"><i class="icon-upload" title="'.Text::_('COM_PHOCACOMMANDER_F10_UPLOAD').'"></i> '.Text::_($f[10]).'</a>';
 			$bar->appendButton('Custom', $dhtml);
 		}
 		if ($this->t['display_download_button'] == 1) {
-			$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'download\')" class="btn btn-small"><i class="icon-download" title="'.Text::_('COM_PHOCACOMMANDER_DOWNLOAD').'"></i> '.Text::_($f[12]).'</a>';
+			$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'download\')" class="btn btn-primary btn-small"><i class="icon-download" title="'.Text::_('COM_PHOCACOMMANDER_DOWNLOAD').'"></i> '.Text::_($f[12]).'</a>';
 			$bar->appendButton('Custom', $dhtml);
 		}
 		if ($this->t['experimental_zip'] == 1) {
-			$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'pack\')" class="btn btn-small btn-default"><i class="icon-box-add" title="'.Text::_('COM_PHOCACOMMANDER_PACK').'"></i> '.Text::_($f[11]).'</a>';
+			$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'pack\')" class="btn btn-small btn-primary"><i class="icon-box-add" title="'.Text::_('COM_PHOCACOMMANDER_PACK').'"></i> '.Text::_($f[11]).'</a>';
 			$bar->appendButton('Custom', $dhtml);
 
 		}

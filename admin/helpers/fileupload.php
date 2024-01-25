@@ -114,7 +114,7 @@ class PhocaCommanderFileUpload
 				// and then (after all parts will be uploaded) we can make the condition to compare the file
 				// and we recognize there is one - ok don't upload it BUT the file will be damaged by
 				// parts uploaded by the new file - so this is why we are using temp file in Chunk method
-				$stream 				= JFactory::getStream();// Chunk Files
+				$stream 				= Factory::getStream();// Chunk Files
 				$tempFolder				= 'pcmpluploadtmpfolder'.'/';
 				$filepathImgFinal 		= Path::clean($pathFolder.strtolower($file['name']));
 				$filepathImgTemp 		= Path::clean($pathFolder.$tempFolder.strtolower($file['name']));

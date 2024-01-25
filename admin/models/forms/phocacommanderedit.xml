@@ -3,7 +3,7 @@
 <fieldset>
 <field name="id" type="hidden" default="0" label="JGLOBAL_FIELD_ID_LABEL" required="true" readonly="true" class="readonly" />
 <field name="filename" type="hidden" default="" label="COM_PHOCACOMMANDER_FIELD_FILENAME_LABEL" description="COM_PHOCACOMMANDER_FIELD_FILENAME_DESC" readonly="true" class="readonly" />
-<field name="source" type="editor" editor="codemirror|none" buttons="no" label="COM_PHOCACOMMANDER_FIELD_CONTENT_LABEL" description="COM_PHOCACOMMANDER_FIELD_CONTENT_DESC"  filter="raw"  syntax="php" height="400px" rows="20" cols="80" />
+<field name="source" type="editor" editor="codemirror|none" buttons="no" label="COM_PHOCACOMMANDER_FIELD_CONTENT_LABEL" description="COM_PHOCACOMMANDER_FIELD_CONTENT_DESC"  filter="raw"  syntax="php" height="70vh" rows="20" cols="80" />
 </fieldset>
 
 </form>

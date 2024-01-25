@@ -89,6 +89,15 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends HtmlView
 			return false;
 		}
 
+
+		$explodeArray      = explode('.', $fileWithPath);
+		$ext               = end($explodeArray);
+		$sourceTypes  		= explode(',', 'txt,less,ini,xml,js,php,css,scss,sass,json');
+
+		if (\in_array($ext, $sourceTypes)) {
+			$this->form->setFieldAttribute('source', 'syntax', $ext);
+		}
+
 		$this->form->setValue('source', null, $this->source->source);
 
 		if (count($errors = $this->get('Errors'))) {

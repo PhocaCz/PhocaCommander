@@ -94,7 +94,45 @@ class com_phocacommanderInstallerScript
             $o .= ' <div class="g5-phoca">';
             $o .=    '<a href="https://www.phoca.cz" target="_blank"><span>Phoca</span></a>';
             $o .= ' </div>';
-            $o .= '</div>';
+            ///$o .= '</div>';
+
+			$upEL = 'https://extensions.joomla.org/extension/phoca-commander/';
+            $upE = 'Phoca Commander';
+
+            $o .= '<div class="upBox">';
+
+            $o .=  '<div class="upItem upItemD">';
+            $o .=  '<div class="upItemText">If you find this project useful, please support it with a donation</div>';
+            $o .=  '<form action="https://www.paypal.com/donate" method="post" target="_top">';
+            $o .=  '<input type="hidden" name="hosted_button_id" value="ZVPH25SQ2DDBY" />';
+            $o .=  '<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />';
+            $o .=  '<img alt="" border="0" src="https://www.paypal.com/en_CZ/i/scr/pixel.gif" width="1" height="1" />';
+            $o .=  '</form>';
+            $o .=  '</div>';
+
+            $o .=  '<div class="upItem upItemJ">';
+            $o .=  '<div class="upItemText">If you find this project useful, please post a rating and review on the Joomla! Extension Directory website</div>';
+            $o .=  '<a class="upItemLink" target="_blank" href="'. $upEL.'">'. $upE.' (JED website)</a>';
+            $o .=  '</form>';
+            $o .=  '</div>';
+
+            $o .=  '<div class="upItem upItemDoc">';
+            $o .=  '<div class="upItemText">If you need help, visit</div>';
+            $o .=  '<a class="upItemLink" target="_blank" href="https://www.phoca.cz/documentation">Phoca documentation website</a>';
+            $o .=  '<div class="upItemText">or ask directly in</div>';
+            $o .=  '<a class="upItemLink" target="_blank" href="https://www.phoca.cz/forum">Phoca forum website</a>';
+            $o .=  '</div>';
+
+            $o .=  '<div class="upItem upItemPh">';
+            $o .=  '<div class="upItemText">There are over a hundred more useful Phoca extensions, discover them on</div>';
+            $o .=  '<a class="upItemLink" target="_blank" href="https://www.phoca.cz">Phoca website</a>';
+            $o .=  '</div>';
+
+            $o .=  '</div>';
+
+
+            $o .= '</div>';//g5i
+            echo $o;
 
             echo $o;
         }
@@ -197,6 +235,65 @@ class com_phocacommanderInstallerScript
 	background-repeat: no-repeat;
 	background-size: cover;
 	border-radius: 6px;
+}
+
+.upBox {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top:1em;
+    margin-bottom: 2em;
+}
+
+.upItemText {
+    margin-bottom: 1em;
+}
+
+.upItem {
+    padding: 1em;
+    text-align: center;
+    width: calc(50% - 0.4em);
+    margin: 0.2em;
+    border-radius: 0.3em;
+}
+
+.upItemD {
+    background: #F5D042;
+    color: #000;
+}
+.upItemPh {
+    background: rgba(255,255,255,0.7);
+    color: #000;
+}
+.upItemDoc {
+    background: rgba(255,255,255,0.7);
+    color: #000;
+}
+.upItemJ {
+    background: rgba(255,255,255,0.7);
+    color: #000;
+}
+
+a.upItemLink {
+    padding: 0.5em 1em;
+    border-radius: 9999px;
+    margin: 1em;
+    display: inline-block;
+}
+
+a.upItemLink::before {
+    content: none;
+}
+.upItemPh a.upItemLink {
+    background: #000;
+    color: #fff;
+}
+.upItemDoc a.upItemLink {
+    background: #000;
+    color: #fff;
+}
+.upItemJ a.upItemLink {
+    background: #000;
+    color: #fff;
 }
 </style>";
     }

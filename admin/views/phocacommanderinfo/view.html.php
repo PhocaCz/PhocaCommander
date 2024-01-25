@@ -39,7 +39,7 @@ class PhocaCommanderCpViewPhocaCommanderInfo extends HtmlView
 
 		// This button is unnecessary but it is displayed because Joomla! design bug
 		$bar = Toolbar::getInstance( 'toolbar' );
-		$dhtml = '<a href="index.php?option=com_phocacommander" class="btn btn-small"><i class="icon-home-2" title="'.Text::_('COM_PHOCACOMMANDER').'"></i> '.Text::_('COM_PHOCACOMMANDER').'</a>';
+		$dhtml = '<a href="index.php?option=com_phocacommander" class="btn btn-primary btn-small"><i class="icon-home-2" title="'.Text::_('COM_PHOCACOMMANDER').'"></i> '.Text::_('COM_PHOCACOMMANDER').'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
 		if ($canDo->get('core.admin')) {

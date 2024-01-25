@@ -378,3 +378,9 @@ label.ph-input-prompt input.ph-input-checkbox-prompt {
 #toolbar .btn i {
 	margin-inline-end: 0;
 }
+
+
+.plupload_progress_bar.bar,
+.progress.plupload_file_statusbar .bar {
+	background: green;
+}

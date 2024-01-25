@@ -23,7 +23,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 		<div class="col-xs-12 col-sm-6 col-md-6"><div class="ph-b" id="ph-b"></div></div>
     </div>
 	<div class="row row-fluid ph-commander-box-in">
-	<div class="span12"style="text-align:right;padding-right: 30px"><?php echo PhocaCommanderHelper::getInfo(); ?><a href="https://www.phoca.cz/version/index.php?phocacommander=<?php echo  $this->t['version']; ?>" target="_blank"><?php echo JText::_('COM_PHOCACOMMANDER_CHECK_FOR_UPDATE') ?></a></div>
+	<div class="span12"style="text-align:right;padding-right: 30px"><?php echo PhocaCommanderHelper::getInfo(); ?><a href="https://www.phoca.cz/version/index.php?phocacommander=<?php echo  $this->t['version']; ?>" target="_blank"><?php echo Text::_('COM_PHOCACOMMANDER_CHECK_FOR_UPDATE') ?></a></div>
 	</div>
 </div>
 
@@ -72,7 +72,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 </div>
 
 <div id="phDialogPromptWelcomeWarning" class="ph-dialog" title="<?php echo Text::_('COM_PHOCACOMMANDER_WARNING'); ?>">
-	<div><?php echo Text::_('COM_PHOCACOMMANDER_WELCOME_WARNING');?></div>
+	<div><?php
+        echo Text::_('COM_PHOCACOMMANDER_WELCOME_WARNING');?></div>
 	<div class="ph-prepend-text"></div>
 	<input type="hidden" name="phPromptValueUnpackOther" id="phPromptValueUnpackOther" value="" />
 </div>

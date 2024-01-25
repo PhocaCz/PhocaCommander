@@ -11,6 +11,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\Version;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -20,10 +21,15 @@ use Joomla\CMS\Language\Text;
 class PhocaCommanderRenderAdminView
 {
 	protected $t;
+	protected $compatible;
+	protected $view;
+	protected $option;
+	protected $sidebar;
+
 	public function __construct(){
 
 		$paramsC 		= ComponentHelper::getParams('com_phocacommander');
-		$this->t['theme']					= $paramsC->get( 'theme', 0 );
+		$this->t['theme']					= $paramsC->get( 'theme', 'phoca-light' );
 
 		$app				= Factory::getApplication();
 		$version 			= new Version();
@@ -31,6 +37,8 @@ class PhocaCommanderRenderAdminView
 		$this->view			= $app->input->get('view');
 		$this->option		= $app->input->get('option');
 		$this->sidebar 		= Factory::getApplication()->getTemplate(true)->params->get('menu', 1) ? true : false;
+
+		$wa 				= $app->getDocument()->getWebAssetManager();
 
 		switch($this->view) {
 
@@ -41,7 +49,6 @@ class PhocaCommanderRenderAdminView
 				if (!$this->compatible) {
 					HTMLHelper::_('behavior.tooltip');
 					HTMLHelper::_('formbehavior.chosen', 'select');
-
 				}
 
 			break;
@@ -54,15 +61,21 @@ class PhocaCommanderRenderAdminView
 			HTMLHelper::_('stylesheet', 'media/'.$this->option.'/duotone/joomla-fonts.css', array('version' => 'auto'));
 		//}
 
-		HTMLHelper::_('stylesheet', 'media/'.$this->option.'/css/administrator/'.str_replace('com_', '', $this->option).'.css', array('version' => 'auto'));
+
+
 
 		if ($this->t['theme'] !== 0) {
 			HTMLHelper::_('stylesheet', 'media/com_phocacommander/css/themes/'.htmlspecialchars(strip_tags($this->t['theme'])).'.css', array('version' => 'auto'));
 		}
 
-		HTMLHelper::_('stylesheet', 'media/com_phocacommander/css/administrator/jquery-ui.css', array('version' => 'auto'));
-		HTMLHelper::_('stylesheet', 'media/com_phocacommander/css/administrator/phoca-ui.css', array('version' => 'auto'));
-		HTMLHelper::_('stylesheet', 'media/com_phocacommander/js/administrator/prettyphoto/css/prettyPhoto.css', array('version' => 'auto'));
+
+
+		//HTMLHelper::_('stylesheet', 'media/com_phocacommander/css/administrator/jquery-ui.css', array('version' => 'auto'));
+		//HTMLHelper::_('stylesheet', 'media/com_phocacommander/css/administrator/phoca-ui.css', array('version' => 'auto'));
+		//HTMLHelper::_('stylesheet', 'media/com_phocacommander/js/administrator/prettyphoto/css/prettyPhoto.css', array('version' => 'auto'));
+		$wa->registerAndUseStyle('com_phocacommander.jquery-ui', 'media/com_phocacommander/css/administrator/jquery-ui.css', array('version' => 'auto'));
+		$wa->registerAndUseStyle('com_phocacommander.phoca-ui', 'media/com_phocacommander/css/administrator/phoca-ui.css', array('version' => 'auto'));
+		$wa->registerAndUseStyle('com_phocacommander.prettyphoto', 'media/com_phocacommander/js/administrator/prettyphoto/css/prettyPhoto.css', array('version' => 'auto'));
 
 		HTMLHelper::_('jquery.framework', false);
 		//HTMLHelper::_('script', 'system/core.js', false, true);
@@ -86,6 +99,11 @@ class PhocaCommanderRenderAdminView
 			HTMLHelper::_('stylesheet', 'media/'.$this->option.'/css/administrator/3.css', array('version' => 'auto'));
 		}
 
+		$wa->registerAndUseStyle('com_phocacommander.phocacommander', 'media/com_phocacommander/css/administrator/phocacommander.css', array('version' => 'auto'));
+		if ($this->t['theme'] === '0'){
+			$wa->registerAndUseStyle('com_phocacommander.theme', 'media/com_phocacommander/css/administrator/theme-dark.css', array('version' => 'auto'), [], ['template.active']);
+		}
+
 	}
 
 	public function startCp() {
@@ -97,12 +115,12 @@ class PhocaCommanderRenderAdminView
 
 			} else {
 				$o[] = '<div class="row">';
-				$o[] = '<div id="j-main-container" class="col-md-2">'.JHtmlSidebar::render().'</div>';
+				$o[] = '<div id="j-main-container" class="col-md-2">'.Sidebar::render().'</div>';
 				$o[] = '<div id="j-main-container" class="col-md-10">';
 			}
 
 		} else {
-			$o[] = '<div id="j-sidebar-container" class="span2">' . JHtmlSidebar::render() . '</div>'."\n";
+			$o[] = '<div id="j-sidebar-container" class="span2">' . Sidebar::render() . '</div>'."\n";
 			$o[] = '<div id="j-main-container" class="span10">'."\n";
 		}
 
@@ -299,7 +317,7 @@ class PhocaCommanderRenderAdminView
 			for ($i = 0; $i<3; $i++) {
 				$numO = $num[$i];
 				$o .= '<div style="float:left;width:33%;margin:0 auto;">';
-				$o .= '<div><a style="text-decoration:underline;" href="https://www.phoca.cz/'.$components[$numO][1].'" target="_blank">'.JHtml::_('image',  'media/'.$option.'/images/administrator/icon-box-'.$components[$numO][2].'.png', ''). '</a></div>';
+				$o .= '<div><a style="text-decoration:underline;" href="https://www.phoca.cz/'.$components[$numO][1].'" target="_blank">'.HtmlHelper::_('image',  'media/'.$option.'/images/administrator/icon-box-'.$components[$numO][2].'.png', ''). '</a></div>';
 				$o .= '<div style="margin-top:-10px;"><small><a style="text-decoration:underline;" href="https://www.phoca.cz/'.$components[$numO][1].'" target="_blank">'.$components[$numO][0].'</a></small></div>';
 				$o .= '</div>';
 			}
@@ -309,13 +327,13 @@ class PhocaCommanderRenderAdminView
 			$num = range(0,(count($banners) - 1 ));
 			shuffle($num);
 			$numO = $num[0];
-			$o .= '<div><a href="https://www.phoca.cz/'.$banners[$numO][1].'" target="_blank">'.JHtml::_('image',  'media/'.$option.'/images/administrator/b-'.$banners[$numO][2].'.png', ''). '</a></div>';
+			$o .= '<div><a href="https://www.phoca.cz/'.$banners[$numO][1].'" target="_blank">'.HtmlHelper::_('image',  'media/'.$option.'/images/administrator/b-'.$banners[$numO][2].'.png', ''). '</a></div>';
 
 		}
 
 		$o .= '<p>&nbsp;</p>';
 		$o .= '<h4 style="margin-bottom:5px;">'.Text::_($oT.'_PLEASE_READ'). '</h4>';
-		$o .= '<div><a style="text-decoration:underline" href="https://www.phoca.cz/phoca-needs-your-help/" target="_blank">'.JText::_($oT.'_PHOCA_NEEDS_YOUR_HELP'). '</a></div>';
+		$o .= '<div><a style="text-decoration:underline" href="https://www.phoca.cz/phoca-needs-your-help/" target="_blank">'.Text::_($oT.'_PHOCA_NEEDS_YOUR_HELP'). '</a></div>';
 
 		$o .= '</div>';
 		return $o;

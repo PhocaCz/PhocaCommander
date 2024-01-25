@@ -187,7 +187,7 @@ foreach ($items as $k => $v) {
 		}
 
 		$lFF = PhocaCommanderHelper::createLoadFilesFunction($this->t, base64_encode($folderLink), $this->t['ordering'], $this->t['direction']);
-		$folders[$i]['fullname'] = '<div><label class="ph-checkbox"><input type="checkbox" name="'.base64_encode($v).'" value="folder|'.base64_encode($v).'" /> <img src="'.$this->t['urlimagemime'].'/icon-folder.png" alt="" /> [<a href="javascript: void(0)" onclick="'.$lFF.'" >'.utf8_encode($v).'</a>]</label></div>';
+		$folders[$i]['fullname'] = '<div><label class="ph-checkbox"><input type="checkbox" name="'.base64_encode($v).'" value="folder|'.base64_encode($v).'" /> <img src="'.$this->t['urlimagemime'].'/icon-folder.png" alt="" /> [<a href="javascript: void(0)" onclick="'.$lFF.'" >'.htmlspecialchars(strip_tags($v)).'</a>]</label></div>';
     }
 
 	// ----
@@ -206,7 +206,7 @@ foreach ($items as $k => $v) {
 		$ext 		= File::getExt($v);
 		$attribImg	= '';
 		if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' | $ext == 'gif') {
-			$attribImg = ' class="phLightBox" data-src="'.$searchPathRel.''.utf8_encode($v).'" ';
+			$attribImg = ' class="phLightBox" data-src="'.$searchPathRel.''.htmlspecialchars(strip_tags($v)).'" ';
 		}
 
 		$image = PhocaCommanderHelper::getMimeTypeIcon($v);
@@ -235,7 +235,7 @@ foreach ($items as $k => $v) {
 
 
 		//$files[$i]['fullname'] = '<div><label class="ph-checkbox"><input type="checkbox" name="'.base64_encode($v).'" /> <img src="'.$this->t['urlimagemime'].'/icon-empty.png" alt="" /> <a href="" >'.utf8_encode($v).'</a></label></div>';
-		$files[$i]['fullname'] = '<div><label class="ph-checkbox"><input class="input-checkbox" type="checkbox" name="'.base64_encode($v).'" value="file|'.base64_encode($v).'" /> '.$image. ' <span '.$attribImg.'>'.utf8_encode($v).'</span> '.$iA.'</label></div>';
+		$files[$i]['fullname'] = '<div><label class="ph-checkbox"><input class="input-checkbox" type="checkbox" name="'.base64_encode($v).'" value="file|'.base64_encode($v).'" /> '.$image. ' <span '.$attribImg.'>'.htmlspecialchars(strip_tags($v)).'</span> '.$iA.'</label></div>';
 	}
 	$i++;
 }
@@ -259,7 +259,7 @@ $o .= '<div class="ph-box-o" style="height:'.htmlspecialchars(strip_tags($this->
 if ($parent == '' && $path == $searchPath) {
 
 } else {
-	$lFF = PhocaCommanderHelper::createLoadFilesFunction($this->t, base64_encode($parent), $this->t['ordering'], $this->t['direction']);
+	$lFF = PhocaCommanderHelper::createLoadFilesFunction($this->t, base64_encode((string)$parent), $this->t['ordering'], $this->t['direction']);
 	$o .= '<tr><td class="ph-name">&nbsp; &nbsp; <a href="javascript: void(0)" onclick="'.$lFF.'" ><img src="'.$this->t['urlimage'].'/up.png" alt="" /></a> &nbsp; <a href="javascript: void(0)" onclick="'.$lFF.'" >..</a></td>';
 	$o .= '<td class="ph-size"></td>';
 	$o .= '<td class="ph-date"></td>';
