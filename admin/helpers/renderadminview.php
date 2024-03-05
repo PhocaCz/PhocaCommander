@@ -85,6 +85,9 @@ class PhocaCommanderRenderAdminView
 		HTMLHelper::_('script', 'media/com_phocacommander/js/administrator/prettyphoto/js/jquery.prettyPhoto.js', array('version' => 'auto'));
 		HTMLHelper::_('script', 'media/com_phocacommander/js/administrator/jquery.pause.min.js', array('version' => 'auto'));
 
+
+		$wa->registerAndUseStyle('com_phocacommander.plupload', 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css', array('version' => 'auto'));
+
 		switch($this->view) {
 			case 'phocacommanderinfo':
 

@@ -43,12 +43,12 @@
 		<description><![CDATA[ Phoca Commander is Joomla! CMS component - it is dual panel file manager (like Total Commander, Midnight Commander, Krusader, ...) working in Joomla! administration. ]]></description>
 		<element>com_phocacommander</element>
 		<type>component</type>
-		<version>5.0.0</version>
-		<infourl title="Phoca Commander 5.0.0">http://www.phoca.cz/version/index.php?phocacommander=5.0.0</infourl>
+		<version>5.0.1</version>
+		<infourl title="Phoca Commander 5.0.1">http://www.phoca.cz/version/index.php?phocacommander=5.0.1</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/5.0.0/com_phocacommander_v5.0.0.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/5.0.1/com_phocacommander_v5.0.1.zip</downloadurl>
 		</downloads>
-		<sha512>d7b87c813f2753122952484a8313966132f71c4cb3e0947066c97b1c12043909338c2253953f599180b9edbffa36d8822bd86d334b63cd411ab0991df5f98df3</sha512>
+		<sha512>49107b04846ef96e6c5fe37f7df798aae4fa7c8d13c728d55505618880aa284abe1d97a4b4ece1711678c38de8f8538a3e15988d42d9d157ab97624109416957</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>

@@ -752,13 +752,16 @@ function setAttribVal(phO, phG, phT) {
 	jQuery('#phAttribVal').val( phAttribVal );
 }
 
+
+
+
 /* Document Ready */
 jQuery(document).ready(function() {
 
     var phLang  = Joomla.getOptions('phLangCM');
     var phVars  = Joomla.getOptions('phVarsCM');
-
-	jQuery('#selectAllA').on( "click", function() {
+	
+	jQuery(document).on( "click", '#selectAllA', function() {
 		phActivePanel = 'B';
 		var checkedStatusA = this.checked;
 		jQuery('#ph-table-A tr').find('td:first :checkbox').each(function () {
@@ -768,7 +771,7 @@ jQuery(document).ready(function() {
 		 });
 	});
 
-	jQuery('#selectAllB').on( "click", function() {
+	jQuery(document).on( "click", '#selectAllB', function() {
 		phActivePanel = 'B';
 		var checkedStatusB = this.checked;
 		jQuery('#ph-table-B tr').find('td:first :checkbox').each(function () {
@@ -796,10 +799,10 @@ jQuery(document).ready(function() {
 	/* Start or change the form*/
 
 	/* Change */
-	jQuery('#ph-a').on( "click", function() {
+	jQuery(document).on( "click", '#ph-a', function() {
 		phActivePanel = 'A';
 	});
-	jQuery('#ph-b').on( "click", function() {
+	jQuery(document).on( "click", '#ph-b', function() {
 		phActivePanel = 'B';
 	});
 

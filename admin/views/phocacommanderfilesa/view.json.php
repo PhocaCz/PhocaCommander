@@ -242,9 +242,6 @@ foreach ($items as $k => $v) {
 
 // Folders
 $o = '<div class="ph-box-s">';
-
-
-
 $o .= '<div class="ph-status '.$activePanelClass.'" id="phStatus'.$this->t['panel'].'"></div>';
 $o .= '<table class="ph-table">';
 $o .= '<tr><th class="ph-check"><input type="checkbox" name="selectAll" id="selectAll'.$this->t['panel'].'" /></th>';

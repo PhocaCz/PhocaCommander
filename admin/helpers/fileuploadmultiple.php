@@ -54,7 +54,8 @@ class PhocaCommanderFileUploadMultiple
 		//$document->addScript(JUri::root(true).'/media/com_phocacommander/js/administrator/plupload/moxie.js');
 		//$document->addScript(JUri::root(true).'/media/com_phocacommander/js/administrator/plupload/jquery.ui.plupload/jquery.ui.plupload.js');
 		//HTMLHelper::stylesheet( 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css' );
-		$wa->registerAndUseStyle('com_phocacommander.plupload', 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css', array('version' => 'auto'));
+		// Moved to renderadmin because of ordering
+		//$wa->registerAndUseStyle('com_phocacommander.plupload', 'media/com_phocacommander/js/administrator/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css', array('version' => 'auto'));
 	}
 
 	public static function getMultipleUploadSizeFormat($size) {

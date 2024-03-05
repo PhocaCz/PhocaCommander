@@ -384,3 +384,7 @@ label.ph-input-prompt input.ph-input-checkbox-prompt {
 .progress.plupload_file_statusbar .bar {
 	background: green;
 }
+
+.ui-widget-content a {
+     color: #000;
+}
