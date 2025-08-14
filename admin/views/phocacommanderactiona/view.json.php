@@ -39,6 +39,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 
 		$paramsC 	= ComponentHelper::getParams('com_phocacommander');
 		$this->p['create_index'] = $paramsC->get( 'create_index', 1 );
+		$this->p['enable_unpack_function'] = $paramsC->get( 'enable_unpack_function', 0 );
 
 		$r	= new PhocaCommanderResponse();
 
@@ -429,6 +430,12 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 		$message		= '';
 		$overwrite		= 0;
 		if ($this->t['task'] == 'unpack') {
+
+			if ($this->p['enable_unpack_function'] == 0) {
+				echo $r->_('0', Text::_('COM_PHOCACOMMANDER_UNPACK_FUNCTION_DISABLED'));return;
+			}
+
+
 			if (isset($files[0]) && $files[0] != '') {
 				/*if (JFile::getExt($files[0]) != 'zip') {
 					echo $r->_('0', Text::_('COM_PHOCACOMMANDER_FILE_NOT_UNPACKED'));return;

@@ -9,8 +9,7 @@
 	<option value="phoca-light">COM_PHOCACOMMANDER_PHOCA_LIGHT</option>
 </field>
 <field 	name="f_keys"
-				type="radio"
-				class="btn-group"
+				type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher"
 				default="1"
 				label="COM_PHOCACOMMANDER_FIELD_F_KEYS_LABEL"
 				description="COM_PHOCACOMMANDER_FIELD_F_KEYS_DESC">
@@ -27,9 +26,9 @@
 
 <field name="upload_maxsize" type="phocatext" size="20" default="3145728" label="COM_PHOCACOMMANDER_FIELD_UPLOAD_MAX_SIZE_ADMIN_LABEL" description="COM_PHOCACOMMANDER_FIELD_UPLOAD_MAX_SIZE_ADMIN_DESC" />
 
-<field name="overwrite_existing_files" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_FIELD_OVERWRITE_EXISTING_FILES_LABEL" description="COM_PHOCACOMMANDER_FIELD_OVERWRITE_EXISTING_FILES_DESC" >
-	<option value="1">COM_PHOCACOMMANDER_YES</option>
+<field name="overwrite_existing_files" default="0" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_FIELD_OVERWRITE_EXISTING_FILES_LABEL" description="COM_PHOCACOMMANDER_FIELD_OVERWRITE_EXISTING_FILES_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
 </field>
 
 
@@ -124,59 +123,70 @@
 
 <field name="disallowed_file_types_upload" default="" rows="2" cols="35" type="phocatextarea" label="COM_PHOCACOMMANDER_FIELD_DISALLOWED_FILE_TYPES_UPLOAD_LABEL" description="COM_PHOCACOMMANDER_FIELD_DISALLOWED_FILE_TYPES_UPLOAD_DESC" />
 
-<field name="ignore_file_types_check" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_IGNORE_FILE_TYPES_CHECK_LABEL" description="COM_PHOCACOMMANDER_IGNORE_FILE_TYPES_CHECK_DESC" >
-	<option value="1">COM_PHOCACOMMANDER_YES</option>
+<field name="ignore_file_types_check" default="0" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_IGNORE_FILE_TYPES_CHECK_LABEL" description="COM_PHOCACOMMANDER_IGNORE_FILE_TYPES_CHECK_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
 </field>
 
 <field 	name="edit_not_writable"
-				type="radio"
-				class="btn-group"
+				type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher"
 				default="0"
 				label="COM_PHOCACOMMANDER_FIELD_EDIT_NOT_WRITABLE_FILES_LABEL"
 				description="COM_PHOCACOMMANDER_FIELD_EDIT_NOT_WRITABLE_FILES_DESC">
-			<option value="1">COM_PHOCACOMMANDER_YES</option>
 			<option value="0">COM_PHOCACOMMANDER_NO</option>
+		<option value="1">COM_PHOCACOMMANDER_YES</option>
 		</field>
 
 <field 	name="create_index"
-				type="radio"
-				class="btn-group"
+				type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher"
 				default="1"
 				label="COM_PHOCACOMMANDER_FIELD_CREATE_INDEX_FILE_LABEL"
 				description="COM_PHOCACOMMANDER_FIELD_CREATE_INDEX_FILE_DESC">
-			<option value="1">COM_PHOCACOMMANDER_YES</option>
 			<option value="0">COM_PHOCACOMMANDER_NO</option>
+		<option value="1">COM_PHOCACOMMANDER_YES</option>
 		</field>
 
 
-<field name="display_upload_button" default="1" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_DISPLAY_UPLOAD_BUTTON_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_UPLOAD_BUTTON_DESC" >
-	<option value="1">COM_PHOCACOMMANDER_YES</option>
+<field name="display_upload_button" default="1" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_DISPLAY_UPLOAD_BUTTON_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_UPLOAD_BUTTON_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
 </field>
 
-<field name="display_download_button" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_DISPLAY_DOWNLOAD_BUTTON_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_DOWNLOAD_BUTTON_DESC" >
-	<option value="1">COM_PHOCACOMMANDER_YES</option>
+<field name="display_download_button" default="0" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_DISPLAY_DOWNLOAD_BUTTON_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_DOWNLOAD_BUTTON_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
 </field>
+
+
+<field name="phocahead2" type="phocahead"  default="COM_PHOCACOMMANDER_CONFIG_SECURITY_OPTIONS_LABEL" label="" description=""/>
+
+
+
+<field name="enable_unpack_function" default="0" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_ENABLE_UNPACK_FUNCTION_LABEL" description="COM_PHOCACOMMANDER_ENABLE_UNPACK_FUNCTION_DESC" >
+	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
+</field>
+
+
+
 
 <field name="phocahead1" type="phocahead"  default="COM_PHOCACOMMANDER_CONFIG_INLINE_ACTIONS_LABEL" label="" description=""/>
 
 
 
-<field name="display_inline_view" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_DISPLAY_INLINE_VIEW_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_INLINE_VIEW_DESC" >
-	<option value="1">COM_PHOCACOMMANDER_YES</option>
+<field name="display_inline_view" default="0" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_DISPLAY_INLINE_VIEW_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_INLINE_VIEW_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
 </field>
 
-<field name="display_inline_edit" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_DISPLAY_INLINE_EDIT_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_INLINE_EDIT_DESC" >
-	<option value="1">COM_PHOCACOMMANDER_YES</option>
+<field name="display_inline_edit" default="0" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_DISPLAY_INLINE_EDIT_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_INLINE_EDIT_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
 </field>
 
-<field name="display_inline_download" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_DISPLAY_INLINE_DOWNLOAD_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_INLINE_DOWNLOAD_DESC" >
-	<option value="1">COM_PHOCACOMMANDER_YES</option>
+<field name="display_inline_download" default="0" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_DISPLAY_INLINE_DOWNLOAD_LABEL" description="COM_PHOCACOMMANDER_DISPLAY_INLINE_DOWNLOAD_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
 </field>
 
 
@@ -188,9 +198,9 @@
 
 <field name="phocaheadexpert1" type="phocaheadexpert"  default="COM_PHOCACOMMANDER_EXPERTS_ONLY_LABEL" label="" description=""/>
 
-<field name="experimental_zip" default="0" type="radio" class="btn-group" label="COM_PHOCACOMMANDER_ENABLE_ZIP_FUNCTION_LABEL" description="COM_PHOCACOMMANDER_ENABLE_ZIP_FUNCTION_DESC" >
-	<option value="1">COM_PHOCACOMMANDER_YES</option>
+<field name="experimental_zip" default="0" type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher" label="COM_PHOCACOMMANDER_ENABLE_ZIP_FUNCTION_LABEL" description="COM_PHOCACOMMANDER_ENABLE_ZIP_FUNCTION_DESC" >
 	<option value="0">COM_PHOCACOMMANDER_NO</option>
+	<option value="1">COM_PHOCACOMMANDER_YES</option>
 </field>
 
 </fieldset>

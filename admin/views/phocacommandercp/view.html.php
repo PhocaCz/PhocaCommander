@@ -35,6 +35,7 @@ class PhocaCommanderCpViewPhocaCommanderCp extends HtmlView
 		$this->t['experimental_zip']		= $paramsC->get( 'experimental_zip', 0 );
 		$this->t['display_upload_button']	= $paramsC->get( 'display_upload_button', 1 );
 		$this->t['display_download_button']	= $paramsC->get( 'display_download_button', 0 );
+		$this->t['enable_unpack_function']	= $paramsC->get( 'enable_unpack_function', 0 );
 
 
 
@@ -277,8 +278,10 @@ class PhocaCommanderCpViewPhocaCommanderCp extends HtmlView
 		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'delete\')" class="btn btn-primary btn-small" id="btn-delete"><i class="icon-delete" title="'.Text::_('COM_PHOCACOMMANDER_F8_DELETE').'"></i> '.Text::_($f[8]).'</a>';
 		$bar->appendButton('Custom', $dhtml);
 
-		$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'unpack\')" class="btn btn-small btn-primary"><i class="icon-box-remove" title="'.Text::_('COM_PHOCACOMMANDER_F9_UNPACK').'"></i> '.Text::_($f[9]).'</a>';
-		$bar->appendButton('Custom', $dhtml);
+		if ($this->t['enable_unpack_function'] == 1) {
+			$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'unpack\')" class="btn btn-small btn-primary"><i class="icon-box-remove" title="'.Text::_('COM_PHOCACOMMANDER_F9_UNPACK').'"></i> '.Text::_($f[9]).'</a>';
+			$bar->appendButton('Custom', $dhtml);
+		}
 
 		if ($this->t['display_upload_button'] == 1) {
 			$dhtml = '<a href="javascript: void(0)" onclick="phDoAction(\'upload\')" class="btn btn-small btn-primary"><i class="icon-upload" title="'.Text::_('COM_PHOCACOMMANDER_F10_UPLOAD').'"></i> '.Text::_($f[10]).'</a>';
