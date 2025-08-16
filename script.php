@@ -8,8 +8,13 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License version 2 or later;
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
+
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\Table\Table;
 
 jimport( 'joomla.filesystem.folder' );
 
@@ -134,11 +139,125 @@ class com_phocacommanderInstallerScript
             $o .= '</div>';//g5i
             echo $o;
 
-            echo $o;
+        }
+
+        if ($type === 'install') {
+            $this->setDefaultPermissions($parent->getElement());
         }
 
         return true;
     }
+
+
+protected function setDefaultPermissions(string $componentName): void
+{
+    $db = Factory::getDbo();
+
+    // 1. Find the ID of our component's asset
+    $query = $db->getQuery(true)
+        ->select($db->quoteName('id'))
+        ->from($db->quoteName('#__assets'))
+        ->where($db->quoteName('name') . ' = ' . $db->quote($componentName));
+    $db->setQuery($query);
+
+    try {
+        $assetId = (int) $db->loadResult();
+
+        if (!$assetId) {
+            return; // Asset not found
+        }
+
+        // 2. Define IDs for key Joomla groups based on a standard installation
+        $publicGroupId      = 1;
+        $registeredGroupId  = 2;
+        $authorGroupId      = 3;
+        $editorGroupId      = 4;
+        $publisherGroupId   = 5;
+        $managerGroupId     = 6;
+        $adminGroupId       = 7;
+        $superUserGroupId   = 8;
+        $guestGroupId       = 9;
+
+        // Get all existing group IDs dynamically to handle any new custom groups
+        $query = $db->getQuery(true)
+            ->select($db->quoteName('id'))
+            ->from($db->quoteName('#__usergroups'));
+        $db->setQuery($query);
+        $allGroupIds = $db->loadColumn();
+
+        // 3. List all actions for which we want to set permissions
+        $actions = [
+            'core.admin',
+            'core.manage',
+            'core.create',
+            'core.delete',
+            'core.edit',
+            'core.edit.state',
+        ];
+
+        // 4. Create the default access rule based on your original logic
+        // This rule will serve as a foundation
+        $defaultAccessRule = [
+            $publicGroupId      => '', // Will be unset, we cannot set this group to 0 as it subgroup like manager will be then locked
+            $registeredGroupId  => 0,
+            $authorGroupId      => 0,
+            $editorGroupId      => 0,
+            $publisherGroupId   => 0,
+            $managerGroupId     => 0,
+            $adminGroupId       => 0,
+            $superUserGroupId   => 1,// Only super user can access
+            $guestGroupId       => 0,
+        ];
+
+
+        // 6. Add a rule for any other newly created groups
+        // We find all groups not in our explicit list and set them to Denied (0)
+        $explicitlyHandledGroups = array_keys($defaultAccessRule);
+        $otherGroupIds = array_diff($allGroupIds, $explicitlyHandledGroups);
+
+        foreach ($otherGroupIds as $groupId) {
+            $defaultAccessRule[$groupId] = 0;
+        }
+
+        // We need to remove these groups as setting them will make locked for subgroups - so guest will lock all groups
+        unset($defaultAccessRule[$publicGroupId]);
+
+        // 7. Prepare the array for the final rules
+        $rules = [];
+
+        // Apply the rule to all defined actions
+        foreach ($actions as $action) {
+            $rules[$action] = $defaultAccessRule;
+        }
+
+        // 8. SPECIAL CASE: Access to component options
+        // This permission should ALWAYS be granted to the Super User only.
+        $rules['core.options'] = [];
+        foreach ($allGroupIds as $groupId) {
+             if ($groupId === $superUserGroupId) {
+                 $rules['core.options'][$groupId] = 1;
+             } else {
+                 $rules['core.options'][$groupId] = 0;
+             }
+        }
+
+        // 9. Convert the array to a JSON string
+        $rulesJson = json_encode($rules);
+
+        // 10. Update the record in the #__assets table
+        $assetTable = Table::getInstance('Asset', 'Joomla\\CMS\\Table\\');
+        $assetTable->load($assetId);
+        $assetTable->rules = $rulesJson;
+
+        if (!$assetTable->store()) {
+            Factory::getApplication()->enqueueMessage('Could not save default component permissions.', 'error');
+        }
+
+    } catch (\Exception $e) {
+        Factory::getApplication()->enqueueMessage('Error setting default permissions: '. $e->getMessage(), 'error');
+    }
+}
+
 
 
     function getStyle() {

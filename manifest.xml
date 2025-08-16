@@ -24,10 +24,10 @@
 		<description><![CDATA[ Phoca Commander is Joomla! CMS component - it is dual panel file manager (like Total Commander, Midnight Commander, Krusader, ...) working in Joomla! administration. ]]></description>
 		<element>com_phocacommander</element>
 		<type>component</type>
-		<version>4.0.1</version>
-		<infourl title="Phoca Commander 4.0.1">http://www.phoca.cz/version/index.php?phocacommander=4.0.1</infourl>
+		<version>4.0.2</version>
+		<infourl title="Phoca Commander 4.0.2">http://www.phoca.cz/version/index.php?phocacommander=4.0.2</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/4.0.1/com_phocacommander_v4.0.1.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/4.0.2/com_phocacommander_v4.0.2.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>stable</tag>
@@ -43,12 +43,12 @@
 		<description><![CDATA[ Phoca Commander is Joomla! CMS component - it is dual panel file manager (like Total Commander, Midnight Commander, Krusader, ...) working in Joomla! administration. ]]></description>
 		<element>com_phocacommander</element>
 		<type>component</type>
-		<version>5.0.2</version>
-		<infourl title="Phoca Commander 5.0.2">http://www.phoca.cz/version/index.php?phocacommander=5.0.2</infourl>
+		<version>5.0.3</version>
+		<infourl title="Phoca Commander 5.0.3">http://www.phoca.cz/version/index.php?phocacommander=5.0.3</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/5.0.2/com_phocacommander_v5.0.2.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/5.0.3/com_phocacommander_v5.0.3.zip</downloadurl>
 		</downloads>
-		<sha512>86c62e857adcd3d7935d4cfd946bc1b835242d0f99b32617d1d5f84a481352c336b49c273de644a54294588a4dca01ceab81793112cdff5560ad0beadb844ba8</sha512>
+		<sha512>ee59cc0333bf121b36c41d6a36dd586d78eff9ba3b6f50083eca2f1de71f04745d670a71d678bcbcf8ca276740c7d3af71f8dd2e0a7e4d439248e6f664156861</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>

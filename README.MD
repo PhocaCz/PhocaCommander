@@ -58,11 +58,11 @@ Phoca Commander is Joomla! CMS component - it is dual panel file manager (like T
 
 ## Version (Joomla! 4.x)
 
-4.0.1
+4.0.2
 
 ## Version (Joomla! 5.x)
 
-5.0.2
+5.0.3
 
 
 
