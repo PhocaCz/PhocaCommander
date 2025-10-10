@@ -82,8 +82,8 @@ class PhocaCommanderCpViewPhocaCommanderCp extends HtmlView
 		$this->t['multipleuploadmethod'] 	= $paramsC->get( 'multiple_upload_method', 4 );
 		$this->session		= Factory::getSession();
 		PhocaCommanderFileUploadMultiple::renderMultipleUploadLibraries();
-		$this->manager 		= $app->input->get( 'manager', '', '', 'file' );
-		$this->field	= $app->input->get('field');
+		$this->manager 		= $app->getInput()->get( 'manager', '', '', 'file' );
+		$this->field	= $app->getInput()->get('field');
 		$this->currentFolder = '';
 
 		/*if ($muUploaded > 0) {
@@ -211,7 +211,7 @@ class PhocaCommanderCpViewPhocaCommanderCp extends HtmlView
 
 	protected function addToolbar() {
 
-		//Factory::getApplication()->input->set('hidemainmenu', true);
+		//Factory::getApplication()->getInput()->set('hidemainmenu', true);
 
 		$paramsC 		= ComponentHelper::getParams('com_phocacommander');
 		$fKeys 	= $paramsC->get( 'f_keys', 1 );

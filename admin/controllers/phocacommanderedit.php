@@ -13,8 +13,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Filesystem\Path;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\Path;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 jimport('joomla.application.component.controllerform');
 
@@ -28,24 +28,24 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends FormController
 
 		$app   			= Factory::getApplication();
 		$context 		= 'com_phocacommander.phocacommander.';
-		$orderinga 		= $app->input->get('orderinga', '', 'string');
-		$orderingb 		= $app->input->get('orderingb', '', 'string');
-		$directiona 	= $app->input->get('directiona', '', 'string');
-		$directionb 	= $app->input->get('directionb', '', 'string');
-		$activepanel 	= $app->input->get('activepanel', '', 'string');
-		$panel 			= $app->input->get('panel', '', 'string');
-		$foldera 		= $app->input->get('foldera', '', 'string');
-		$folderb 		= $app->input->get('folderb', '', 'string');
+		$orderinga 		= $app->getInput()->get('orderinga', '', 'string');
+		$orderingb 		= $app->getInput()->get('orderingb', '', 'string');
+		$directiona 	= $app->getInput()->get('directiona', '', 'string');
+		$directionb 	= $app->getInput()->get('directionb', '', 'string');
+		$activepanel 	= $app->getInput()->get('activepanel', '', 'string');
+		$panel 			= $app->getInput()->get('panel', '', 'string');
+		$foldera 		= $app->getInput()->get('foldera', '', 'string');
+		$folderb 		= $app->getInput()->get('folderb', '', 'string');
 
 		if(Session::checkToken('request')) {
-			$app->input->post->set('orderinga', $orderinga);
-			$app->input->post->set('orderingb', $orderingb);
-			$app->input->post->set('directiona', $directiona);
-			$app->input->post->set('directionb', $directionb);
-			$app->input->post->set('foldera', $foldera);
-			$app->input->post->set('folderb', $folderb);
-			$app->input->post->set('activepanel', $activepanel);
-			$app->input->post->set('panel', $panel);
+			$app->getInput()->post->set('orderinga', $orderinga);
+			$app->getInput()->post->set('orderingb', $orderingb);
+			$app->getInput()->post->set('directiona', $directiona);
+			$app->getInput()->post->set('directionb', $directionb);
+			$app->getInput()->post->set('foldera', $foldera);
+			$app->getInput()->post->set('folderb', $folderb);
+			$app->getInput()->post->set('activepanel', $activepanel);
+			$app->getInput()->post->set('panel', $panel);
 
 
 			$app->getUserStateFromRequest($context .'orderinga', 'orderinga', $orderinga, 'string');
@@ -84,7 +84,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends FormController
 
 		$app   		= Factory::getApplication();
 		$context 	= "$this->option.edit.$this->context";
-		$file		= $app->input->get( 'filename', '', 'string'  );
+		$file		= $app->getInput()->get( 'filename', '', 'string'  );
 		$recordId 	= 1;
 		$key = $urlVar 	= 'id';
 
@@ -120,7 +120,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends FormController
 
 		$app   		= Factory::getApplication();
 		$context 	= "$this->option.edit.$this->context";
-		$file		= $app->input->get( 'filename', '', 'string'  );
+		$file		= $app->getInput()->get( 'filename', '', 'string'  );
 
 
 		$file 		= base64_decode($file);
@@ -130,7 +130,7 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends FormController
 		$pathFolder	= Path::clean($path . '/' .$file);
 
 		$mimeType = '';
-		if (File::exists($pathFolder)) {
+		if (PhocaCommanderHelper::fileExists($pathFolder)) {
 
 			if (function_exists('mime_content_type')) {
 				$mimeType 	= mime_content_type($pathFolder);

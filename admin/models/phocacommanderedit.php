@@ -10,14 +10,17 @@
 defined( '_JEXEC' ) or die();
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
+use Phoca\PhocaCommander\MVC\Model\AdminModelTrait;
+
 jimport('joomla.application.component.modeladmin');
 
 class PhocaCommanderCpModelPhocaCommanderEdit extends AdminModel
 {
+	use AdminModelTrait;
 	protected	$option 		= 'com_phocacommander';
 	protected 	$text_prefix	= 'com_phocacommander';
 	public $typeAlias 			= 'com_phocacommander.phocacommanderedit';
@@ -36,7 +39,7 @@ class PhocaCommanderCpModelPhocaCommanderEdit extends AdminModel
 	public function getSource($fileName) {
 		$fileName = base64_decode($fileName);
 		$item = new stdClass;
-		if (File::exists(JPATH_ROOT.'/'.$fileName)) {
+		if (PhocaCommanderHelper::fileExists(JPATH_ROOT.'/'.$fileName)) {
 			$item->source = file_get_contents(JPATH_ROOT.'/'.$fileName);
 		} else {
 			$this->setError(Text::_('COM_PHOCACOMMANDER_FILE_DOES_NOT_EXIST'));
@@ -64,7 +67,7 @@ class PhocaCommanderCpModelPhocaCommanderEdit extends AdminModel
 				$fileName = base64_decode($data['filename']);
 				$filePath = Path::clean(JPATH_ROOT . '/' . $fileName);
 
-				if (File::exists($filePath)) {
+				if (PhocaCommanderHelper::fileExists($filePath)) {
 					//JClientHelper::setCredentialsFromRequest('ftp');
 					//$ftp = JClientHelper::getCredentials('ftp');
 					$user = get_current_user();

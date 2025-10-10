@@ -9,12 +9,15 @@
 defined( '_JEXEC' ) or die();
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
+use Phoca\PhocaCommander\MVC\Model\AdminModelTrait;
+
 jimport( 'joomla.application.component.modellist' );
 jimport( 'joomla.filesystem.folder' );
 jimport( 'joomla.filesystem.file' );
 
 class PhocaCommanderCpModelPhocaCommanderCp extends ListModel
 {
+	use AdminModelTrait;
 	protected	$option 		= 'com_phocacommander';
 
 	public function checkState() {

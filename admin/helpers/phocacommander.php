@@ -7,12 +7,12 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Client\ClientHelper;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
 use Joomla\CMS\Client\FtpClient;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Factory;
@@ -44,11 +44,11 @@ class PhocaCommanderHelper
 
 	public static function getExtensionVersion($c = 'phocacommander') {
 		$folder = JPATH_ADMINISTRATOR . '/components/com_'.$c;
-		if (Folder::exists($folder)) {
+		if (PhocaCommanderHelper::folderExists($folder)) {
 			$xmlFilesInDir = Folder::files($folder, '.xml$');
 		} else {
 			$folder = JPATH_SITE . '/components/com_'.$c;
-			if (Folder::exists($folder)) {
+			if (PhocaCommanderHelper::folderExists($folder)) {
 				$xmlFilesInDir = Folder::files($folder, '.xml$');
 			} else {
 				$xmlFilesInDir = null;
@@ -1159,8 +1159,8 @@ class PhocaCommanderHelper
         }
 
     }
-	
-	
+
+
 
 	public static function getInfo() {
 
@@ -1171,12 +1171,12 @@ class PhocaCommanderHelper
 		}
 		return 'Powered by <a href="https://www.phoca.cz/phocacommander" target="_blank">Phoca Commander</a> | ';
 	}
-	
+
 	public static function setVars( $task = '') {
 
 		$a			= array();
 		$app		= Factory::getApplication();
-		$a['o'] 	= htmlspecialchars(strip_tags($app->input->get('option')));
+		$a['o'] 	= htmlspecialchars(strip_tags($app->getInput()->get('option')));
 		$a['c'] 	= str_replace('com_', '', $a['o']);
 		$a['n'] 	= 'Phoca' . ucfirst(str_replace('com_phoca', '', $a['o']));
 		$a['l'] 	= strtoupper($a['o']);
@@ -1185,6 +1185,14 @@ class PhocaCommanderHelper
 		$a['task']	= $a['c'] . htmlspecialchars(strip_tags($task));
 		$a['tasks'] = $a['task']. 's';
 		return $a;
+	}
+
+	public static function fileExists($file) {
+    return is_file(Path::clean($file));
+}
+
+	public static function folderExists($path) {
+		return is_dir(Path::clean($path));
 	}
 }
 ?>

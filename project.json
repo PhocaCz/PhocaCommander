@@ -5,6 +5,7 @@
 	"license": "GNU/GPL",
 	"projectName": "PhocaCommander",
 	"extensionName": "Phoca Commander",
+	"nameSpace": "Phoca\\Component\\Phocacommander",
 	"projectInitials" : "CM",
 	"description": "Phoca Commander is Joomla! CMS component - it is dual panel file manager (like Total Commander, Midnight Commander, Krusader, ...) working in Joomla! administration.",
 	"projectUrl": "https://www.phoca.cz/phocacommander",

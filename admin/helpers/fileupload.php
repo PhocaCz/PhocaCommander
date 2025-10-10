@@ -14,9 +14,9 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Client\ClientHelper;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Path;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Path;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\HTML\HTMLHelper;
 jimport( 'joomla.filesystem.folder' );
@@ -57,13 +57,13 @@ class PhocaCommanderFileUpload
 		// Set FTP credentials, if given
 		$ftp = ClientHelper::setCredentialsFromRequest('ftp');
 
-		$folder			= $app->input->get( 'folder', '', '', 'string' );
+		$folder			= $app->getInput()->get( 'folder', '', '', 'string' );
 		$folder 		= base64_decode($folder);
 		//$file 			= J Request::getVar( 'file', '', 'files', 'array' );
-		$file			= $app->input->files->get( 'file', null, 'raw');
-		$chunk 			= $app->input->get( 'chunk', 0, '', 'int' );
-		$chunks 		= $app->input->get( 'chunks', 0, '', 'int' );
-		$manager		= $app->input->get( 'manager', 'file', '', 'string' );
+		$file			= $app->getInput()->files->get( 'file', null, 'raw');
+		$chunk 			= $app->getInput()->get( 'chunk', 0, '', 'int' );
+		$chunks 		= $app->getInput()->get( 'chunks', 0, '', 'int' );
+		$manager		= $app->getInput()->get( 'manager', 'file', '', 'string' );
 
 
 		$path	= JPATH_ROOT;
@@ -130,7 +130,7 @@ class PhocaCommanderFileUpload
 				// Get the real size - if chunk is uploaded, it is only a part size, so we must compute all size
 				// If there is last chunk we can computhe the whole size
 				if ($lastChunk == $chunks) {
-					if (File::exists($filepathImgTemp) && File::exists($file['tmp_name'])) {
+					if (PhocaCommanderHelper::fileExists($filepathImgTemp) && PhocaCommanderHelper::fileExists($file['tmp_name'])) {
 						$realSize = filesize($filepathImgTemp) + filesize($file['tmp_name']);
 					}
 				}
@@ -148,7 +148,7 @@ class PhocaCommanderFileUpload
 				if ($overwriteExistingFiles == 1) {
 					File::delete($filepathImgFinal);
 				}
-				if (File::exists($filepathImgFinal)) {
+				if (PhocaCommanderHelper::fileExists($filepathImgFinal)) {
 					if($lastChunk == $chunks){
 						@Folder::delete($filepathFolderTemp);
 					}
@@ -172,12 +172,12 @@ class PhocaCommanderFileUpload
 				}
 
 				// Ok create temp folder and add chunks
-				if (!Folder::exists($filepathFolderTemp)) {
+				if (!PhocaCommanderHelper::folderExists($filepathFolderTemp)) {
 					@Folder::create($filepathFolderTemp);
 				}
 
 				// Remove old temp files
-				if (Folder::exists($filepathFolderTemp)) {
+				if (PhocaCommanderHelper::folderExists($filepathFolderTemp)) {
 					$dirFiles = Folder::files($filepathFolderTemp);
 					if (!empty($dirFiles)) {
 						foreach ($dirFiles as $fileS) {
@@ -320,7 +320,7 @@ class PhocaCommanderFileUpload
 
 
 
-				if (File::exists($filepathImgFinal) && $overwriteExistingFiles == 0) {
+				if (PhocaCommanderHelper::fileExists($filepathImgFinal) && $overwriteExistingFiles == 0) {
 					jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 108,
 					'message' => Text::_('COM_PHOCACOMMANDER_ERROR').': ',
 					'details' => Text::_('COM_PHOCACOMMANDER_FILE_ALREADY_EXISTS'))));
@@ -368,18 +368,18 @@ class PhocaCommanderFileUpload
 		$app->allowCache(false);
 
 
-		$file 			= $app->input->get( 'Filedata', '', 'files', 'array' );
-		$folder			= $app->input->get( 'folder', '', '', 'path' );
-		$format			= $app->input->get( 'format', 'html', '', 'cmd');
-		$return			= $app->input->get( 'return-url', null, 'post', 'base64' );//includes field
-		$viewBack		= $app->input->get( 'viewback', '', '', '' );
-		$manager		= $app->input->get( 'manager', 'file', '', 'string' );
-		$tab			= $app->input->get( 'tab', '', '', 'string' );
-		$field			= $app->input->get( 'field' );
+		$file 			= $app->getInput()->get( 'Filedata', '', 'files', 'array' );
+		$folder			= $app->getInput()->get( 'folder', '', '', 'path' );
+		$format			= $app->getInput()->get( 'format', 'html', '', 'cmd');
+		$return			= $app->getInput()->get( 'return-url', null, 'post', 'base64' );//includes field
+		$viewBack		= $app->getInput()->get( 'viewback', '', '', '' );
+		$manager		= $app->getInput()->get( 'manager', 'file', '', 'string' );
+		$tab			= $app->getInput()->get( 'tab', '', '', 'string' );
+		$field			= $app->getInput()->get( 'field' );
 		$errUploadMsg	= '';
 		$folderUrl 		= $folder;
 		$tabUrl			= '';
-		$component		= $app->input->get( 'option', '', '', 'string' );
+		$component		= $app->getInput()->get( 'option', '', '', 'string' );
 
 		$path	= PhocaDownloadPath::getPathSet($manager);// we use viewback to get right path
 
@@ -437,7 +437,7 @@ class PhocaCommanderFileUpload
 				}
 			}
 
-			if (File::exists($filepath) && $overwriteExistingFiles == 0) {
+			if (PhocaCommanderHelper::fileExists($filepath) && $overwriteExistingFiles == 0) {
 				if ($return) {
 					$app->redirect(base64_decode($return).'&manager='.(string)$manager.'&folder='.$folderUrl, Text::_('COM_PHOCACOMMANDER_FILE_ALREADY_EXISTS'), 'error');
 					exit;

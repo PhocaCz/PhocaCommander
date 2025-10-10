@@ -12,10 +12,10 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\Path;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Path;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 jimport( 'joomla.application.component.view');
 
 class PhocaCommanderCpViewPhocaCommanderFilesA extends HtmlView
@@ -35,14 +35,14 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends HtmlView
 		}
 
 		$app					= Factory::getApplication();
-		$this->t['panel']		= $app->input->get( 'panel', '', 'string'  );
-		$this->t['activepanel']	= $app->input->get( 'activepanel', '', 'string'  );
-		$this->t['orderinga']	= $app->input->get( 'orderinga', '', 'string'  );
-		$this->t['directiona'] 	= $app->input->get( 'directiona', '', 'string'  );
-		$this->t['foldera']		= $app->input->get( 'foldera', '', 'string'  );
-		$this->t['orderingb']	= $app->input->get( 'orderingb', '', 'string'  );
-		$this->t['directionb'] 	= $app->input->get( 'directionb', '', 'string'  );
-		$this->t['folderb']		= $app->input->get( 'folderb', '', 'string'  );
+		$this->t['panel']		= $app->getInput()->get( 'panel', '', 'string'  );
+		$this->t['activepanel']	= $app->getInput()->get( 'activepanel', '', 'string'  );
+		$this->t['orderinga']	= $app->getInput()->get( 'orderinga', '', 'string'  );
+		$this->t['directiona'] 	= $app->getInput()->get( 'directiona', '', 'string'  );
+		$this->t['foldera']		= $app->getInput()->get( 'foldera', '', 'string'  );
+		$this->t['orderingb']	= $app->getInput()->get( 'orderingb', '', 'string'  );
+		$this->t['directionb'] 	= $app->getInput()->get( 'directionb', '', 'string'  );
+		$this->t['folderb']		= $app->getInput()->get( 'folderb', '', 'string'  );
 
 		$app   			= Factory::getApplication();
 		$context 		= 'com_phocacommander.phocacommander.';
@@ -75,7 +75,7 @@ class PhocaCommanderCpViewPhocaCommanderFilesA extends HtmlView
 		if ($this->t['folder'] != '') {
 			$this->t['folderdecoded'] 	= base64_decode($this->t['folder']);
 
-			if (Folder::exists(Path::clean($path . '/' .$this->t['folderdecoded']))) {
+			if (PhocaCommanderHelper::folderExists(Path::clean($path . '/' .$this->t['folderdecoded']))) {
 				$searchPath					= $path . '/' . $this->t['folderdecoded'];
 				$searchPathRel				= $searchPathRel . '/' . $this->t['folderdecoded'];
 				$parent 					= str_replace("\\", "/", dirname($this->t['folderdecoded']));

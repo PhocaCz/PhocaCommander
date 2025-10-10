@@ -16,15 +16,16 @@ use Joomla\CMS\Version;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Phoca\Render\Adminview;
 
 
-class PhocaCommanderRenderAdminView
+class PhocaCommanderRenderAdminView extends Adminview
 {
 	protected $t;
-	protected $compatible;
-	protected $view;
-	protected $option;
-	protected $sidebar;
+	public $compatible;
+	public $view;
+	public $option;
+	public $sidebar;
 
 	public function __construct(){
 
@@ -34,25 +35,15 @@ class PhocaCommanderRenderAdminView
 		$app				= Factory::getApplication();
 		$version 			= new Version();
 		$this->compatible 	= $version->isCompatible('4.0.0-alpha');
-		$this->view			= $app->input->get('view');
-		$this->option		= $app->input->get('option');
+		$this->view			= $app->getInput()->get('view');
+		$this->option		= $app->getInput()->get('option');
 		$this->sidebar 		= Factory::getApplication()->getTemplate(true)->params->get('menu', 1) ? true : false;
 
 		$wa 				= $app->getDocument()->getWebAssetManager();
 
-		switch($this->view) {
-
-            default:
-				HTMLHelper::_('behavior.formvalidator');
-				HTMLHelper::_('behavior.keepalive');
-
-				if (!$this->compatible) {
-					HTMLHelper::_('behavior.tooltip');
-					HTMLHelper::_('formbehavior.chosen', 'select');
-				}
-
-			break;
-		}
+		HTMLHelper::_('behavior.formvalidator');
+		HTMLHelper::_('behavior.keepalive');
+		HTMLHelper::_('jquery.framework', false);
 
 
 
@@ -108,7 +99,7 @@ class PhocaCommanderRenderAdminView
 		}
 
 	}
-
+/*
 	public function startCp() {
 
 		$o = array();
@@ -146,7 +137,8 @@ class PhocaCommanderRenderAdminView
 
 		return implode("\n", $o);
 	}
-
+*/
+/*
 	public function startForm($option, $view, $itemId, $id = 'adminForm', $name = 'adminForm', $class = '', $layout = 'edit',  $tmpl = '') {
 
 
@@ -173,8 +165,8 @@ class PhocaCommanderRenderAdminView
 
 		return $o;
 	}
-
-	public function formInputs() {
+*/
+/*	public function formInputs($task = '') {
 
 		$o = '<input type="hidden" name="task" value="" />'. "\n";
 		$o .= HTMLHelper::_('form.token'). "\n";
@@ -237,7 +229,7 @@ class PhocaCommanderRenderAdminView
 
 	public function getLinks($internalLinksOnly = 0) {
 		$app	= Factory::getApplication();
-		$option = $app->input->get('option');
+		$option = $app->getInput()->get('option');
 		$oT		= strtoupper($option);
 
 		$links =  array();
@@ -341,9 +333,9 @@ class PhocaCommanderRenderAdminView
 		$o .= '</div>';
 		return $o;
 	}
-
+*/
 	// TABS
-
+/*
 	public function navigation($tabs, $activeTab = '') {
 
 		if ($this->compatible) {
@@ -369,8 +361,8 @@ class PhocaCommanderRenderAdminView
 		$o .= '</ul>';
 		return $o;
 	}
-
-
+*/
+/*
 	public function startTabs($active = 'general') {
 		if ($this->compatible) {
 			return HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => $active));
@@ -401,7 +393,7 @@ class PhocaCommanderRenderAdminView
 		} else {
 			return '</div>';
 		}
-	}
+	}*/
 
 }
 ?>

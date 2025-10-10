@@ -12,9 +12,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Path;
 jimport( 'joomla.application.component.view');
 
 class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
@@ -25,17 +25,18 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 
 	function display($tpl = null){
 
+
 		$app						= Factory::getApplication();
-		$this->t['pathfrom']		= $app->input->get( 'pathfrom', '', 'string'  );
-		$this->t['pathwhere']		= $app->input->get( 'pathwhere', '', 'string'  );
-		$this->t['selfiles']		= $app->input->get( 'selfiles', array(), 'array'  );
-		$this->t['task']			= $app->input->get( 'task', '', 'string'  );
-		$this->t['newitem']			= $app->input->get( 'newitem', '', 'string'  );
-		$this->t['renameitem']		= $app->input->get( 'renameitem', '', 'string'  );
-		$this->t['newattrib']		= $app->input->get( 'newattrib', '', 'string'  );
-		$this->t['option']			= $app->input->get( 'option', '', 'string'  );
-		$this->t['newvalue']		= $app->input->get( 'newvalue', '', 'string'  );// Can be renamed folder, checkbox for overwritten, ...
-		//$this->t['activepanel']		= $app->input->get( 'activepanel', '', 'string'  );
+		$this->t['pathfrom']		= $app->getInput()->get( 'pathfrom', '', 'string'  );
+		$this->t['pathwhere']		= $app->getInput()->get( 'pathwhere', '', 'string'  );
+		$this->t['selfiles']		= $app->getInput()->get( 'selfiles', array(), 'array'  );
+		$this->t['task']			= $app->getInput()->get( 'task', '', 'string'  );
+		$this->t['newitem']			= $app->getInput()->get( 'newitem', '', 'string'  );
+		$this->t['renameitem']		= $app->getInput()->get( 'renameitem', '', 'string'  );
+		$this->t['newattrib']		= $app->getInput()->get( 'newattrib', '', 'string'  );
+		$this->t['option']			= $app->getInput()->get( 'option', '', 'string'  );
+		$this->t['newvalue']		= $app->getInput()->get( 'newvalue', '', 'string'  );// Can be renamed folder, checkbox for overwritten, ...
+		//$this->t['activepanel']		= $app->getInput()->get( 'activepanel', '', 'string'  );
 
 		$paramsC 	= ComponentHelper::getParams('com_phocacommander');
 		$this->p['create_index'] = $paramsC->get( 'create_index', 1 );
@@ -103,14 +104,14 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 					if ($oldValue == $newValue) {
 						echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_NEW_NAME_SAME_OLD'));return;
 					}
-					if (Folder::exists($newValue)) {
+					if (PhocaCommanderHelper::folderExists($newValue)) {
 						echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_NEW_FOLDER_NAME_EXISTS'));return;
 					}
 
 					// TO DO
 					// test php rename on possible OSs
 					//
-					if (Folder::exists($oldValue)) {
+					if (PhocaCommanderHelper::folderExists($oldValue)) {
 						if (Folder::move($oldValue, $newValue)) {
 							if (File::move($oldValue, $newValue)) {
 								echo $r->_('1', Text::_('COM_PHOCACOMMANDER_FOLDER_RENAMED'));return;
@@ -124,11 +125,11 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 					if ($oldValue == $newValue) {
 						echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_NEW_NAME_SAME_OLD'));return;
 					}
-					if (File::exists($newValue)) {
+					if (PhocaCommanderHelper::fileExists($newValue)) {
 						echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_NEW_FILE_NAME_EXISTS'));return;
 					}
 
-					if (File::exists($oldValue)) {
+					if (PhocaCommanderHelper::fileExists($oldValue)) {
 						if (File::move($oldValue, $newValue)) {
 							echo $r->_('1', Text::_('COM_PHOCACOMMANDER_FILE_RENAMED'));return;
 						}
@@ -178,9 +179,9 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 					if ($pos === false) {
 						if (isset($v) && $v != '') {
 							$srcValue = $pathFrom . $v;
-							if (Folder::exists($srcValue) && Folder::exists($pathWhere)) {
+							if (PhocaCommanderHelper::folderExists($srcValue) && PhocaCommanderHelper::folderExists($pathWhere)) {
 
-								if(!$overwrite && Folder::exists($pathWhere . $v)) {
+								if(!$overwrite && PhocaCommanderHelper::folderExists($pathWhere . $v)) {
 									$msg[] = $v . ' - '.Text::_('COM_PHOCACOMMANDER_FOLDER_NOT_OVERWRITTEN');
 									$countFolderNo++;
 								} else {
@@ -234,10 +235,10 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 				foreach($files as $k => $v) {
 					if (isset($v) && $v != '') {
 						$srcValue = $pathFrom . $v;
-						if (File::exists($srcValue) && Folder::exists($pathWhere)) {
+						if (PhocaCommanderHelper::fileExists($srcValue) && PhocaCommanderHelper::folderExists($pathWhere)) {
 							if ($overwrite == 0) {
 								$possibleNewFile = Path::clean($pathWhere .$v);
-								if(File::exists($possibleNewFile)) {
+								if(PhocaCommanderHelper::fileExists($possibleNewFile)) {
 									$msg[] = $v . ' - '.Text::_('COM_PHOCACOMMANDER_FILE_NOT_OVERWRITTEN');
 									$countFileNo++;
 								} else {
@@ -304,7 +305,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 				echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_NO_VALUE_SEND'));return;
 			} else {
 				$newValue = Path::clean($pathFrom . $this->t['newvalue']);
-				if (Folder::exists($newValue)) {
+				if (PhocaCommanderHelper::folderExists($newValue)) {
 					echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_NEW_FOLDER_NAME_EXISTS'));return;
 				} else {
 					if(Folder::create($newValue)) {
@@ -334,7 +335,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 				foreach($folders as $k => $v) {
 					if (isset($v) && $v != '') {
 						$srcValue = $pathFrom . $v;
-						if (Folder::exists($srcValue)) {
+						if (PhocaCommanderHelper::folderExists($srcValue)) {
 							if (Folder::delete($srcValue)) {
 								$countFolder++;
 							} else {
@@ -375,7 +376,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 				foreach($files as $k => $v) {
 					if (isset($v) && $v != '') {
 						$srcValue = $pathFrom . $v;
-						if (File::exists($srcValue)) {
+						if (PhocaCommanderHelper::fileExists($srcValue)) {
 							if (File::delete($srcValue)) {
 								$countFile++;
 							} else {
@@ -445,8 +446,8 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 					$overwrite = true;
 				}
 				$archFile = $pathFrom . $files[0];
-				if (File::exists($archFile)){
-					if (Folder::exists($pathWhere)) {
+				if (PhocaCommanderHelper::fileExists($archFile)){
+					if (PhocaCommanderHelper::folderExists($pathWhere)) {
 
 						$ext = File::getExt($files[0]);
 						$ext = strtolower($ext);
@@ -462,7 +463,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 							if ($zip->open(Path::clean($archFile)) === true) {
 								for ($i = 0; $i < $zip->numFiles; $i++) {
 									$entry = $zip->getNameIndex($i);
-									if (File::exists(Path::clean($pathWhere . '/' . $entry))) {
+									if (PhocaCommanderHelper::fileExists(Path::clean($pathWhere . '/' . $entry))) {
 										$fileExists = 1;
 										break;
 									}
@@ -518,7 +519,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 					foreach($folders as $k => $v) {
 						if (isset($v) && $v != '') {
 							$srcValue = $pathFrom . $v;
-							if (Folder::exists($srcValue)) {
+							if (PhocaCommanderHelper::folderExists($srcValue)) {
 
 								$zero = substr((string)$this->t['newvalue'], 0, 1);
 								if ($zero === '0') {
@@ -567,7 +568,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 					foreach($files as $k => $v) {
 						if (isset($v) && $v != '') {
 							$srcValue = $pathFrom . $v;
-							if (File::exists($srcValue)) {
+							if (PhocaCommanderHelper::fileExists($srcValue)) {
 
 								$zero = substr((string)$this->t['newvalue'], 0, 1);
 								if ($zero === '0') {
@@ -653,7 +654,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 
 				$newValue = Path::clean($pathWhere . $this->t['newvalue']);
 
-				if (File::exists($newValue)) {
+				if (PhocaCommanderHelper::fileExists($newValue)) {
 					echo $r->_('0', $this->t['newvalue'] . ' - '.Text::_('COM_PHOCACOMMANDER_ERROR_FILE_EXISTS'));return;
 				} else {
 
@@ -677,7 +678,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 						foreach($folders as $k => $v) {
 							if (isset($v) && $v != '') {
 								$srcValue = $pathFrom . $v;
-								if (Folder::exists($srcValue)) {
+								if (PhocaCommanderHelper::folderExists($srcValue)) {
 									$fToPack[$i] = Folder::files($srcValue, '.', true, true);
 									$i++;
 								}
@@ -708,7 +709,7 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 						foreach($files as $k => $v) {
 							if (isset($v) && $v != '') {
 								$srcValue = $pathFrom . $v;
-								if (File::exists($srcValue)) {
+								if (PhocaCommanderHelper::fileExists($srcValue)) {
 									//$fToPackJ[$i] = $srcValue;
 									$rel3 = str_replace(JPATH_ROOT . '/', '', $srcValue);
 

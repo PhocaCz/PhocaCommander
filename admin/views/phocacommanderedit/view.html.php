@@ -50,7 +50,7 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends HtmlView
 		$document->addScriptOptions('phVarsCM', $oVars);
 
 		$app   					= Factory::getApplication();
-		$this->t['fullfile']	= $app->input->get( 'file', '', 'string'  );
+		$this->t['fullfile']	= $app->getInput()->get( 'file', '', 'string'  );
 
 		$context 				= 'com_phocacommander.phocacommander.';
 		$this->t['orderinga'] 	= $app->getUserStateFromRequest($context .'orderinga', 'orderinga', '', 'string');
@@ -112,7 +112,7 @@ class PhocaCommanderCpViewPhocaCommanderEdit extends HtmlView
 	protected function addToolbar() {
 
 		require_once JPATH_COMPONENT.'/helpers/phocacommanderedit.php';
-		Factory::getApplication()->input->set('hidemainmenu', true);
+		Factory::getApplication()->getInput()->set('hidemainmenu', true);
 		$bar 		= Toolbar::getInstance('toolbar');
 		$user		= Factory::getUser();
 		$canDo		= PhocaCommanderEditHelper::getActions();
