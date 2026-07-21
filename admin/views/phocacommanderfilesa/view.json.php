@@ -16,6 +16,8 @@ use Joomla\Filesystem\Path;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Filesystem\File;
+use Joomla\CMS\HTML\HTMLHelper;
+
 jimport( 'joomla.application.component.view');
 
 class PhocaCommanderCpViewPhocaCommanderFilesA extends HtmlView
@@ -273,7 +275,8 @@ foreach ($folders as $k => $v) {
 	//$o .= '<tr><td class="ph-name">'.$v['fullname'].'('.$this->t['folderdecoded'].')</td>';
 	$o .= '<tr><td class="ph-name">'.$v['fullname'].'</td>';
 	$o .= '<td class="ph-size"></td>';
-	$o .= '<td class="ph-date">'.date('Y-m-d H:i', $v['date']).'</td>';
+	//$o .= '<td class="ph-date">'.date('Y-m-d H:i', $v['date']).'</td>';
+	$o .= '<td class="ph-date">'.HTMLHelper::date($v['date'],'Y-m-d H:i').'</td>';
 	$o .= '<td class="ph-attributes" >'.$v['chmod'].'</td>';
 	//$o .= '<td class="ph-owner">'.$v['uid'].' ('.$v['gid'].')</td></tr>';
 	$o .= '<td class="ph-owner">'.$v['uid'].'</td></tr>';
@@ -290,7 +293,8 @@ if ($reorder == 2) {
 foreach ($files as $k => $v) {
 	$o .= '<tr><td class="ph-name">'.$v['fullname'].'</td>';
 	$o .= '<td class="ph-size">'.PhocaCommanderHelper::getFileSizeReadable($v['size']).'</td>';
-	$o .= '<td class="ph-date">'.date('Y-m-d H:i', $v['date']).'</td>';
+	//$o .= '<td class="ph-date">'.date('Y-m-d H:i', $v['date']).'</td>';
+	$o .= '<td class="ph-date">'.HTMLHelper::date($v['date'],'Y-m-d H:i').'</td>';
 	$o .= '<td class="ph-attributes">'.$v['chmod'].'</td>';
 	//$o .= '<td class="ph-owner">'.$v['uid'].' ('.$v['gid'].')</td></tr>';
 	$o .= '<td class="ph-owner">'.$v['uid'].'</td></tr>';
