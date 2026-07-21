@@ -63,8 +63,14 @@ If you need additional information beyond this GitHub repository, further docume
 
 - [Joomla! 3 Demo](https://youtu.be/0iB1gOaz0og)
 
+### Version (Joomla! 3.x - no longer supported)
+3.0.5
+### Version (Joomla! 4.x - no longer supported)
+4.0.2
+### Version (Joomla! 5.x - no longer supported)
+5.1.0
 ### Version (Joomla! 6.x)
-6.1.2
+6.1.0
 
 ### License
 

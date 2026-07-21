@@ -73,7 +73,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 <div id="phDialogPromptWelcomeWarning" class="ph-dialog" title="<?php echo Text::_('COM_PHOCACOMMANDER_WARNING'); ?>">
 	<div><?php
-        echo Text::_('COM_PHOCACOMMANDER_WELCOME_WARNING');?></div>
+        echo Text::_('COM_PHOCACOMMANDER_WELCOME_WARNING');
+        echo '<br>';
+        echo Text::_('COM_PHOCACOMMANDER_FOSS_DECLARATION');
+        echo Text::_('COM_PHOCACOMMANDER_FOSS_DECLARATION_DESCRIPTION');
+
+        ?></div>
 	<div class="ph-prepend-text"></div>
 	<input type="hidden" name="phPromptValueUnpackOther" id="phPromptValueUnpackOther" value="" />
 </div>
