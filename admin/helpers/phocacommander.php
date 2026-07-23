@@ -261,14 +261,37 @@ class PhocaCommanderHelper
 
 	public static function createLoadFilesFunction($var, $folder, $ordering, $dir) {
 
+		// Reflected XSS fix: $ordering, $dir and $var['panel'] ultimately come
+		// from request input (orderinga/orderingb/directiona/directionb/panel),
+		// and $folder is expected to be base64 but is not actually validated
+		// as such anywhere upstream. Previously all of these were concatenated
+		// directly into a single-quoted JS string with no escaping at all, and
+		// every caller then drops that JS string straight into an HTML
+		// onclick="..." attribute - so a value like ';alert(1);//" ..." could
+		// break out of the JS string AND the HTML attribute in one shot.
+		//
+		// Fix: whitelist the small enumerated values (panel/ordering/direction)
+		// to their only legitimate options, json_encode() every interpolated
+		// value so it is always a safe, fully-quoted JS string literal (this
+		// also covers $folder, which is free-form), and htmlspecialchars() the
+		// finished JS snippet before returning it, since every caller inserts
+		// it into an HTML attribute.
+		$allowedPanel     = array('A', 'B');
+		$allowedOrdering  = array('name', 'size', 'date');
+		$allowedDirection = array('ASC', 'DESC');
+
+		$panel    = (isset($var['panel']) && in_array($var['panel'], $allowedPanel, true)) ? $var['panel'] : 'A';
+		$ordering = in_array($ordering, $allowedOrdering, true) ? $ordering : 'name';
+		$dir      = in_array($dir, $allowedDirection, true) ? $dir : 'ASC';
+
 		$o = '';
 		$o .= 'var phLFAc = {};';
-		$o .= 'phLFAc[\'panel\'] = \''.$var['panel'].'\';';
+		$o .= 'phLFAc[\'panel\'] = '.json_encode($panel).';';
 
 
 		// Active Panel always changes when click (click on order, click on folder will make active the clicked panel)
-		//$o .= 'phLFAc[\'activepanel\'] = \''.$var['activepanel'].'\';';
-		$o .= 'phLFAc[\'activepanel\'] = \''.$var['panel'].'\';';
+		//$o .= 'phLFAc[\'activepanel\'] = '.json_encode($var['activepanel']).';';
+		$o .= 'phLFAc[\'activepanel\'] = '.json_encode($panel).';';
 
 
 		// FOLDER
@@ -280,32 +303,35 @@ class PhocaCommanderHelper
 			$folder = '|';
 		}
 
-		if ($var['panel'] == 'A') {
-			$o .= 'phLFAc[\'foldera\'] = \''.$folder.'\';';
+		if ($panel == 'A') {
+			$o .= 'phLFAc[\'foldera\'] = '.json_encode($folder).';';
 			$o .= 'phLFAc[\'folderb\'] = \'*\';';
 		} else {
-			$o .= 'phLFAc[\'folderb\'] = \''.$folder.'\';';
+			$o .= 'phLFAc[\'folderb\'] = '.json_encode($folder).';';
 			$o .= 'phLFAc[\'foldera\'] = \'*\';';
 		}
 
-		if ($var['panel'] == 'A') {
-			$o .= 'phLFAc[\'orderinga\'] = \''.$ordering.'\';';
+		if ($panel == 'A') {
+			$o .= 'phLFAc[\'orderinga\'] = '.json_encode($ordering).';';
 			$o .= 'phLFAc[\'orderingb\'] = \'\';';
 		} else {
-			$o .= 'phLFAc[\'orderingb\'] = \''.$ordering.'\';';
+			$o .= 'phLFAc[\'orderingb\'] = '.json_encode($ordering).';';
 			$o .= 'phLFAc[\'orderinga\'] = \'\';';
 		}
 
-		if ($var['panel'] == 'A') {
-			$o .= 'phLFAc[\'directiona\'] = \''.$dir.'\';';
+		if ($panel == 'A') {
+			$o .= 'phLFAc[\'directiona\'] = '.json_encode($dir).';';
 			$o .= 'phLFAc[\'directionb\'] = \'\';';
 		} else {
-			$o .= 'phLFAc[\'directionb\'] = \''.$dir.'\';';
+			$o .= 'phLFAc[\'directionb\'] = '.json_encode($dir).';';
 			$o .= 'phLFAc[\'directiona\'] = \'\';';
 		}
 
 		$o .= 'phLoadFiles(phLFAc);';
-		return $o;
+
+		// Every caller inserts this string into an HTML onclick="..." attribute -
+		// encode it for that context here, once, so callers can't forget to.
+		return htmlspecialchars($o, ENT_QUOTES, 'UTF-8');
 
 	}
 
