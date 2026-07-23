@@ -122,6 +122,21 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends FormController
 		$context 	= "$this->option.edit.$this->context";
 		$file		= $app->getInput()->get( 'filename', '', 'string'  );
 
+		// Explicit core.edit check: don't rely solely on the blanket
+		// core.manage gate in phocacommander.php - download() is paired
+		// with the editor's edit()/save() actions, both of which already
+		// require core.edit, and should not be reachable by a lower bar.
+		$user = Factory::getUser();
+		if (!$user->authorise('core.edit', 'com_phocacommander')) {
+			$app->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'), 'error');
+			$this->setRedirect(
+				Route::_(
+					'index.php?option=' . $this->option . '&view=' . $this->view_list
+					. $this->getRedirectToListAppend(), false
+				)
+			);
+			return false;
+		}
 
 		$file 		= base64_decode($file);
 
@@ -129,8 +144,18 @@ class PhocaCommanderCpControllerPhocaCommanderEdit extends FormController
 
 		$pathFolder	= Path::clean($path . '/' .$file);
 
+		// Real path-containment check: resolve the target and confirm it
+		// is still inside JPATH_ROOT. Path::clean() alone does not reject
+		// a '../' that escapes the root, so an unresolved path could still
+		// point outside the intended directory (e.g. configuration.php via
+		// a traversal, or any file elsewhere on disk the web server can read).
+		$safePathFolder = PhocaCommanderHelper::getContainedRealPath($pathFolder, $path);
+		if ($safePathFolder !== false) {
+			$pathFolder = $safePathFolder;
+		}
+
 		$mimeType = '';
-		if (PhocaCommanderHelper::fileExists($pathFolder)) {
+		if ($safePathFolder !== false && PhocaCommanderHelper::fileExists($pathFolder)) {
 
 			if (function_exists('mime_content_type')) {
 				$mimeType 	= mime_content_type($pathFolder);

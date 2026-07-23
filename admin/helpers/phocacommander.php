@@ -7,15 +7,16 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  */
 defined('_JEXEC') or die;
-use Joomla\Filesystem\Folder;
-use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Client\ClientHelper;
-use Joomla\Filesystem\Path;
 use Joomla\CMS\Client\FtpClient;
-use Joomla\Filesystem\File;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 class PhocaCommanderHelper
 {
 	/*
@@ -1193,6 +1194,71 @@ class PhocaCommanderHelper
 
 	public static function folderExists($path) {
 		return is_dir(Path::clean($path));
+	}
+
+
+	/**
+	 * Real path-containment check.
+	 *
+	 * Path::clean() only normalizes slashes/dots - it does NOT reject a
+	 * '../' sequence that walks the resolved path outside of $base. This
+	 * resolves both $path and $base with realpath() (which collapses any
+	 * '../' and symlinks) and confirms the resolved $path is still inside
+	 * the resolved $base directory.
+	 *
+	 * Returns the safe, resolved absolute path on success, or false if
+	 * $path does not exist or escapes $base.
+	 */
+	public static function getContainedRealPath($path, $base) {
+		$realBase = realpath($base);
+		$realPath = realpath($path);
+
+		if ($realBase === false || $realPath === false) {
+			return false;
+		}
+
+		$realBase = rtrim(str_replace('\\', '/', $realBase), '/') . '/';
+		$realPath = str_replace('\\', '/', $realPath);
+
+		// $realPath must be $realBase itself, or a path strictly inside it.
+		if (($realPath . '/') !== $realBase && strpos($realPath . '/', $realBase) !== 0) {
+			return false;
+		}
+
+		return $realPath;
+	}
+
+	/**
+	 * Extensions that must never be written by the file editor's save()
+	 * action, mirroring the deny-list already enforced on regular uploads
+	 * in admin/helpers/fileupload.php.
+	 */
+	public static function getDisallowedEditExtensions() {
+		$default = 'php,php2,php3,php4,php5,php6,php7,php8,phtml,phar,pht,phps,phps3,phpt,cgi,pl,py,asp,aspx,jsp,jspx,sh,bash,exe,dll,so,htaccess,htpasswd,ini,user.ini';
+
+		$params = ComponentHelper::getParams('com_phocacommander');
+		$disallowed = $params->get('disallowed_edit_extensions', $default);
+
+		if (trim($disallowed) === '') {
+			$disallowed = $default;
+		}
+
+		$exts = explode(',', $disallowed);
+		$exts = array_map('trim', $exts);
+		$exts = array_map('strtolower', $exts);
+
+		return array_values(array_filter($exts, function ($val) {
+			return $val !== '';
+		}));
+	}
+
+	/**
+	 * True if $fileName has an extension that the editor is not allowed
+	 * to write to, based on getDisallowedEditExtensions().
+	 */
+	public static function isDisallowedEditExtension($fileName) {
+		$ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+		return in_array($ext, self::getDisallowedEditExtensions(), true);
 	}
 }
 ?>

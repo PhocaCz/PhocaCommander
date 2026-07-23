@@ -137,6 +137,12 @@
 		<option value="1">COM_PHOCACOMMANDER_YES</option>
 		</field>
 
+<field name="disallowed_edit_extensions"
+				type="textarea" rows="3" cols="50"
+				default="php,php2,php3,php4,php5,php6,php7,php8,phtml,phar,pht,phps,phps3,phpt,cgi,pl,py,asp,aspx,jsp,jspx,sh,bash,exe,dll,so,htaccess,htpasswd,ini,user.ini"
+				label="COM_PHOCACOMMANDER_FIELD_DISALLOWED_EDIT_EXTENSIONS_LABEL"
+				description="COM_PHOCACOMMANDER_FIELD_DISALLOWED_EDIT_EXTENSIONS_DESC" />
+
 <field 	name="create_index"
 				type="radio"  class="btn-group btn-group-yesno" layout="joomla.form.field.radio.switcher"
 				default="1"

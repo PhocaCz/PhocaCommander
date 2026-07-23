@@ -68,6 +68,25 @@ class PhocaCommanderCpModelPhocaCommanderEdit extends AdminModel
 				$filePath = Path::clean(JPATH_ROOT . '/' . $fileName);
 
 				if (PhocaCommanderHelper::fileExists($filePath)) {
+
+					// Extension deny-list: never allow the file editor to
+					// write server-executable file types, regardless of
+					// who holds core.edit.
+					if (PhocaCommanderHelper::isDisallowedEditExtension($filePath)) {
+						$app->enqueueMessage(Text::_('COM_PHOCACOMMANDER_ERROR_FILE_TYPE_NOT_ALLOWED'), 'error');
+						return false;
+					}
+
+					// Real path-containment check: resolve the target and
+					// confirm it is still inside JPATH_ROOT. Path::clean()
+					// alone does not reject a '../' that escapes the root.
+					$safePath = PhocaCommanderHelper::getContainedRealPath($filePath, JPATH_ROOT);
+					if ($safePath === false) {
+						$app->enqueueMessage(Text::_('COM_PHOCACOMMANDER_ERROR_INVALID_PATH'), 'error');
+						return false;
+					}
+					$filePath = $safePath;
+
 					//JClientHelper::setCredentialsFromRequest('ftp');
 					//$ftp = JClientHelper::getCredentials('ftp');
 					$user = get_current_user();

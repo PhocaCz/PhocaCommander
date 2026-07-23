@@ -129,6 +129,12 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 						echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_NEW_FILE_NAME_EXISTS'));return;
 					}
 
+					// Don't allow rename to turn a file into a server-executable
+					// type that skips the upload deny-list (e.g. .jpg -> .php).
+					if (PhocaCommanderHelper::isDisallowedEditExtension($newValue)) {
+						echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_FILE_TYPE_NOT_ALLOWED'));return;
+					}
+
 					if (PhocaCommanderHelper::fileExists($oldValue)) {
 						if (File::move($oldValue, $newValue)) {
 							echo $r->_('1', Text::_('COM_PHOCACOMMANDER_FILE_RENAMED'));return;

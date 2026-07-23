@@ -23,4 +23,3 @@ class PhocaCommanderEditHelper
 		return $result;
 	}
 }
-?>
