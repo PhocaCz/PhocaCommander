@@ -2,7 +2,7 @@
 <extension type="component" method="upgrade" version="6.0">
 	<name>com_phocacommander</name>
 	<author>Jan Pavelka (www.phoca.cz)</author>
-	<creationDate>23/07/2026</creationDate>
+	<creationDate>24/07/2026</creationDate>
 	<authorEmail></authorEmail>
 	<authorUrl>https://www.phoca.cz</authorUrl>
 	<copyright>Jan Pavelka</copyright>

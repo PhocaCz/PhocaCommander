@@ -67,7 +67,7 @@
 		<downloads>
 			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/6.1.2/com_phocacommander_v6.1.2.zip</downloadurl>
 		</downloads>
-		<sha512>ee647ce1d9093baeb48c4f274e9b652057668e6c63538b45dd2747cf6a39b7120e4e30f56bddcd11253cdf21434888ee8751ff4773cf4d27bf90890b1042bbb1</sha512>
+		<sha512>835749a9e9c88085abab9da5e83e41b6550c2e251e8be9f5ef51959c05a35cda539a9d8392f96add6b852c03e515e0387cef40c415b32347a517814563765bb5</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>
