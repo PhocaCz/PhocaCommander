@@ -1286,5 +1286,45 @@ class PhocaCommanderHelper
 		$ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 		return in_array($ext, self::getDisallowedEditExtensions(), true);
 	}
+
+	/**
+	 * Sanitize an uploaded filename.
+	 *
+	 * By default this is identical to Joomla's own File::makeSafe(): it
+	 * strips anything outside [A-Za-z0-9._- ], collapses 2+ consecutive
+	 * dots to nothing, and removes a leading dot.
+	 *
+	 * Some legitimate filenames (containing '!', or other punctuation) get
+	 * mangled by that default behaviour. Site owners can opt in to a wider,
+	 * still-safe character set via the "upload_filename_allow_special_chars"
+	 * component parameter. Regardless of that setting, the security-relevant
+	 * protections are always enforced: NUL bytes and path separators
+	 * (/ \ :) are always stripped, 2+ consecutive dots are always collapsed
+	 * to a single dot (this is what stops '..'-style traversal or
+	 * double-extension tricks hidden in the filename itself), and a
+	 * filename cannot start with a dot (hidden/dotfile). These do not
+	 * relax or replace the extension allow/disallow-list checks elsewhere -
+	 * they only affect which characters may appear in the name.
+	 */
+	public static function makeSafeFileName($fileName) {
+		$params 	= ComponentHelper::getParams('com_phocacommander');
+		$allowExtra = (int) $params->get('upload_filename_allow_special_chars', 0);
+
+		if (!$allowExtra) {
+			// Unchanged default behaviour.
+			return File::makeSafe($fileName);
+		}
+
+		// Opt-in relaxed mode - security-relevant stripping stays in place,
+		// only the allowed punctuation set is widened.
+		$fileName = str_replace("\0", '', $fileName);
+		$fileName = str_replace(array('/', '\\', ':'), '', $fileName);
+		$fileName = preg_replace('#(\.){2,}#', '.', $fileName);
+		$fileName = preg_replace('#^\.+#', '', $fileName);
+		$fileName = preg_replace("#[^A-Za-z0-9\.\_\-\ \!\@\#\$\%\&\+\=\(\)\[\]\{\}']#", '', $fileName);
+		$fileName = trim($fileName);
+
+		return $fileName;
+	}
 }
 ?>

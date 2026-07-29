@@ -70,7 +70,7 @@ class PhocaCommanderFileUpload
 
 		// Make the filename safe
 		if (isset($file['name'])) {
-			$file['name']	= File::makeSafe($file['name']);
+			$file['name']	= PhocaCommanderHelper::makeSafeFileName($file['name']);
 		}
 
 		$pathFolder	= Path::clean($path.'/');
@@ -398,7 +398,7 @@ class PhocaCommanderFileUpload
 
 		// Make the filename safe
 		if (isset($file['name'])) {
-			$file['name']	= File::makeSafe($file['name']);
+			$file['name']	= PhocaCommanderHelper::makeSafeFileName($file['name']);
 		}
 
 
@@ -531,8 +531,16 @@ class PhocaCommanderFileUpload
 			return false;
 		}
 		// Not safe file
-		jimport('joomla.filesystem.file');
-		if ($file['name'] !== File::makesafe($file['name'])) {
+		//
+		// This must use the same sanitizer as the one already applied to
+		// $file['name'] earlier (PhocaCommanderHelper::makeSafeFileName()),
+		// which respects the "upload_filename_allow_special_chars" setting.
+		// Previously this compared against Joomla's own strict
+		// File::makesafe() unconditionally, so even with the relaxed
+		// parameter enabled, any filename containing a character outside
+		// the strict default set (e.g. '!') would still fail here with
+		// COM_PHOCACOMMANDER_WARNFILENAME - silently overriding the setting.
+		if ($file['name'] !== PhocaCommanderHelper::makeSafeFileName($file['name'])) {
 			$err = 'COM_PHOCACOMMANDER_WARNFILENAME';
 			return false;
 		}

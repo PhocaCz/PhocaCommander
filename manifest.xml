@@ -62,19 +62,19 @@
 		<description><![CDATA[ Phoca Commander is Joomla! CMS component - it is dual panel file manager (like Total Commander, Midnight Commander, Krusader, ...) working in Joomla! administration. ]]></description>
 		<element>com_phocacommander</element>
 		<type>component</type>
-		<version>6.1.2</version>
-		<infourl title="Phoca Commander 6.1.2">http://www.phoca.cz/version/index.php?phocacommander=6.1.2</infourl>
+		<version>6.1.3</version>
+		<infourl title="Phoca Commander 6.1.3">http://www.phoca.cz/version/index.php?phocacommander=6.1.3</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/6.1.2/com_phocacommander_v6.1.2.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaCommander/releases/download/6.1.3/com_phocacommander_v6.1.3.zip</downloadurl>
 		</downloads>
-		<sha512>835749a9e9c88085abab9da5e83e41b6550c2e251e8be9f5ef51959c05a35cda539a9d8392f96add6b852c03e515e0387cef40c415b32347a517814563765bb5</sha512>
+		<sha512>ccd330cc09f62c180dbf313b02ced1025f87f81856a56880201893d995a610b9bf26ab5730cb74f7d6249275671349fb49def0da0e5cca5e79367541ca5831c0</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>
 		<maintainer><![CDATA[ Phoca.cz ]]></maintainer>
 		<maintainerurl>https://www.phoca.cz/</maintainerurl>
 		<section>Updates</section>
-		<targetplatform name="joomla" version="(5|6)\.*"/>
+		<targetplatform name="joomla" version="6\.*"/>
 		<client>administrator</client>
 	</update>
 </updates>
