@@ -36,13 +36,28 @@ class PhocaCommanderCpModelPhocaCommanderEdit extends AdminModel
 		return parent::canEditState($record);
 	}
 
-	public function getSource($fileName) {
+	/* public function getSource($fileName) {
 		$fileName = base64_decode($fileName);
 		$item = new stdClass;
 		if (PhocaCommanderHelper::fileExists(JPATH_ROOT.'/'.$fileName)) {
 			$item->source = file_get_contents(JPATH_ROOT.'/'.$fileName);
 		} else {
 			$this->setError(Text::_('COM_PHOCACOMMANDER_FILE_DOES_NOT_EXIST'));
+		}
+		return $item;
+	} */
+
+	public function getSource($fileName) {
+		$fileName = base64_decode($fileName);
+		$safePath = PhocaCommanderHelper::getContainedRealPath(JPATH_ROOT . '/' . $fileName, JPATH_ROOT);
+		if ($safePath === false) {
+			$this->setError(Text::_('COM_PHOCACOMMANDER_ERROR_INVALID_PATH'));
+			return false;
+		}
+
+		$item = new stdClass;
+		if (PhocaCommanderHelper::fileExists($safePath)) {
+			$item->source = file_get_contents($safePath);
 		}
 		return $item;
 	}

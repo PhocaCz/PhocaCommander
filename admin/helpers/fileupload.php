@@ -73,7 +73,13 @@ class PhocaCommanderFileUpload
 			$file['name']	= PhocaCommanderHelper::makeSafeFileName($file['name']);
 		}
 
-		$pathFolder	= Path::clean($path.'/');
+		//$pathFolder	= Path::clean($path.'/');
+		$pathFolder = PhocaCommanderHelper::getContainedRealPath(JPATH_ROOT . '/' . $folder, JPATH_ROOT);
+
+		if ($pathFolder === false) {
+			jexit(json_encode(['jsonrpc' => '2.0', 'result' => 'error', 'code' => 403, 'message' => Text::_('COM_PHOCACOMMANDER_ERROR_INVALID_PATH')]));
+		}
+
 		if (isset($folder) && $folder != '') {
 			$pathFolder	= Path::clean($path . '/' .$folder . '/');
 		} else {

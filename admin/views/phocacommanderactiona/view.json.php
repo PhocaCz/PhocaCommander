@@ -55,15 +55,27 @@ class PhocaCommanderCpViewPhocaCommanderActionA extends HtmlView
 		}
 
 		if (base64_decode($this->t['pathfrom']) != '') {
-			$pathFrom 	= JPATH_ROOT . '/'. base64_decode($this->t['pathfrom']) . '/';
+			//$pathFrom 	= JPATH_ROOT . '/'. base64_decode($this->t['pathfrom']) . '/';
+			$pathFrom = PhocaCommanderHelper::getContainedRealPath(JPATH_ROOT . '/' . base64_decode($this->t['pathfrom']), JPATH_ROOT);
 		} else {
 			$pathFrom 	= JPATH_ROOT . '/';
 		}
 		if (base64_decode($this->t['pathwhere']) != '') {
-			$pathWhere 	= JPATH_ROOT . '/'. base64_decode($this->t['pathwhere']) . '/';
+			//$pathWhere 	= JPATH_ROOT . '/'. base64_decode($this->t['pathwhere']) . '/';
+			$pathWhere = PhocaCommanderHelper::getContainedRealPath(JPATH_ROOT . '/' . base64_decode($this->t['pathwhere']), JPATH_ROOT);
 		} else {
 			$pathWhere 	= JPATH_ROOT . '/';
 		}
+
+		if ($pathFrom === false || $pathWhere === false) {
+			echo $r->_('0', Text::_('COM_PHOCACOMMANDER_ERROR_INVALID_PATH'));
+		return;
+		}
+
+		// Append trailing slash after validation
+		$pathFrom .= '/';
+		$pathWhere .= '/';
+
 
 		$folders 	= array();
 		$files		= array();
